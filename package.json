@@ -1,0 +1,21 @@
+{
+  "name": "workboxtesting",
+  "version": "1.0.0",
+  "description": "WorkBoxTesting",
+  "main": "index.js",
+  "scripts": {
+    "serv": "http-server -p 8181 build -c-1",
+    "servBuild": "workbox injectManifest && http-server -p 8181 build -c-1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kelsch/WorkBoxTesting.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Kelsch/WorkBoxTesting/issues"
+  },
+  "homepage": "https://github.com/Kelsch/WorkBoxTesting#readme"
+}
