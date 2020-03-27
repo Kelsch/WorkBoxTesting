@@ -1,8 +1,9 @@
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.0.0/workbox-sw.js');
 
 workbox.routing.registerRoute(
-    new RegExp('https://jsonplaceholder.typicode.com/users'),
-    new workbox.strategies.CacheFirst()
+    // new RegExp('https://jsonplaceholder.typicode.com/users'),
+    new RegExp('userTestJson.json'),
+    new workbox.strategies.NetworkFirst()
 );
     
 // Cache the Google Fonts stylesheets with a stale-while-revalidate strategy.

@@ -8,7 +8,8 @@ function append(parent, el) {
 
 const ul = document.getElementById('people');
 
-fetch('https://jsonplaceholder.typicode.com/users')
+// fetch('https://jsonplaceholder.typicode.com/users')
+fetch('userTestJson.json')
     .then(response => response.json())
     .then(data => {
         let people = data;

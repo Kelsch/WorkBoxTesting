@@ -1,8 +1,9 @@
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.0.0/workbox-sw.js');
 
 workbox.routing.registerRoute(
-    new RegExp('https://jsonplaceholder.typicode.com/users'),
-    new workbox.strategies.CacheFirst()
+    // new RegExp('https://jsonplaceholder.typicode.com/users'),
+    new RegExp('userTestJson.json'),
+    new workbox.strategies.NetworkFirst()
 );
     
 // Cache the Google Fonts stylesheets with a stale-while-revalidate strategy.
@@ -30,4 +31,4 @@ workbox.routing.registerRoute(
     })
 );
 
-workbox.precaching.precacheAndRoute([{"revision":"5eaf54831efcbcdfec2cdc44788dbede","url":"css/main.css"},{"revision":"b7f37d2386f1b27d182846e5f42c7809","url":"index.html"},{"revision":"d00dd9562818cd8909bc4fa27bb762b7","url":"js/app.js"},{"revision":"edd4495e66b5cb260886662b5e5b2e42","url":"js/workbox-7248be78.js"}]);
+workbox.precaching.precacheAndRoute([{"revision":"5eaf54831efcbcdfec2cdc44788dbede","url":"css/main.css"},{"revision":"5f8bac3a72cfc7bf2a51fa3e2856e5c1","url":"index.html"},{"revision":"2a2380ccfd464eb45c1946911437c6d0","url":"js/app.js"},{"revision":"edd4495e66b5cb260886662b5e5b2e42","url":"js/workbox-7248be78.js"}]);
