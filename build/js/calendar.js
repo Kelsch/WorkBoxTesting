@@ -8,6 +8,18 @@ let currentYear = today.getFullYear();
 
 const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
+// const styles = `
+//     .calendar-basicGrid {
+//         display: grid;
+//         grid-template-columns: repeat(7, 1fr);
+//     }
+// `;
+
+// const styleSheet = document.createElement("style");
+// styleSheet.type = "text/css";
+// styleSheet.innerText = styles;
+// document.head.appendChild(styleSheet);
+
 // class CalendarCard extends HTMLElement {
 //     // Define constructor
 //     // constructor() {
@@ -44,10 +56,22 @@ function showCalendar(month, year) {
         for (let i = 0; i < 7; i++) {
             let cell = '';
             if (r === 0 && i < firstDay) {
-                cell = `<div class="calendar-day"></div>`;
+                let lastMonth;
+                if (month === 0) {
+                    lastMonth = month + 11;
+                }
+                else {
+                    lastMonth = month - 1;
+                
+                }
+                let previousMonthDate = daysInMonth(lastMonth, year) - firstDay + i + 1;
+                
+                cell = `<div class="calendar-day">${previousMonthDate}</div>`;
             }
             else if (date > daysInMonth(month, year)) {
-                break;
+                let nextMonthDate = date - daysInMonth(month, year);
+                cell = `<div class="calendar-day">${nextMonthDate}</div>`;
+                date++;
             }
             else {
                 cell = `<div class="calendar-day${(date === today.getDate() && year === today.getFullYear() && month === today.getMonth()) ? 'calendar-currentDay' : ''}">${date}</div>`;
@@ -87,7 +111,7 @@ function next() {
     currentMonth = (currentMonth + 1) % 12;
     showCalendar(currentMonth, currentYear);
 }
-
+previous()
 function previous() {
     currentYear = (currentMonth === 0) ? currentYear - 1 : currentYear;
     currentMonth = (currentMonth === 0) ? 11 : currentMonth - 1;
