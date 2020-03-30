@@ -1,46 +1,8 @@
-// import {html, render} from 'https://unpkg.com/lit-html?module';
-
 const today = new Date();
 let currentMonth = today.getMonth();
 let currentYear = today.getFullYear();
-// const selectYear = document.getElementById("year");
-// const selectMonth = document.getElementById("month");
 
 const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-
-// const styles = `
-//     .calendar-basicGrid {
-//         display: grid;
-//         grid-template-columns: repeat(7, 1fr);
-//     }
-// `;
-
-// const styleSheet = document.createElement("style");
-// styleSheet.type = "text/css";
-// styleSheet.innerText = styles;
-// document.head.appendChild(styleSheet);
-
-// class CalendarCard extends HTMLElement {
-//     // Define constructor
-//     // constructor() {
-//     //     super();
-//     // }
-
-//     // Create inner HTML contents
-//     connectedCallback() {
-//         let calendarObj = JSON.parse(this.getAttribute('calendardata'));
-
-//         let firstDay = (new Date(currentYear, currentMonth)).getDay();
-        
-//         let calendarCardHTML = () => html`
-//         <div>
-//             Tetss 1
-//         </div>
-//         `;
-//         render(calendarCardHTML(), this);
-//     }
-// }
-// customElements.define('calendar-card', CalendarCard);
 
 showCalendar(currentMonth, currentYear);
 
@@ -66,27 +28,51 @@ function showCalendar(month, year) {
                 }
                 let previousMonthDate = daysInMonth(lastMonth, year) - firstDay + i + 1;
                 
-                cell = `<div class="calendar-day">${previousMonthDate}</div>`;
+                cell = `
+                <div id="${lastMonth}-${previousMonthDate}-${year}" class="calendar-day">
+                    <div>${previousMonthDate}</div>
+                    <div class="dateNumber-jobIndicator">
+                        <div class="dateNumber-indicator"></div>
+                        <div class="dateNumber-indicator"></div>
+                        <div class="dateNumber-indicator"></div>
+                    </div>
+                </div>`;
             }
             else if (date > daysInMonth(month, year)) {
                 let nextMonthDate = date - daysInMonth(month, year);
-                cell = `<div class="calendar-day">${nextMonthDate}</div>`;
+                cell = `
+                <div id="${month + 1}-${nextMonthDate}-${year}" class="calendar-day">
+                    <div>${nextMonthDate}</div>
+                    <div class="dateNumber-jobIndicator">
+                        <div class="dateNumber-indicator"></div>
+                        <div class="dateNumber-indicator"></div>
+                        <div class="dateNumber-indicator"></div>
+                    </div>
+                </div>`;
                 date++;
             }
             else {
-                cell = `<div class="calendar-day${(date === today.getDate() && year === today.getFullYear() && month === today.getMonth()) ? 'calendar-currentDay' : ''}">${date}</div>`;
+                cell = `
+                <div id="${month}-${date}-${year}" class="calendar-day${(date === today.getDate() && year === today.getFullYear() && month === today.getMonth()) ? ' calendar-currentDay' : ''}">
+                    <div>${date}</div>
+                    <div class="dateNumber-jobIndicator">
+                        <div class="dateNumber-indicator"></div>
+                        <div class="dateNumber-indicator"></div>
+                        <div class="dateNumber-indicator"></div>
+                    </div>
+                </div>`;
                 
                 date++;
             }
             cellElements += cell;
         }
     }
-
-    // let calendarCardHTML = () => html`
+    
     let calendarCardHTML = `
         <div id="calendar_monthHeader">
-            <span>${months[month]}</span>
-            <span>${year}</span>
+            <div class="material-icons" onClick="previous()">keyboard_arrow_left</div>
+            <div onClick="returnToCurrent()">${months[month]} ${year}</div>
+            <div class="material-icons" onClick="next()">keyboard_arrow_right</div>
         </div>
         <div id="calendar_dayHeader" class="calendar-basicGrid">
             <span class="week-name">S</span>
@@ -101,9 +87,20 @@ function showCalendar(month, year) {
             ${cellElements}
         </div>
     `;
-    // render(calendarCardHTML(), this);
     
     calendarElement.innerHTML = calendarCardHTML;
+}
+
+document.onkeydown = checkKey;
+
+function checkKey(e) {
+    let event = window.event ? window.event : e;
+    if (event.keyCode == 37) {
+        previous();
+    }
+    if (event.keyCode == 39) {
+        next();
+    }
 }
 
 function next() {
@@ -111,10 +108,16 @@ function next() {
     currentMonth = (currentMonth + 1) % 12;
     showCalendar(currentMonth, currentYear);
 }
-previous()
+
 function previous() {
     currentYear = (currentMonth === 0) ? currentYear - 1 : currentYear;
     currentMonth = (currentMonth === 0) ? 11 : currentMonth - 1;
+    showCalendar(currentMonth, currentYear);
+}
+
+function returnToCurrent() {
+    currentMonth = today.getMonth();
+    currentYear = today.getFullYear();
     showCalendar(currentMonth, currentYear);
 }
 

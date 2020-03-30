@@ -1,4 +1,93 @@
+#calendar_monthHeader {
+    font-size: 20px;
+    text-align: center;
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin: 5px;
+    -webkit-user-select: none; /* Safari */        
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
+}
+
+#calendar_monthHeader div {
+    cursor: pointer;
+}
+
+    #calendar_monthHeader div:hover {
+        color: #c3c3c3;
+    }
+
 .calendar-basicGrid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
+    box-shadow: -1px -1px rgba(0,0,0,.1);
 }
+
+.week-name {
+    text-align: center;
+    font-weight: bold;
+}
+
+    .week-name:last-child {
+        box-shadow: 1px 0px rgba(0,0,0,.1);
+    }
+
+.calendar-day {
+    text-align: center;
+    overflow: hidden;
+    height: 50px;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-evenly;
+    cursor: pointer;
+    box-shadow: 1px 1px rgba(0,0,0,.1);
+    padding: 5px;
+}
+
+    .calendar-day:hover {
+        background-color: #cacaca;
+    }
+
+    .calendar-day:active {
+        background-color: #b7b7b7;
+    }
+
+.calendar-currentDay {
+    background-color: #e4e4e4;
+}
+
+.dateNumber-jobIndicator {
+    align-items: center;
+    display: grid;
+    grid-auto-columns: max-content;
+    grid-gap: 5px;
+    grid-auto-flow: column;
+    overflow: hidden;
+    justify-content: center;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    pointer-events: none;
+}
+
+.dateNumber-indicator {
+    width: 10px;
+    height: 10px;
+    background-color: #a500bd;
+    border-radius: 10px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    pointer-events: none;
+}
+
+@media only screen and (max-width: 425px) {
+    .dateNumber-jobIndicator {
+        grid-gap: 2px;
+        justify-content: start;
+    }
+  }
