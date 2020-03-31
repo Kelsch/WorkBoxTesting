@@ -1,6 +1,6 @@
 {
-  "name": "workboxTest",
-  "short_name": "Workbox",
+  "name": "PDInstall",
+  "short_name": "PDInstall",
   "theme_color": "#e4e4e4",
   "background_color": "#c1c1c1",
   "display": "standalone",
