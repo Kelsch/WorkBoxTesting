@@ -1,19 +1,14 @@
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.0.0/workbox-sw.js');
 
 workbox.routing.registerRoute(
-    new RegExp('https://jsonplaceholder.typicode.com/users'),
-    // new RegExp('userTestJson.json'),
-    new workbox.strategies.NetworkFirst()
+    // new RegExp('https://jsonplaceholder.typicode.com/users'),
+    new RegExp('userTestJson.json'),
+    new workbox.strategies.StaleWhileRevalidate()
 );
 
 workbox.routing.registerRoute(
     new RegExp('https://pdwebapi-mf5.conveyor.cloud/api/installerAppData/getInstallIndicators'),
-    new workbox.strategies.NetworkFirst()
-);
-
-workbox.routing.registerRoute(
-    new RegExp('https://pdwebapi-mf5.conveyor.cloud/api/values'),
-    new workbox.strategies.NetworkFirst()
+    new workbox.strategies.StaleWhileRevalidate()
 );
 
 // Cache the Google Fonts stylesheets with a stale-while-revalidate strategy.
@@ -41,4 +36,4 @@ workbox.routing.registerRoute(
     })
 );
 
-workbox.precaching.precacheAndRoute([{"revision":"d4bb1978ee0340efff9755577b9cbcd3","url":"css/calendar.css"},{"revision":"02d8db646dd579a2bbf33dc8d4212dc0","url":"css/main.css"},{"revision":"afeac53b2545444dae02b8560f98ae75","url":"index.html"},{"revision":"6ec5ae1a88e6ad42704a6cea25716004","url":"js/app.js"},{"revision":"39f3c05db82890baf57843e7256d6020","url":"js/calendar.js"},{"revision":"edd4495e66b5cb260886662b5e5b2e42","url":"js/workbox-7248be78.js"}]);
+workbox.precaching.precacheAndRoute([{"revision":"18246f150b6e96dde5be4a99ade84990","url":"css/calendar.css"},{"revision":"a4d437f991314c6368363fabe851ab30","url":"css/main.css"},{"revision":"8487903dde30cc13cc096d74a7251656","url":"index.html"},{"revision":"4b20aa7002cb6c1b8df70255d229d856","url":"js/app.js"},{"revision":"6875ade4221bf111343a01a147676089","url":"js/calendar.js"},{"revision":"edd4495e66b5cb260886662b5e5b2e42","url":"js/workbox-7248be78.js"}]);

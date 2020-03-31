@@ -74,6 +74,14 @@
     width: fit-content;
 }
 
+.calendar-selectedDate {
+    background-color: #e8e8e8;
+}
+
+.calendar-nonWorkDay {
+    background-color: #d2d2d2;
+}
+
 .dateNumber-jobIndicator {
     align-items: center;
     display: grid;

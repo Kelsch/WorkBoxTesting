@@ -3,6 +3,7 @@ let currentMonth = today.getMonth();
 let currentYear = today.getFullYear();
 
 const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+let calendarDayElements;
 
 showCalendar(currentMonth, currentYear);
 
@@ -29,7 +30,7 @@ function showCalendar(month, year) {
                 let previousMonthDate = daysInMonth(lastMonth, year) - firstDay + i + 1;
                 
                 cell = `
-                <div id="${lastMonth + 1}-${previousMonthDate}-${year}" class="calendar-day calendar-notCurrentMonth">
+                <div id="${lastMonth + 1}-${previousMonthDate}-${year}" class="calendar-day calendar-notCurrentMonth" onClick="dateSelected(this)">
                     <div class="calendar-date">${previousMonthDate}</div>
                     <div id="indicatorContainer${lastMonth + 1}-${previousMonthDate}-${year}" class="dateNumber-jobIndicator">
                     </div>
@@ -38,7 +39,7 @@ function showCalendar(month, year) {
             else if (date > daysInMonth(month, year)) {
                 let nextMonthDate = date - daysInMonth(month, year);
                 cell = `
-                <div id="${month + 2}-${nextMonthDate}-${year}" class="calendar-day calendar-notCurrentMonth">
+                <div id="${month + 2}-${nextMonthDate}-${year}" class="calendar-day calendar-notCurrentMonth" onClick="dateSelected(this)">
                     <div class="calendar-date">${nextMonthDate}</div>
                     <div id="indicatorContainer${month + 2}-${nextMonthDate}-${year}" class="dateNumber-jobIndicator">
                     </div>
@@ -47,7 +48,7 @@ function showCalendar(month, year) {
             }
             else {
                 cell = `
-                <div id="${month + 1}-${date}-${year}" class="calendar-day">
+                <div id="${month + 1}-${date}-${year}" class="calendar-day${(date === today.getDate() && year === today.getFullYear() && month === today.getMonth()) ? ' calendar-selectedDate' : ''}" onClick="dateSelected(this)">
                     <div class="calendar-date${(date === today.getDate() && year === today.getFullYear() && month === today.getMonth()) ? ' calendar-currentDay' : ''}">${date}</div>
                     <div id="indicatorContainer${month + 1}-${date}-${year}" class="dateNumber-jobIndicator">
                     </div>
@@ -80,6 +81,17 @@ function showCalendar(month, year) {
     `;
     
     calendarElement.innerHTML = calendarCardHTML;
+    calendarDayElements = document.querySelectorAll('.calendar-day');
+    getJobs();
+}
+
+function dateSelected(element) {
+    for (let i = 0; i < calendarDayElements.length; i++) {
+        const dayElement = calendarDayElements[i];
+        dayElement.classList.remove('calendar-selectedDate');
+    }
+
+    element.classList.add('calendar-selectedDate');
 }
 
 document.onkeydown = checkKey;

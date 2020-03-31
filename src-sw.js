@@ -1,19 +1,14 @@
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.0.0/workbox-sw.js');
 
 workbox.routing.registerRoute(
-    new RegExp('https://jsonplaceholder.typicode.com/users'),
-    // new RegExp('userTestJson.json'),
-    new workbox.strategies.NetworkFirst()
+    // new RegExp('https://jsonplaceholder.typicode.com/users'),
+    new RegExp('userTestJson.json'),
+    new workbox.strategies.StaleWhileRevalidate()
 );
 
 workbox.routing.registerRoute(
     new RegExp('https://pdwebapi-mf5.conveyor.cloud/api/installerAppData/getInstallIndicators'),
-    new workbox.strategies.NetworkFirst()
-);
-
-workbox.routing.registerRoute(
-    new RegExp('https://pdwebapi-mf5.conveyor.cloud/api/values'),
-    new workbox.strategies.NetworkFirst()
+    new workbox.strategies.StaleWhileRevalidate()
 );
 
 // Cache the Google Fonts stylesheets with a stale-while-revalidate strategy.
