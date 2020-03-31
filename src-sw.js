@@ -7,6 +7,11 @@ workbox.routing.registerRoute(
 );
 
 workbox.routing.registerRoute(
+    new RegExp('https://pdwebapi-mf5.conveyor.cloud/api/installerAppData/getNonWorkDays'),
+    new workbox.strategies.StaleWhileRevalidate()
+);
+
+workbox.routing.registerRoute(
     new RegExp('https://pdwebapi-mf5.conveyor.cloud/api/installerAppData/getInstallIndicators'),
     new workbox.strategies.StaleWhileRevalidate()
 );

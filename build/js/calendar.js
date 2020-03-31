@@ -20,28 +20,29 @@ function showCalendar(month, year) {
             let cell = '';
             if (r === 0 && i < firstDay) {
                 let lastMonth;
+                let lastMonthYear = year;
                 if (month === 0) {
                     lastMonth = month + 11;
+                    lastMonthYear = year - 1;
                 }
                 else {
                     lastMonth = month - 1;
-                
                 }
                 let previousMonthDate = daysInMonth(lastMonth, year) - firstDay + i + 1;
-                
                 cell = `
-                <div id="${lastMonth + 1}-${previousMonthDate}-${year}" class="calendar-day calendar-notCurrentMonth" onClick="dateSelected(this)">
+                <div id="${lastMonth + 1}-${previousMonthDate}-${lastMonthYear}" class="calendar-day calendar-notCurrentMonth" onClick="dateSelected(this)">
                     <div class="calendar-date">${previousMonthDate}</div>
-                    <div id="indicatorContainer${lastMonth + 1}-${previousMonthDate}-${year}" class="dateNumber-jobIndicator">
+                    <div id="indicatorContainer${lastMonth + 1}-${previousMonthDate}-${lastMonthYear}" class="dateNumber-jobIndicator">
                     </div>
                 </div>`;
             }
             else if (date > daysInMonth(month, year)) {
-                let nextMonthDate = date - daysInMonth(month, year);
+                const nextMonthDate = date - daysInMonth(month, year);
+                const nextMonth = month + 2 > 12 ? month - 10 : month + 2; 
                 cell = `
-                <div id="${month + 2}-${nextMonthDate}-${year}" class="calendar-day calendar-notCurrentMonth" onClick="dateSelected(this)">
+                <div id="${nextMonth}-${nextMonthDate}-${year}" class="calendar-day calendar-notCurrentMonth" onClick="dateSelected(this)">
                     <div class="calendar-date">${nextMonthDate}</div>
-                    <div id="indicatorContainer${month + 2}-${nextMonthDate}-${year}" class="dateNumber-jobIndicator">
+                    <div id="indicatorContainer${nextMonth}-${nextMonthDate}-${year}" class="dateNumber-jobIndicator">
                     </div>
                 </div>`;
                 date++;
@@ -83,6 +84,7 @@ function showCalendar(month, year) {
     calendarElement.innerHTML = calendarCardHTML;
     calendarDayElements = document.querySelectorAll('.calendar-day');
     getJobs();
+    getNonWorkDays();
 }
 
 function dateSelected(element) {

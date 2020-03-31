@@ -7,6 +7,11 @@ workbox.routing.registerRoute(
 );
 
 workbox.routing.registerRoute(
+    new RegExp('https://pdwebapi-mf5.conveyor.cloud/api/installerAppData/getNonWorkDays'),
+    new workbox.strategies.StaleWhileRevalidate()
+);
+
+workbox.routing.registerRoute(
     new RegExp('https://pdwebapi-mf5.conveyor.cloud/api/installerAppData/getInstallIndicators'),
     new workbox.strategies.StaleWhileRevalidate()
 );
@@ -36,4 +41,4 @@ workbox.routing.registerRoute(
     })
 );
 
-workbox.precaching.precacheAndRoute([{"revision":"18246f150b6e96dde5be4a99ade84990","url":"css/calendar.css"},{"revision":"a4d437f991314c6368363fabe851ab30","url":"css/main.css"},{"revision":"8487903dde30cc13cc096d74a7251656","url":"index.html"},{"revision":"4b20aa7002cb6c1b8df70255d229d856","url":"js/app.js"},{"revision":"6875ade4221bf111343a01a147676089","url":"js/calendar.js"},{"revision":"edd4495e66b5cb260886662b5e5b2e42","url":"js/workbox-7248be78.js"}]);
+workbox.precaching.precacheAndRoute([{"revision":"18246f150b6e96dde5be4a99ade84990","url":"css/calendar.css"},{"revision":"a4d437f991314c6368363fabe851ab30","url":"css/main.css"},{"revision":"8487903dde30cc13cc096d74a7251656","url":"index.html"},{"revision":"56604c9a8e6c278f73df70000897ca9c","url":"js/app.js"},{"revision":"0020140580c9c812e519fed2461c23d2","url":"js/calendar.js"},{"revision":"edd4495e66b5cb260886662b5e5b2e42","url":"js/workbox-7248be78.js"}]);

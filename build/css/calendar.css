@@ -53,11 +53,11 @@
 }
 
     .calendar-day:hover {
-        background-color: #cacaca;
+        background-color: #efefef;
     }
 
     .calendar-day:active {
-        background-color: #b7b7b7;
+        background-color: #dadada;
     }
 
 .calendar-notCurrentMonth {
@@ -79,7 +79,7 @@
 }
 
 .calendar-nonWorkDay {
-    background-color: #d2d2d2;
+    background-color: #f7f7f7;
 }
 
 .dateNumber-jobIndicator {
