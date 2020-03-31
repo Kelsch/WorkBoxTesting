@@ -23,6 +23,7 @@
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     box-shadow: -1px -1px rgba(0,0,0,.1);
+    grid-gap: 2px;
 }
 
 .week-name {
@@ -44,6 +45,11 @@
     cursor: pointer;
     box-shadow: 1px 1px rgba(0,0,0,.1);
     padding: 5px;
+    align-items: center;
+    -webkit-user-select: none; /* Safari */        
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
 }
 
     .calendar-day:hover {
@@ -54,8 +60,18 @@
         background-color: #b7b7b7;
     }
 
+.calendar-notCurrentMonth {
+    color: #a0a0a0;
+}
+
+.calendar-date {
+    border-radius: 20px;
+    padding: 4px;
+}
+
 .calendar-currentDay {
     background-color: #e4e4e4;
+    width: fit-content;
 }
 
 .dateNumber-jobIndicator {

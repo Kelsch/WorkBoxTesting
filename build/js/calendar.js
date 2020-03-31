@@ -29,36 +29,27 @@ function showCalendar(month, year) {
                 let previousMonthDate = daysInMonth(lastMonth, year) - firstDay + i + 1;
                 
                 cell = `
-                <div id="${lastMonth}-${previousMonthDate}-${year}" class="calendar-day">
-                    <div>${previousMonthDate}</div>
-                    <div class="dateNumber-jobIndicator">
-                        <div class="dateNumber-indicator"></div>
-                        <div class="dateNumber-indicator"></div>
-                        <div class="dateNumber-indicator"></div>
+                <div id="${lastMonth + 1}-${previousMonthDate}-${year}" class="calendar-day calendar-notCurrentMonth">
+                    <div class="calendar-date">${previousMonthDate}</div>
+                    <div id="indicatorContainer${lastMonth + 1}-${previousMonthDate}-${year}" class="dateNumber-jobIndicator">
                     </div>
                 </div>`;
             }
             else if (date > daysInMonth(month, year)) {
                 let nextMonthDate = date - daysInMonth(month, year);
                 cell = `
-                <div id="${month + 1}-${nextMonthDate}-${year}" class="calendar-day">
-                    <div>${nextMonthDate}</div>
-                    <div class="dateNumber-jobIndicator">
-                        <div class="dateNumber-indicator"></div>
-                        <div class="dateNumber-indicator"></div>
-                        <div class="dateNumber-indicator"></div>
+                <div id="${month + 2}-${nextMonthDate}-${year}" class="calendar-day calendar-notCurrentMonth">
+                    <div class="calendar-date">${nextMonthDate}</div>
+                    <div id="indicatorContainer${month + 2}-${nextMonthDate}-${year}" class="dateNumber-jobIndicator">
                     </div>
                 </div>`;
                 date++;
             }
             else {
                 cell = `
-                <div id="${month}-${date}-${year}" class="calendar-day${(date === today.getDate() && year === today.getFullYear() && month === today.getMonth()) ? ' calendar-currentDay' : ''}">
-                    <div>${date}</div>
-                    <div class="dateNumber-jobIndicator">
-                        <div class="dateNumber-indicator"></div>
-                        <div class="dateNumber-indicator"></div>
-                        <div class="dateNumber-indicator"></div>
+                <div id="${month + 1}-${date}-${year}" class="calendar-day">
+                    <div class="calendar-date${(date === today.getDate() && year === today.getFullYear() && month === today.getMonth()) ? ' calendar-currentDay' : ''}">${date}</div>
+                    <div id="indicatorContainer${month + 1}-${date}-${year}" class="dateNumber-jobIndicator">
                     </div>
                 </div>`;
                 
