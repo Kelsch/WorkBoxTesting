@@ -63,9 +63,9 @@ function showCalendar(month, year) {
     
     let calendarCardHTML = `
         <div id="calendar_monthHeader">
-            <div class="material-icons" onClick="previous()">keyboard_arrow_left</div>
-            <div onClick="returnToCurrent()">${months[month]} ${year}</div>
-            <div class="material-icons" onClick="next()">keyboard_arrow_right</div>
+            <div><div class="material-icons calendar-monthHeader" onClick="previous()">keyboard_arrow_left</div></div>
+            <div><div class="calendar-monthHeader" onClick="returnToCurrent()">${months[month]} ${year}</div></div>
+            <div><div class="material-icons calendar-monthHeader" onClick="next()">keyboard_arrow_right</div></div>
         </div>
         <div id="calendar_dayHeader" class="calendar-basicGrid">
             <span class="week-name">S</span>
