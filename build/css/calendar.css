@@ -15,7 +15,7 @@
 .calendar-monthHeader {
     cursor: pointer;
     width: max-content;
-    padding: 3px;
+    padding: 5px;
 }
 
     .calendar-monthHeader:hover {
@@ -29,6 +29,7 @@
     grid-template-columns: repeat(7, 1fr);
     box-shadow: -1px -1px rgba(0,0,0,.1);
     grid-gap: 2px;
+    padding: 2px 0px;
 }
 
 .week-name {
