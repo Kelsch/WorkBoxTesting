@@ -26,17 +26,12 @@ fetch('userTestJson.json')
         });
     });
 
-let timesRunGetNonWorkDays = 0;
 getNonWorkDays = () => {
     fetch('https://pdwebapi-mf5.conveyor.cloud/api/installerAppData/getNonWorkDays')
     .then(response => response.json())
     .then(data => {
-        if (timesRunGetJobs > 0) {
-            return;
-        }
         let days = data;
         const currentCalendar = document.getElementById('calendar_dayContainer');
-        timesRunGetNonWorkDays++;
         return days.map(function (day) {
             const dateElement = currentCalendar.querySelector(`[id='${day.mm}-${day.dd}-${day.yy}']`);
             if (dateElement !== null && !day.isWorkDay) {
@@ -44,7 +39,6 @@ getNonWorkDays = () => {
             }
         });
     });
-    timesRunGetNonWorkDays = 0;
 }
 
 let timesRunGetJobs = 0;

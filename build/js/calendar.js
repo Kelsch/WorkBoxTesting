@@ -37,12 +37,13 @@ function showCalendar(month, year) {
                 </div>`;
             }
             else if (date > daysInMonth(month, year)) {
+                const nextMonthYear = month + 2 > 12 ? year + 1 : year;
                 const nextMonthDate = date - daysInMonth(month, year);
-                const nextMonth = month + 2 > 12 ? month - 10 : month + 2; 
+                const nextMonth = month + 2 > 12 ? month - 10 : month + 2;
                 cell = `
-                <div id="${nextMonth}-${nextMonthDate}-${year}" class="calendar-day calendar-notCurrentMonth" onClick="dateSelected(this)">
+                <div id="${nextMonth}-${nextMonthDate}-${nextMonthYear}" class="calendar-day calendar-notCurrentMonth" onClick="dateSelected(this)">
                     <div class="calendar-date">${nextMonthDate}</div>
-                    <div id="indicatorContainer${nextMonth}-${nextMonthDate}-${year}" class="dateNumber-jobIndicator">
+                    <div id="indicatorContainer${nextMonth}-${nextMonthDate}-${nextMonthYear}" class="dateNumber-jobIndicator">
                     </div>
                 </div>`;
                 date++;

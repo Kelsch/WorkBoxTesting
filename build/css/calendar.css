@@ -72,19 +72,20 @@
 .calendar-date {
     border-radius: 20px;
     padding: 4px;
+    height: 20px;
+    width: 20px;
 }
 
 .calendar-currentDay {
     background-color: #e4e4e4;
-    width: fit-content;
-}
-
-.calendar-selectedDate {
-    background-color: #e8e8e8;
 }
 
 .calendar-nonWorkDay {
     background-color: #f7f7f7;
+}
+
+.calendar-selectedDate {
+    background-color: #e8e8e8;
 }
 
 .dateNumber-jobIndicator {
