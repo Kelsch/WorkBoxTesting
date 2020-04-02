@@ -120,5 +120,11 @@
     .dateNumber-jobIndicator {
         grid-gap: 2px;
         justify-content: start;
+        max-width: 35px;
+    }
+
+    .dateNumber-indicator {
+        width: 6px;
+        height: 6px;
     }
   }

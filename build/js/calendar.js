@@ -42,12 +42,13 @@ let currentYear = today.getFullYear();
 
 const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 let calendarDayElements;
+const calendarElement = document.getElementById('create_calendar');
 
 showCalendar(currentMonth, currentYear);
+setupSwipeListener(calendarElement);
 
 function showCalendar(month, year) {
     const firstDay = (new Date(year, month)).getDay();
-    const calendarElement = document.getElementById('create_calendar');
     calendarElement.innerHTML = "";
 
     let date = 1;
@@ -122,8 +123,21 @@ function showCalendar(month, year) {
     
     calendarElement.innerHTML = calendarCardHTML;
     calendarDayElements = document.querySelectorAll('.calendar-day');
+
     getJobs();
     getNonWorkDays();
+}
+
+function setupSwipeListener(calendarElement) {
+    calendarElement.addEventListener('swiped-right', function(e) {
+        // the element that was swiped
+        previous();
+    });
+
+    calendarElement.addEventListener('swiped-left', function(e) {
+        // the element that was swiped
+        next();
+    });
 }
 
 function dateSelected(element) {

@@ -41,4 +41,4 @@ workbox.routing.registerRoute(
     })
 );
 
-workbox.precaching.precacheAndRoute([{"revision":"23e03f13cc266207efec41f04f855ecf","url":"css/calendar.css"},{"revision":"a4d437f991314c6368363fabe851ab30","url":"css/main.css"},{"revision":"8487903dde30cc13cc096d74a7251656","url":"index.html"},{"revision":"131b63321d241cd671de56362cbc7138","url":"js/app.js"},{"revision":"94147eb86e3b7c8b95e089da9e202d62","url":"js/calendar.js"},{"revision":"edd4495e66b5cb260886662b5e5b2e42","url":"js/workbox-7248be78.js"}]);
+workbox.precaching.precacheAndRoute([{"revision":"cb614876712bdf089679a8071dafbb18","url":"css/calendar.css"},{"revision":"52d4a6168b8884415e148deb36016fd0","url":"css/main.css"},{"revision":"bda648045bfb4c4395e8ae3a8cbf8315","url":"index.html"},{"revision":"c826dfd18c565dbe4b093a19b2ce7e50","url":"js/app.js"},{"revision":"3c15ff4ecece402fbd32831eacb4b74f","url":"js/calendar.js"},{"revision":"8618cac677171c71ee01a7027cdb659b","url":"js/swiped-events.js"},{"revision":"edd4495e66b5cb260886662b5e5b2e42","url":"js/workbox-7248be78.js"}]);
