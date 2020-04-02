@@ -13,7 +13,9 @@ workbox.routing.registerRoute(
 
 workbox.routing.registerRoute(
     new RegExp('https://pdwebapi-mf5.conveyor.cloud/api/installerAppData/getInstallIndicators'),
-    new workbox.strategies.StaleWhileRevalidate()
+    new workbox.strategies.StaleWhileRevalidate({
+        cacheName: 'job-list',
+      })
 );
 
 // Cache the Google Fonts stylesheets with a stale-while-revalidate strategy.

@@ -1,41 +1,3 @@
-function getNonWorkDays() {
-    fetch('https://pdwebapi-mf5.conveyor.cloud/api/installerAppData/getNonWorkDays')
-    .then(response => response.json())
-    .then(data => {
-        let days = data;
-        const currentCalendar = document.getElementById('calendar_dayContainer');
-        return days.map(function (day) {
-            const dateElement = currentCalendar.querySelector(`[id='${day.mm}-${day.dd}-${day.yy}']`);
-            if (dateElement !== null && !day.isWorkDay) {
-                dateElement.classList.add('calendar-nonWorkDay');
-            }
-        });
-    });
-}
-
-let timesRunGetJobs = 0;
-function getJobs() {
-    fetch('https://pdwebapi-mf5.conveyor.cloud/api/installerAppData/getInstallIndicators?businessId=2')
-    .then(response => response.json())
-    .then(data => {
-        if (timesRunGetJobs > 0) {
-            return;
-        }
-        timesRunGetJobs++;
-        let jobs = data;
-        const currentCalendar = document.getElementById('calendar_dayContainer');
-        return jobs.map(function (job) {
-            const jobInstallDate = new Date(job.installDate);
-            const installElement = currentCalendar.querySelector(`[id='indicatorContainer${jobInstallDate.getMonth() + 1}-${jobInstallDate.getDate()}-${jobInstallDate.getFullYear()}']`);
-            
-            if (installElement !== null) {
-                installElement.innerHTML += '<div class="dateNumber-indicator"></div>';
-            }
-        });
-    });
-    timesRunGetJobs = 0;
-}
-
 const today = new Date();
 let currentMonth = today.getMonth();
 let currentYear = today.getFullYear();
@@ -54,7 +16,7 @@ function showCalendar(month, year) {
     let date = 1;
     let cellElements = '';
 
-    for (let r = 0; r < 6; r++)  {
+    for (let r = 0; r < 6; r++) {
         for (let i = 0; i < 7; i++) {
             let cell = '';
             if (r === 0 && i < firstDay) {
@@ -94,13 +56,13 @@ function showCalendar(month, year) {
                     <div id="indicatorContainer${month + 1}-${date}-${year}" class="dateNumber-jobIndicator">
                     </div>
                 </div>`;
-                
+
                 date++;
             }
             cellElements += cell;
         }
     }
-    
+
     let calendarCardHTML = `
         <div id="calendar_monthHeader">
             <div><div class="material-icons calendar-monthHeader" onClick="previous()">keyboard_arrow_left</div></div>
@@ -120,21 +82,26 @@ function showCalendar(month, year) {
             ${cellElements}
         </div>
     `;
-    
-    calendarElement.innerHTML = calendarCardHTML;
-    calendarDayElements = document.querySelectorAll('.calendar-day');
 
-    getJobs();
+    calendarElement.innerHTML = calendarCardHTML;
+    calendarDayElements = calendarElement.querySelectorAll('.calendar-day');
+
+    const selectedDate = calendarElement.querySelector('.calendar-selectedDate');
+    if (selectedDate != null) {
+        dateSelected(selectedDate);
+    }
+    
+    getJobs(month, year);
     getNonWorkDays();
 }
 
 function setupSwipeListener(calendarElement) {
-    calendarElement.addEventListener('swiped-right', function(e) {
+    calendarElement.addEventListener('swiped-right', function (e) {
         // the element that was swiped
         previous();
     });
 
-    calendarElement.addEventListener('swiped-left', function(e) {
+    calendarElement.addEventListener('swiped-left', function (e) {
         // the element that was swiped
         next();
     });
@@ -145,8 +112,11 @@ function dateSelected(element) {
         const dayElement = calendarDayElements[i];
         dayElement.classList.remove('calendar-selectedDate');
     }
-
     element.classList.add('calendar-selectedDate');
+
+    const selectedInstallDate = new Date(element.getAttribute('id'));
+    const installDateString = new Date(selectedInstallDate.setHours(0, 0, 0, 0)).toJSON();
+    findSelectedDateJobs(`${installDateString.substring(0, installDateString.indexOf('T'))}T00:00:00`);
 }
 
 document.onkeydown = checkKey;

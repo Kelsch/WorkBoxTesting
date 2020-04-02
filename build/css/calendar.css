@@ -107,13 +107,28 @@
 .dateNumber-indicator {
     width: 10px;
     height: 10px;
-    background-color: #a500bd;
     border-radius: 10px;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
     pointer-events: none;
+}
+
+.indicator-notReady {
+    background-color: #f4a041;
+}
+.indicator-onRoute {
+    background-color: #f7e017;
+}
+.indicator-ready {
+    background-color: #00a208;
+}
+.indicator-installed {
+    background-color: #00ccff;
+}
+.indicator-complete {
+    background-color: #808080;
 }
 
 @media only screen and (max-width: 425px) {

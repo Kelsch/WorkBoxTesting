@@ -13,7 +13,9 @@ workbox.routing.registerRoute(
 
 workbox.routing.registerRoute(
     new RegExp('https://pdwebapi-mf5.conveyor.cloud/api/installerAppData/getInstallIndicators'),
-    new workbox.strategies.StaleWhileRevalidate()
+    new workbox.strategies.StaleWhileRevalidate({
+        cacheName: 'job-list',
+      })
 );
 
 // Cache the Google Fonts stylesheets with a stale-while-revalidate strategy.
@@ -41,4 +43,4 @@ workbox.routing.registerRoute(
     })
 );
 
-workbox.precaching.precacheAndRoute([{"revision":"cb614876712bdf089679a8071dafbb18","url":"css/calendar.css"},{"revision":"52d4a6168b8884415e148deb36016fd0","url":"css/main.css"},{"revision":"bda648045bfb4c4395e8ae3a8cbf8315","url":"index.html"},{"revision":"c826dfd18c565dbe4b093a19b2ce7e50","url":"js/app.js"},{"revision":"3c15ff4ecece402fbd32831eacb4b74f","url":"js/calendar.js"},{"revision":"8618cac677171c71ee01a7027cdb659b","url":"js/swiped-events.js"},{"revision":"edd4495e66b5cb260886662b5e5b2e42","url":"js/workbox-7248be78.js"}]);
+workbox.precaching.precacheAndRoute([{"revision":"51d99528b324405abccab914da08d4bb","url":"css/calendar.css"},{"revision":"52d4a6168b8884415e148deb36016fd0","url":"css/main.css"},{"revision":"7ed98b005d38f1e8c3893dbf35bbf91d","url":"index.html"},{"revision":"46bee9f28df4ae9aab832f8ab7997bdc","url":"js/apiFetch.js"},{"revision":"2a2380ccfd464eb45c1946911437c6d0","url":"js/app.js"},{"revision":"a47d68719572116ce14121aa110045d9","url":"js/calendar.js"},{"revision":"8618cac677171c71ee01a7027cdb659b","url":"js/swiped-events.js"},{"revision":"edd4495e66b5cb260886662b5e5b2e42","url":"js/workbox-7248be78.js"}]);
