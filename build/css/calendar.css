@@ -131,6 +131,22 @@
     background-color: #808080;
 }
 
+.indicator-notReady.mdc-button--unelevated:not(:disabled) {
+    background-color: #f4a041;
+}
+.indicator-onRoute.mdc-button--unelevated:not(:disabled) {
+    background-color: #f7e017;
+}
+.indicator-ready.mdc-button--unelevated:not(:disabled) {
+    background-color: #00a208;
+}
+.indicator-installed.mdc-button--unelevated:not(:disabled) {
+    background-color: #00ccff;
+}
+.indicator-complete.mdc-button--unelevated:not(:disabled) {
+    background-color: #808080;
+}
+
 @media only screen and (max-width: 425px) {
     .dateNumber-jobIndicator {
         grid-gap: 2px;

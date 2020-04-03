@@ -23,7 +23,7 @@ body {
 }
 
 .button-container-title {
-    padding-top: 5px;
+    padding: 5px;
     font-size: 0.9rem;
     text-align: center;
     font-weight: bold;
@@ -37,6 +37,8 @@ body {
 .list-jobs {
     display: grid;
     grid-gap: 5px;
+    overflow-y: auto;
+    margin: 1px;
 }
 
 ul {

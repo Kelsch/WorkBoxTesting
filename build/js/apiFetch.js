@@ -38,32 +38,7 @@ function getJobs(month, year) {
                 const jobInstallDate = new Date(job.installDate);
                 const installElement = currentCalendar.querySelector(`[id='indicatorContainer${jobInstallDate.getMonth() + 1}-${jobInstallDate.getDate()}-${jobInstallDate.getFullYear()}']`);
                 if (installElement !== null) {
-                    let installColor;
-
-                    switch (job.status) {
-                        case 60:
-                        case 63:
-                        case 65:
-                        case 70:
-                            installColor = ' indicator-notReady';
-                            break;
-                        case 73:
-                            installColor = ' indicator-onRoute';
-                            break;
-                        case 80:
-                            installColor = ' indicator-ready';
-                            break;
-                        case 90:
-                        case 100:
-                            installColor = ' indicator-installed';
-                            break;
-                        case 110:
-                            installColor = ' indicator-complete';
-                            break;
-                        default:
-                            installColor = ' indicator-notReady';
-                            break;
-                    }
+                    const installColor = determineInstallColor(job.status);
 
                     installElement.innerHTML += `<div class="dateNumber-indicator${installColor}"></div>`;
                 }
@@ -84,18 +59,23 @@ async function findSelectedDateJobs(selectedInstallDate) {
 
     caches.open(cacheName).then(cache => {
         cache.match(request).then((response) => {
+            if (response == undefined) {
+                return;
+            }
             response.json().then(jobs => {
                 jobDiv.innerHTML = '';
                 const filteredJobs = jobs.filter(job => {
                     return job.installDate === selectedInstallDate;
                 });
                 filteredJobs.map(fJob => {
-                    const buttonHtml = `<button class="mdc-button mdc-button--unelevated">
-                                <div class="mdc-button__ripple"></div>
-                                <span class="mdc-button__label">
-                                    ${fJob.orderId} ${fJob.shopName}: ${fJob.cabinetCount}
-                                </span>
-                            </button>`;
+                    const installColor = determineInstallColor(fJob.status);
+
+                    const buttonHtml = `<button class="mdc-button mdc-button--unelevated${installColor}" jobid="${fJob.jobId}">
+                                            <div class="mdc-button__ripple"></div>
+                                            <span class="mdc-button__label">
+                                                ${fJob.name}: ${fJob.cabinetCount}
+                                            </span>
+                                        </button>`;
 
                     jobDiv.innerHTML += buttonHtml;
                 });
@@ -112,4 +92,35 @@ async function findSelectedDateJobs(selectedInstallDate) {
     }).catch(err => {
         console.error(err)
     });
+}
+
+function determineInstallColor(jobStatus) {
+    let installColor;
+
+    switch (jobStatus) {
+        case 60:
+        case 63:
+        case 65:
+        case 70:
+            installColor = ' indicator-notReady';
+            break;
+        case 73:
+            installColor = ' indicator-onRoute';
+            break;
+        case 80:
+            installColor = ' indicator-ready';
+            break;
+        case 90:
+        case 100:
+            installColor = ' indicator-installed';
+            break;
+        case 110:
+            installColor = ' indicator-complete';
+            break;
+        default:
+            installColor = ' indicator-notReady';
+            break;
+    }
+
+    return installColor;
 }

@@ -116,6 +116,10 @@ function dateSelected(element) {
 
     const selectedInstallDate = new Date(element.getAttribute('id'));
     const installDateString = new Date(selectedInstallDate.setHours(0, 0, 0, 0)).toJSON();
+
+    const buttonContainerTitle = document.getElementById('date_selected');
+    buttonContainerTitle.innerHTML = selectedInstallDate.toLocaleDateString();
+
     findSelectedDateJobs(`${installDateString.substring(0, installDateString.indexOf('T'))}T00:00:00`);
 }
 
