@@ -1,10 +1,10 @@
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.0.0/workbox-sw.js');
 
-workbox.routing.registerRoute(
-    // new RegExp('https://jsonplaceholder.typicode.com/users'),
-    new RegExp('userTestJson.json'),
-    new workbox.strategies.StaleWhileRevalidate()
-);
+// workbox.routing.registerRoute(
+//     // new RegExp('https://jsonplaceholder.typicode.com/users'),
+//     new RegExp('userTestJson.json'),
+//     new workbox.strategies.StaleWhileRevalidate()
+// );
 
 workbox.routing.registerRoute(
     new RegExp('https://pdwebapi-mf5.conveyor.cloud/api/installerAppData/getNonWorkDays'),
@@ -18,11 +18,19 @@ workbox.routing.registerRoute(
       })
 );
 
-// Cache the Google Fonts stylesheets with a stale-while-revalidate strategy.
+// Cache the Google Fonts stylesheets with a cache first strategy.
 workbox.routing.registerRoute(
     /^https:\/\/fonts\.googleapis\.com/,
     new workbox.strategies.StaleWhileRevalidate({
         cacheName: 'google-fonts-stylesheets',
+    })
+);
+
+// Material Components CSS not including the Javascript because it is not essential
+workbox.routing.registerRoute(
+    new RegExp('https://unpkg.com/material-components-web@v4.0.0/dist/material-components-web.min.css'),
+    new workbox.strategies.StaleWhileRevalidate({
+        cacheName: 'google-material-components',
     })
 );
 
@@ -43,4 +51,4 @@ workbox.routing.registerRoute(
     })
 );
 
-workbox.precaching.precacheAndRoute([{"revision":"51d99528b324405abccab914da08d4bb","url":"css/calendar.css"},{"revision":"52d4a6168b8884415e148deb36016fd0","url":"css/main.css"},{"revision":"7ed98b005d38f1e8c3893dbf35bbf91d","url":"index.html"},{"revision":"46bee9f28df4ae9aab832f8ab7997bdc","url":"js/apiFetch.js"},{"revision":"2a2380ccfd464eb45c1946911437c6d0","url":"js/app.js"},{"revision":"a47d68719572116ce14121aa110045d9","url":"js/calendar.js"},{"revision":"8618cac677171c71ee01a7027cdb659b","url":"js/swiped-events.js"},{"revision":"edd4495e66b5cb260886662b5e5b2e42","url":"js/workbox-7248be78.js"}]);
+workbox.precaching.precacheAndRoute([{"revision":"51d99528b324405abccab914da08d4bb","url":"css/calendar.css"},{"revision":"e22c59928941fc856c5f5883e9e9a3e1","url":"css/main.css"},{"revision":"e1bd99de1314557a60540c7b9e7b9b1d","url":"index.html"},{"revision":"44929f99fcbcb2acdf4e5178e952e1ea","url":"js/apiFetch.js"},{"revision":"3742599a77260508f9860b6aa919172a","url":"js/app.js"},{"revision":"aa81a20a03ae725e730a80ee76dcf59c","url":"js/calendar.js"},{"revision":"8618cac677171c71ee01a7027cdb659b","url":"js/swiped-events.js"},{"revision":"edd4495e66b5cb260886662b5e5b2e42","url":"js/workbox-7248be78.js"}]);

@@ -6,7 +6,7 @@ function append(parent, el) {
     return parent.appendChild(el); 
 }
 
-const ul = document.getElementById('people');
+// const ul = document.getElementById('people');
 
 // fetch('userTestJson.json')
 //     .then(response => response.json())

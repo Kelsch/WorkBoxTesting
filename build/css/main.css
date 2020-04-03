@@ -34,6 +34,11 @@ body {
     user-select: none;
 }
 
+.list-jobs {
+    display: grid;
+    grid-gap: 5px;
+}
+
 ul {
     list-style-type: none;
     padding: 0;

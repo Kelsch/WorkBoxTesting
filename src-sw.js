@@ -1,10 +1,10 @@
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.0.0/workbox-sw.js');
 
-workbox.routing.registerRoute(
-    // new RegExp('https://jsonplaceholder.typicode.com/users'),
-    new RegExp('userTestJson.json'),
-    new workbox.strategies.StaleWhileRevalidate()
-);
+// workbox.routing.registerRoute(
+//     // new RegExp('https://jsonplaceholder.typicode.com/users'),
+//     new RegExp('userTestJson.json'),
+//     new workbox.strategies.StaleWhileRevalidate()
+// );
 
 workbox.routing.registerRoute(
     new RegExp('https://pdwebapi-mf5.conveyor.cloud/api/installerAppData/getNonWorkDays'),
@@ -18,11 +18,19 @@ workbox.routing.registerRoute(
       })
 );
 
-// Cache the Google Fonts stylesheets with a stale-while-revalidate strategy.
+// Cache the Google Fonts stylesheets with a cache first strategy.
 workbox.routing.registerRoute(
     /^https:\/\/fonts\.googleapis\.com/,
     new workbox.strategies.StaleWhileRevalidate({
         cacheName: 'google-fonts-stylesheets',
+    })
+);
+
+// Material Components CSS not including the Javascript because it is not essential
+workbox.routing.registerRoute(
+    new RegExp('https://unpkg.com/material-components-web@v4.0.0/dist/material-components-web.min.css'),
+    new workbox.strategies.StaleWhileRevalidate({
+        cacheName: 'google-material-components',
     })
 );
 

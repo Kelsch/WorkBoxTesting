@@ -28,7 +28,7 @@ function getJobs(month, year) {
             year = month - 1 == -1 ? year - 1 : year;
             month = month - 1 == -1 ? 12 : month - 1;
             const selectedInstallMonth = new Date(year, month - 1, 1);
-            
+
             const filteredJobs = jobs.filter(job => {
                 let jobInstallDate = new Date(job.installDate);
                 return jobInstallDate >= selectedInstallMonth;
@@ -80,31 +80,33 @@ async function findSelectedDateJobs(selectedInstallDate) {
     const cacheName = 'job-list';
     const request = new Request(`https://pdwebapi-mf5.conveyor.cloud/api/installerAppData/getInstallIndicators?businessId=2`);
 
-    const ul = document.getElementById('jobs');
+    const jobDiv = document.getElementById('jobs');
 
     caches.open(cacheName).then(cache => {
         cache.match(request).then((response) => {
             response.json().then(jobs => {
-                ul.innerHTML = '';
+                jobDiv.innerHTML = '';
                 const filteredJobs = jobs.filter(job => {
                     return job.installDate === selectedInstallDate;
                 });
-                // console.log(jobs, filteredJobs, selectedInstallDate)
                 filteredJobs.map(fJob => {
-                    let li = createNode('li')
-                    span = createNode('span');
+                    const buttonHtml = `<button class="mdc-button mdc-button--unelevated">
+                                <div class="mdc-button__ripple"></div>
+                                <span class="mdc-button__label">
+                                    ${fJob.orderId} ${fJob.shopName}: ${fJob.cabinetCount}
+                                </span>
+                            </button>`;
 
-                    li.innerHTML = fJob.name;
-                    span.innerHTML = fJob.orderId;
-
-                    append(li, span);
-                    append(ul, li);
+                    jobDiv.innerHTML += buttonHtml;
                 });
 
-                // const test = jobs.map(function (job) {
-                //     return job.installDate === selectedInstallDate;
-                // });
-                // console.log(test)
+                const buttons = jobDiv.querySelectorAll('.mdc-button');
+                if (typeof mdc !== 'undefined') {
+                    for (let i = 0; i < buttons.length; i++) {
+                        const element = buttons[i];
+                        mdc.ripple.MDCRipple.attachTo(element);
+                    }
+                }
             });
         });
     }).catch(err => {
