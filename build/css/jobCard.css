@@ -1,0 +1,93 @@
+.modal-card-container-tint {
+    height: 100vh;
+    background-color: #00000040;
+    bottom: 0;
+    width: 100%;
+    position: absolute;
+    display: none;
+    margin-left: -5px;
+}
+
+.modal-card-container-show {
+    display: block;
+}
+
+.modal-card {
+    background-color: #e2e2e2;
+    font-size: .875rem;
+    pointer-events: none;
+    /* transition: all 45ms ease-in; */
+    font-weight: 500;
+    letter-spacing: .0892857143em;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    max-height: 90vh;
+    height: 220px;
+    bottom: 0;
+    pointer-events: all;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    position: absolute;
+    width: 100%;
+}
+
+.modal-jobName {
+    padding: 5px;
+    text-align: center;
+    cursor: n-resize;
+}
+
+.modal-container {
+    overflow-y: auto;
+    height: 100%;
+    min-height: 200px;
+    position: absolute;
+    width: 100%;
+}
+
+.modal-jobContainer {
+    margin: 0px 5px;
+    padding: 5px;
+    border-radius: 3px;
+    background-color: white;
+    height: calc(100% - 47px);
+    overflow-y: auto;
+}
+
+.job-shippingNotes {
+    margin: 5px 0px;
+    overflow-y: auto;
+    max-height: 50px;
+}
+
+.job-buttons {
+    display: flex;
+}
+
+.job-button {
+    margin: 0px 5px;
+    padding: 0px 10px;
+    cursor: pointer;
+    border-radius: 3px;
+    line-height: 0;
+}
+
+    .job-button:hover {
+        background-color: #eaeaea;
+        color: #5d5d5d;
+    }
+
+    .job-button:active {
+        background-color: #cfcfcf;
+        color: #2f2f2f;
+    }
+
+.job-label {
+    font-weight: bold;
+}
+
+.stopScroll {
+    overflow-y: hidden;
+}

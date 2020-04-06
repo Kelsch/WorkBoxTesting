@@ -12,6 +12,7 @@
     <title>PDInstall</title>
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/calendar.css">
+    <link rel="stylesheet" href="css/jobCard.css">
     <!-- icon in the highest resolution we need it for -->
     <!-- <link rel="icon" sizes="192x192" href="/build/images/icons/icon-152x152.png"> -->
     <!-- reuse same icon for Safari -->
@@ -33,13 +34,23 @@
         <!-- <calendar-card></calendar-card> -->
         <div id="create_calendar"></div>
 
-        <div id="date_selected" class="button-container-title">4/1/2020</div>
+        <div id="date_selected" class="button-container-title"></div>
 
         <div id="jobs" class="list-jobs"></div>
     </div>
 
+    <div id="modalCard_job" class="modal-card-container-tint">
+        <div class="modal-card">
+            <div class="modal-jobName">Lot 51 Parkside A1</div>
+            <div class="modal-jobContainer">
+                TEst
+            </div>
+        </div>
+    </div>
+
     <script src="js/app.js"></script>
     <script async src="js/calendar.js"></script>
+    <script async src="js/jobCard.js"></script>
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
