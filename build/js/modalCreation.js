@@ -96,60 +96,21 @@ async function jobClicked(jobId) {
                     return job.jobId === jobId;
                 });
                 filteredJobs.map(fJob => {
-                    // const installColor = determineInstallColor(fJob.status);
                     const modalName = jobModal.querySelector(".modal-jobName");
 
+                    const jobCreatedElement = document.createElement('job-card');
+
+                    jobCreatedElement.jobId = fJob.jobId;
+                    jobCreatedElement.name = fJob.name;
+                    jobCreatedElement.cabinetCount = fJob.cabinetCount;
+                    jobCreatedElement.hasHomeOwner = fJob.hasHomeOwner;
+                    jobCreatedElement.installerPay = fJob.installerPay;
+                    jobCreatedElement.installerNotes = fJob.installerNotes;
+                    jobCreatedElement.status = fJob.status;
+
+                    jobDetailDiv.appendChild(jobCreatedElement);
+
                     modalName.innerHTML = fJob.name;
-
-                    const buttonHtml = `
-                        <div class="job-datails job-name job-shippingNotes">
-                            ${fJob.name}
-                        </div>
-                        <div class="job-datails job-address job-shippingNotes">
-                            Get Address Here
-                        </div>
-                        <div class="job-datails job-cabinetCount job-shippingNotes">
-                            <span class="job-label">Cab. Count:</span>
-                            ${fJob.cabinetCount}
-                        </div>
-                        <div class="job-datails job-shippingNotes">
-                            <span class="job-label">H.O.:</span>
-                            Get H.O.
-                        </div>
-
-                        <div class="job-datails job-shippingNotes">
-                            <span class="job-label">Pay:</span>
-                            $${fJob.installerPay}
-                        </div>
-                        <div class="job-datails job-shippingNotes">
-                            <span class="job-label">Shipping Notes:</span>
-                            Get Shipping Notes
-                        </div>
-                        <div class="job-datails job-buttons">
-                            <span class="job-button mdc-button" data-buttontype="info" title="info" jobid="${fJob.jobId}">
-                                <div class="mdc-button__ripple"></div>
-                                <i class="material-icons">info</i>
-                            </span>
-                            <!-- <span class="job-button mdc-button" data-buttontype="status" title="status" jobid="${fJob.jobId}">
-                                <div class="mdc-button__ripple"></div>
-                                    <i class="material-icons">directions_run</i>
-                                </span> -->
-                            <!-- <span class="job-button mdc-button" data-buttontype="note" title="note" jobid="${fJob.jobId}">
-                                <div class="mdc-button__ripple"></div>
-                                    <i class="material-icons">note</i>
-                                </span> -->
-                            <!-- <span class="job-button mdc-button" data-buttontype="job" title="job" jobid="${fJob.jobId}">
-                                <div class="mdc-button__ripple"></div>
-                                    <i class="material-icons">arrow_forward</i>
-                                </span> -->
-                            <span class="job-button mdc-button" data-buttontype="layouts" title="layouts" jobid="${fJob.jobId}">
-                                <div class="mdc-button__ripple"></div>
-                                <i class="material-icons">arrow_forward</i>
-                            </span>
-                        </div>
-                    `;
-
-                    jobDetailDiv.innerHTML += buttonHtml;
                 });
 
                 const buttons = jobDetailDiv.querySelectorAll('.mdc-button');
