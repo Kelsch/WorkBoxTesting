@@ -1,4 +1,5 @@
 const jobModal = document.getElementById("modalCard_job");
+const designSetModal = document.getElementById("modalCard_designSetInfo");
 
 let hiddenModals = document.getElementsByClassName('modal-card-container-tint');
 let resizable, resizer, startY, startHeight;
@@ -40,7 +41,7 @@ function stopDrag() {
 
 function resetModal() {
     resizable.parentElement.classList.remove('modal-card-container-show')
-    resizable.style.height = 220 + 'px';
+    resizable.style.height = 400 + 'px';
 
     document.querySelector('.list-jobs').classList.remove('stopScroll');
 
@@ -81,9 +82,10 @@ async function jobClicked(jobId) {
         return;
     }
     const cacheName = 'job-list';
-    const request = new Request(`https://pdwebapi-mf5.conveyor.cloud/api/installerAppData/getInstallIndicators?businessId=2`);
+    // const request = new Request(`https://pdwebapi-mf5.conveyor.cloud/api/installerAppData/getInstallIndicators?businessId=2`);
+    const request = new Request(`${apiURL}/api/installerAppData/getInstallIndicators?businessId=2`);
 
-    const jobDetailDiv = jobModal.querySelector(".modal-jobContainer");
+    const jobDetailDiv = jobModal.querySelector(".modal-info-container");
     
     caches.open(cacheName).then(cache => {
         cache.match(request).then((response) => {
@@ -126,6 +128,82 @@ async function jobClicked(jobId) {
     }).catch(err => {
         console.error(err)
     });
+}
 
+function designSetInfoClicked(jobId) {
+    const cacheAvailable = 'caches' in self;
+    if (!cacheAvailable && selectedInstallDate != null) {
+        return;
+    }
+    const cacheName = 'job-list';
+    // const request = new Request(`https://pdwebapi-mf5.conveyor.cloud/api/installerAppData/getInstallIndicators?businessId=2`);
+    const request = new Request(`https://142.11.229.62:45455/api/installerAppData/getInstallIndicators?businessId=2`);
 
+    const designSetInfoDetailDiv = designSetModal.querySelector(".modal-info-container");
+
+    caches.open(cacheName).then(cache => {
+        cache.match(request).then((response) => {
+            if (response == undefined) {
+                return;
+            }
+            response.json().then(jobs => {
+                designSetInfoDetailDiv.innerHTML = '';
+                const filteredJobs = jobs.filter(job => {
+                    return job.jobId === jobId;
+                });
+                filteredJobs.map(fJob => {
+                    const modalName = designSetModal.querySelector(".modal-jobName");
+
+                    const designSetInfoCreatedElement = document.createElement('designset-card');
+                    
+                    designSetInfoCreatedElement.name = fJob.name;
+                    designSetInfoCreatedElement.orderId = fJob.orderId;
+                    designSetInfoCreatedElement.salesRepName = "Sales Rep"// fJob.salesRepName;
+                    designSetInfoCreatedElement.branchName = "Branch Name"//fJob.branchName;
+                    designSetInfoCreatedElement.salesNumber = "Sales Number"//fJob.salesNumber;
+                    designSetInfoCreatedElement.statusName = fJob.statusName;
+                    designSetInfoCreatedElement.addressName = "Address Name"//fJob.addressName;
+                    designSetInfoCreatedElement.addressNumber = "Address Number"//fJob.addressNumber;
+                    designSetInfoCreatedElement.address = "Address"//fJob.address;
+                    designSetInfoCreatedElement.shopName = fJob.shopName;
+                    designSetInfoCreatedElement.specie = "Specie"//fJob.specie;
+                    designSetInfoCreatedElement.upperDoor = "Upper Door" //fJob.upperDoor;
+                    designSetInfoCreatedElement.lowerDoor = "Lower Door" //fJob.lowerDoor;
+                    designSetInfoCreatedElement.front = "Front" //fJob.front;
+                    designSetInfoCreatedElement.finish = "Finish" //fJob.finish;
+                    designSetInfoCreatedElement.glaze = "Glaze"//fJob.glaze;
+                    designSetInfoCreatedElement.finishOption = "Finish Option"//fJob.finishOption;
+                    designSetInfoCreatedElement.distress = "Distress" //fJob.distress;
+                    designSetInfoCreatedElement.sheen = "Sheen"//fJob.sheen;
+                    designSetInfoCreatedElement.interior = "Interior"//fJob.interior;
+                    designSetInfoCreatedElement.drawer = "Drawer"//fJob.drawer;
+                    designSetInfoCreatedElement.hinge = "Hinge" //fJob.hinge;
+                    designSetInfoCreatedElement.slide = "Slide" //fJob.slide;
+                    designSetInfoCreatedElement.orderDate = "Order Date" //fJob.orderDate;
+                    designSetInfoCreatedElement.shipDate = "Ship Date" //fJob.shipDate;
+                    designSetInfoCreatedElement.scheduledTime = "Schedule Time" //fJob.scheduleTime;
+                    designSetInfoCreatedElement.completedDate = "Completed Date" // fJob.completedDate;
+                    designSetInfoCreatedElement.installer = "Intaller"//fJob.installer;
+                    designSetInfoCreatedElement.installDate = fJob.installDate;
+                    designSetInfoCreatedElement.closeDate = "Close Date"//fJob.closeDate;
+                    designSetInfoCreatedElement.products = "Products"//fJob.products;
+
+                    designSetInfoDetailDiv.appendChild(designSetInfoCreatedElement);
+
+                    modalName.innerHTML = fJob.name;
+                });
+
+                const buttons = designSetInfoDetailDiv.querySelectorAll('.mdc-button');
+                if (typeof mdc !== 'undefined') {
+                    for (let i = 0; i < buttons.length; i++) {
+                        const element = buttons[i];
+                        mdc.ripple.MDCRipple.attachTo(element);
+                    }
+                }
+                designSetModal.classList.add("modal-card-container-show");
+            });
+        });
+    }).catch(err => {
+        console.error(err)
+    });
 }

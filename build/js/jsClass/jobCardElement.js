@@ -195,49 +195,51 @@ class JobCard extends HTMLElement {
         const installColor = determineInstallColor(this.status);
         
         this.innerHTML = `
-            <div class="job-datails job-name job-notes">
-                ${this.name}
-            </div>
-            <div class="job-datails job-address job-notes">
-                Get Address Here
-            </div>
-            <div class="job-datails job-cabinetCount job-notes">
-                <span class="job-label">Cab. Count:</span>
-                ${this.cabinetCount}
-            </div>
-            <div class="job-datails job-notes">
-                <span class="job-label">H.O.:</span>
-                ${this.hasHomeOwner ? 'Yes' : 'No'}
-            </div>
-            <div class="job-datails job-notes">
-                <span class="job-label">Pay:</span>
-                $${this.installerPay.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString()}
-            </div>
-            <div class="job-datails job-notes">
-                <span class="job-label">Notes:</span>
-                ${this.installerNotes === null || this.installerNotes === '' ? '' : this.installerNotes}
-            </div>
-            <div class="job-datails job-buttons">
-                <span class="job-button mdc-button${installColor}" data-buttontype="info" title="info" jobid="${this.jobId}">
-                    <div class="mdc-button__ripple"></div>
-                    <i class="material-icons">info</i>
-                </span>
-                <!-- <span class="job-button mdc-button${installColor}" data-buttontype="status" title="status" jobid="${this.jobId}">
-                    <div class="mdc-button__ripple"></div>
-                        <i class="material-icons">directions_run</i>
-                    </span> -->
-                <!-- <span class="job-button mdc-button${installColor}" data-buttontype="note" title="note" jobid="${this.jobId}">
-                    <div class="mdc-button__ripple"></div>
-                        <i class="material-icons">note</i>
-                    </span> -->
-                <!-- <span class="job-button mdc-button${installColor}" data-buttontype="job" title="job" jobid="${this.jobId}">
-                    <div class="mdc-button__ripple"></div>
+            <div class="modal-information">
+                <div class="job-datails job-name job-notes">
+                    ${this.name}
+                </div>
+                <div class="job-datails job-address job-notes">
+                    Get Address Here
+                </div>
+                <div class="job-datails job-cabinetCount job-notes">
+                    <span class="job-label">Cab. Count:</span>
+                    ${this.cabinetCount}
+                </div>
+                <div class="job-datails job-notes">
+                    <span class="job-label">H.O.:</span>
+                    ${this.hasHomeOwner ? 'Yes' : 'No'}
+                </div>
+                <div class="job-datails job-notes">
+                    <span class="job-label">Pay:</span>
+                    $${this.installerPay.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString()}
+                </div>
+                <div class="job-datails job-notes">
+                    <span class="job-label">Notes:</span>
+                    ${this.installerNotes === null || this.installerNotes === '' ? '' : this.installerNotes}
+                </div>
+                <div class="job-datails job-buttons">
+                    <span class="job-button mdc-button${installColor}" data-buttontype="info" title="info" jobid="${this.jobId}" onclick="designSetInfoClicked('${this.jobId}')">
+                        <div class="mdc-button__ripple"></div>
+                        <i class="material-icons">info</i>
+                    </span>
+                    <!-- <span class="job-button mdc-button${installColor}" data-buttontype="status" title="status" jobid="${this.jobId}">
+                        <div class="mdc-button__ripple"></div>
+                            <i class="material-icons">directions_run</i>
+                        </span> -->
+                    <!-- <span class="job-button mdc-button${installColor}" data-buttontype="note" title="note" jobid="${this.jobId}">
+                        <div class="mdc-button__ripple"></div>
+                            <i class="material-icons">note</i>
+                        </span> -->
+                    <!-- <span class="job-button mdc-button${installColor}" data-buttontype="job" title="job" jobid="${this.jobId}">
+                        <div class="mdc-button__ripple"></div>
+                            <i class="material-icons">arrow_forward</i>
+                        </span> -->
+                    <span class="job-button mdc-button${installColor}" data-buttontype="layouts" title="layouts" jobid="${this.jobId}">
+                        <div class="mdc-button__ripple"></div>
                         <i class="material-icons">arrow_forward</i>
-                    </span> -->
-                <span class="job-button mdc-button${installColor}" data-buttontype="layouts" title="layouts" jobid="${this.jobId}">
-                    <div class="mdc-button__ripple"></div>
-                    <i class="material-icons">arrow_forward</i>
-                </span>
+                    </span>
+                </div>
             </div>
         `;
     }

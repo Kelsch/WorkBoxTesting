@@ -31,7 +31,6 @@
     <div class="app-container">
         <div class="app-title">PDInstall</div>
 
-        <!-- <calendar-card></calendar-card> -->
         <div id="create_calendar"></div>
 
         <div id="date_selected" class="button-container-title"></div>
@@ -42,15 +41,20 @@
     <div id="modalCard_job" class="modal-card-container-tint">
         <div class="modal-card">
             <div class="modal-jobName">Lot 51 Parkside A1</div>
-            <div class="modal-jobContainer">
-                TEst
-            </div>
+            <div class="modal-info-container"></div>
         </div>
     </div>
 
-    <script src="js/app.js"></script>
+    <div id="modalCard_designSetInfo" class="modal-card-container-tint">
+        <div class="modal-card modal-card-sub">
+            <div class="modal-jobName">Lot 51 Parkside A1</div>
+            <div class="modal-info-container"></div>
+        </div>
+    </div>
+
     <script async src="js/calendar.js"></script>
-    <script src="js/jobCardElement.js"></script>
+    <script src="js/jsClass/jobCardElement.js"></script>
+    <script src="js/jsClass/designSetInfoCardElement.js"></script>
     <script async src="js/modalCreation.js"></script>
     <script>
         if ('serviceWorker' in navigator) {

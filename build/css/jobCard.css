@@ -24,13 +24,17 @@
     -ms-user-select: none;
     user-select: none;
     max-height: 90vh;
-    height: 220px;
+    height: 400px;
     bottom: 0;
     pointer-events: all;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     position: absolute;
     width: 100%;
+}
+
+.modal-card-sub {
+    height: 370px;
 }
 
 .modal-jobName {
@@ -47,13 +51,96 @@
     width: 100%;
 }
 
-.modal-jobContainer {
+.modal-info-container {
     margin: 0px 5px;
+    /* padding: 5px; */
+    border-radius: 3px;
+    /* background-color: white; */
+    height: calc(100% - 47px);
+    overflow-y: auto;
+}
+
+job-card {
+    background-color: white;
+}
+
+.modal-information {
+    margin: 5px;
     padding: 5px;
     border-radius: 3px;
     background-color: white;
-    height: calc(100% - 47px);
-    overflow-y: auto;
+    height: auto;
+}
+
+.modal-job-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-gap: 10px;
+    text-align: center;
+}
+
+.modal-costs {
+    display: flex;
+    justify-content: center;
+}
+
+.modal-cost-detail {
+    padding: 0px 15px;
+}
+
+.modal-designSets {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.status-item-title {
+    font-weight: bold;
+    padding-left: 10px;
+}
+
+.modal-designSet-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-gap: 2px;
+    white-space: nowrap;
+    min-height: 120px;
+}
+
+.designSet-detail {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 5px;
+}
+
+.designSet-detail-name {
+    text-align: right;
+}
+
+.designSet-product-container {
+    padding-top: 10px;
+    border-top-style: solid;
+    border-top-width: 1px;
+    border-top-color: #bdbdbd;
+}
+
+.designSet-product:nth-child(odd) {
+    background-color: #cacaca;
+}
+.designSet-product {
+    display: grid;
+    grid-template-columns: 50px 1fr;
+}
+
+.product-quantity {
+    grid-row: 2;
+    padding-left: 5px;
+}
+.product-detail {
+    grid-column: 2;
+}
+.product-info {
+    font-style: italic;
+    margin-left: 21px;
 }
 
 .job-notes {

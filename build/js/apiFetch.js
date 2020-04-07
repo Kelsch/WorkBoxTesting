@@ -1,5 +1,6 @@
 function getNonWorkDays() {
-    fetch('https://pdwebapi-mf5.conveyor.cloud/api/installerAppData/getNonWorkDays')
+    // fetch('https://pdwebapi-mf5.conveyor.cloud/api/installerAppData/getNonWorkDays')
+    fetch(`${apiURL}/api/installerAppData/getNonWorkDays`)
         .then(response => response.json())
         .then(data => {
             let days = data;
@@ -15,7 +16,8 @@ function getNonWorkDays() {
 
 let timesRunGetJobs = 0;
 function getJobs(month, year) {
-    fetch('https://pdwebapi-mf5.conveyor.cloud/api/installerAppData/getInstallIndicators?businessId=2')
+    // fetch('https://pdwebapi-mf5.conveyor.cloud/api/installerAppData/getInstallIndicators?businessId=2')
+    fetch(`${apiURL}/api/installerAppData/getInstallIndicators?businessId=2`)
         .then(response => response.json())
         .then(data => {
             if (timesRunGetJobs > 0) {
@@ -53,7 +55,8 @@ async function findSelectedDateJobs(selectedInstallDate) {
         return;
     }
     const cacheName = 'job-list';
-    const request = new Request(`https://pdwebapi-mf5.conveyor.cloud/api/installerAppData/getInstallIndicators?businessId=2`);
+    // const request = new Request(`https://pdwebapi-mf5.conveyor.cloud/api/installerAppData/getInstallIndicators?businessId=2`);
+    const request = new Request(`${apiURL}/api/installerAppData/getInstallIndicators?businessId=2`);
 
     const jobDiv = document.getElementById('jobs');
 
