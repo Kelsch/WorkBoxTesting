@@ -1,14 +1,11 @@
-importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.0.0/workbox-sw.js');
-importScripts('js/');
-
-const apiURL = 'https://142.11.229.62:45455';
+importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.0.0/workbox-sw.js', '/js/app.js');
 
 // workbox.routing.registerRoute(
 //     // new RegExp('https://jsonplaceholder.typicode.com/users'),
 //     new RegExp('userTestJson.json'),
 //     new workbox.strategies.StaleWhileRevalidate()
 // );
-console.log(apiURL)
+
 workbox.routing.registerRoute(
     // new RegExp('https://pdwebapi-mf5.conveyor.cloud/api/installerAppData/getNonWorkDays'),
     new RegExp(`${apiURL}/api/installerAppData/getNonWorkDays`),

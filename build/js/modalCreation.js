@@ -109,6 +109,7 @@ async function jobClicked(jobId) {
                     jobCreatedElement.installerPay = fJob.installerPay;
                     jobCreatedElement.installerNotes = fJob.installerNotes;
                     jobCreatedElement.status = fJob.status;
+                    jobCreatedElement.address = fJob.address;
 
                     jobDetailDiv.appendChild(jobCreatedElement);
 
@@ -137,7 +138,7 @@ function designSetInfoClicked(jobId) {
     }
     const cacheName = 'job-list';
     // const request = new Request(`https://pdwebapi-mf5.conveyor.cloud/api/installerAppData/getInstallIndicators?businessId=2`);
-    const request = new Request(`https://142.11.229.62:45455/api/installerAppData/getInstallIndicators?businessId=2`);
+    const request = new Request(`${apiURL}/api/installerAppData/getInstallIndicators?businessId=2`);
 
     const designSetInfoDetailDiv = designSetModal.querySelector(".modal-info-container");
 
@@ -155,38 +156,41 @@ function designSetInfoClicked(jobId) {
                     const modalName = designSetModal.querySelector(".modal-jobName");
 
                     const designSetInfoCreatedElement = document.createElement('designset-card');
+
+                    console.log(fJob)
                     
                     designSetInfoCreatedElement.name = fJob.name;
                     designSetInfoCreatedElement.orderId = fJob.orderId;
-                    designSetInfoCreatedElement.salesRepName = "Sales Rep"// fJob.salesRepName;
-                    designSetInfoCreatedElement.branchName = "Branch Name"//fJob.branchName;
-                    designSetInfoCreatedElement.salesNumber = "Sales Number"//fJob.salesNumber;
+                    designSetInfoCreatedElement.salesRepName = fJob.salesRepName;
+                    designSetInfoCreatedElement.branchName = fJob.branchName;
+                    designSetInfoCreatedElement.salesNumber = formatPhoneNumber(fJob.salesRepNumber);
                     designSetInfoCreatedElement.statusName = fJob.statusName;
-                    designSetInfoCreatedElement.addressName = "Address Name"//fJob.addressName;
-                    designSetInfoCreatedElement.addressNumber = "Address Number"//fJob.addressNumber;
-                    designSetInfoCreatedElement.address = "Address"//fJob.address;
+                    designSetInfoCreatedElement.addressName = fJob.addressName;
+                    designSetInfoCreatedElement.addressNumber = formatPhoneNumber(fJob.addressNumber);
+                    designSetInfoCreatedElement.address = fJob.address;
                     designSetInfoCreatedElement.shopName = fJob.shopName;
-                    designSetInfoCreatedElement.specie = "Specie"//fJob.specie;
-                    designSetInfoCreatedElement.upperDoor = "Upper Door" //fJob.upperDoor;
-                    designSetInfoCreatedElement.lowerDoor = "Lower Door" //fJob.lowerDoor;
-                    designSetInfoCreatedElement.front = "Front" //fJob.front;
-                    designSetInfoCreatedElement.finish = "Finish" //fJob.finish;
-                    designSetInfoCreatedElement.glaze = "Glaze"//fJob.glaze;
-                    designSetInfoCreatedElement.finishOption = "Finish Option"//fJob.finishOption;
-                    designSetInfoCreatedElement.distress = "Distress" //fJob.distress;
-                    designSetInfoCreatedElement.sheen = "Sheen"//fJob.sheen;
-                    designSetInfoCreatedElement.interior = "Interior"//fJob.interior;
-                    designSetInfoCreatedElement.drawer = "Drawer"//fJob.drawer;
-                    designSetInfoCreatedElement.hinge = "Hinge" //fJob.hinge;
-                    designSetInfoCreatedElement.slide = "Slide" //fJob.slide;
-                    designSetInfoCreatedElement.orderDate = "Order Date" //fJob.orderDate;
-                    designSetInfoCreatedElement.shipDate = "Ship Date" //fJob.shipDate;
-                    designSetInfoCreatedElement.scheduledTime = "Schedule Time" //fJob.scheduleTime;
-                    designSetInfoCreatedElement.completedDate = "Completed Date" // fJob.completedDate;
-                    designSetInfoCreatedElement.installer = "Intaller"//fJob.installer;
+                    designSetInfoCreatedElement.specie = fJob.specie;
+                    designSetInfoCreatedElement.upperDoor = fJob.upperDoor;
+                    designSetInfoCreatedElement.lowerDoor = fJob.lowerDoor;
+                    designSetInfoCreatedElement.front = fJob.front;
+                    designSetInfoCreatedElement.finish = fJob.finish;
+                    designSetInfoCreatedElement.glaze = fJob.glaze;
+                    designSetInfoCreatedElement.finishOption = fJob.finishOption;
+                    designSetInfoCreatedElement.distress = fJob.distress;
+                    designSetInfoCreatedElement.sheen = fJob.sheen;
+                    designSetInfoCreatedElement.interior = fJob.interior;
+                    designSetInfoCreatedElement.drawer = fJob.drawer;
+                    designSetInfoCreatedElement.hinge = fJob.hinge;
+                    designSetInfoCreatedElement.slide = fJob.slide;
+                    designSetInfoCreatedElement.orderDate = fJob.orderDate;
+                    designSetInfoCreatedElement.shipDate = fJob.shipDate;
+                    designSetInfoCreatedElement.scheduledTime = fJob.scheduleTime;
+                    designSetInfoCreatedElement.completionDate = fJob.completionDate;
+                    designSetInfoCreatedElement.installer = fJob.installer;
                     designSetInfoCreatedElement.installDate = fJob.installDate;
-                    designSetInfoCreatedElement.closeDate = "Close Date"//fJob.closeDate;
-                    designSetInfoCreatedElement.products = "Products"//fJob.products;
+                    designSetInfoCreatedElement.closeDate = fJob.closeDate;
+                    designSetInfoCreatedElement.products = fJob.products;
+                    designSetInfoCreatedElement.designSetDTOs = fJob.designSetDTOs;
 
                     designSetInfoDetailDiv.appendChild(designSetInfoCreatedElement);
 

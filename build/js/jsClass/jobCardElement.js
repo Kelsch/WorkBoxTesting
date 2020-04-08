@@ -25,6 +25,7 @@ class JobCard extends HTMLElement {
         this._installerPay = 0;
         this._installerNotes = "";
         this._hasHomeOwner = false;
+        this._address = "";
     }
 
     //#region getter/setter
@@ -189,6 +190,13 @@ class JobCard extends HTMLElement {
     get hasHomeOwner() {
         return this._hasHomeOwner;
     }
+
+    set address(value) {
+        this._address = value;
+    }
+    get address() {
+        return this._address;
+    }
     //#endregion
 
     connectedCallback() {
@@ -200,7 +208,7 @@ class JobCard extends HTMLElement {
                     ${this.name}
                 </div>
                 <div class="job-datails job-address job-notes">
-                    Get Address Here
+                    ${this.address}
                 </div>
                 <div class="job-datails job-cabinetCount job-notes">
                     <span class="job-label">Cab. Count:</span>
