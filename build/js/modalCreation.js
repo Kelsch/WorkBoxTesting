@@ -43,6 +43,10 @@ function resetModal() {
     resizable.parentElement.classList.remove('modal-card-container-show')
     resizable.style.height = 400 + 'px';
 
+    if (resizable.classList.contains('modal-card-sub')) {
+        resizable.style.height = 370 + 'px';
+    }
+
     document.querySelector('.list-jobs').classList.remove('stopScroll');
 
     stopDrag();
@@ -86,6 +90,7 @@ async function jobClicked(jobId) {
     const request = new Request(`${apiURL}/api/installerAppData/getInstallIndicators?businessId=2`);
 
     const jobDetailDiv = jobModal.querySelector(".modal-info-container");
+    // getDesignSets(jobId);
     
     caches.open(cacheName).then(cache => {
         cache.match(request).then((response) => {
@@ -93,6 +98,7 @@ async function jobClicked(jobId) {
                 return;
             }
             response.json().then(jobs => {
+                
                 jobDetailDiv.innerHTML = '';
                 const filteredJobs = jobs.filter(job => {
                     return job.jobId === jobId;
@@ -140,6 +146,9 @@ function designSetInfoClicked(jobId) {
     // const request = new Request(`https://pdwebapi-mf5.conveyor.cloud/api/installerAppData/getInstallIndicators?businessId=2`);
     const request = new Request(`${apiURL}/api/installerAppData/getInstallIndicators?businessId=2`);
 
+    const cacheNameDesignSet = 'job-designSets-list';
+    const requestDesignSet = new Request(`${apiURL}/api/installerAppData/getInstallJobDesignSets?jobIdString=${jobId}`);
+
     const designSetInfoDetailDiv = designSetModal.querySelector(".modal-info-container");
 
     caches.open(cacheName).then(cache => {
@@ -156,8 +165,6 @@ function designSetInfoClicked(jobId) {
                     const modalName = designSetModal.querySelector(".modal-jobName");
 
                     const designSetInfoCreatedElement = document.createElement('designset-card');
-
-                    console.log(fJob)
                     
                     designSetInfoCreatedElement.name = fJob.name;
                     designSetInfoCreatedElement.orderId = fJob.orderId;
@@ -190,10 +197,21 @@ function designSetInfoClicked(jobId) {
                     designSetInfoCreatedElement.installDate = fJob.installDate;
                     designSetInfoCreatedElement.closeDate = fJob.closeDate;
                     designSetInfoCreatedElement.products = fJob.products;
-                    designSetInfoCreatedElement.designSetDTOs = fJob.designSetDTOs;
+                    // designSetInfoCreatedElement.designSetDTOs = fJob.designSetDTOs;
 
-                    designSetInfoDetailDiv.appendChild(designSetInfoCreatedElement);
-
+                    caches.open(cacheNameDesignSet).then(cacheDs => {
+                        cacheDs.match(requestDesignSet).then((responseDs) => {
+                            if (responseDs == undefined) {
+                                return;
+                            }
+                            responseDs.json().then(designSetDTOs => {
+                                console.log(designSetDTOs)
+                                designSetInfoCreatedElement.designSetDTOs = designSetDTOs;
+                                designSetInfoDetailDiv.appendChild(designSetInfoCreatedElement);
+                            });
+                        });
+                    });
+                    
                     modalName.innerHTML = fJob.name;
                 });
 

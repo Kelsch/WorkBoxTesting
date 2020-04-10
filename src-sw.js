@@ -20,6 +20,14 @@ workbox.routing.registerRoute(
       })
 );
 
+workbox.routing.registerRoute(
+    new RegExp(`${apiURL}/api/installerAppData/postInstallJobsDesignSets`),
+    new workbox.strategies.StaleWhileRevalidate({
+        cacheName: 'job-designSets-list',
+      }),
+    'POST'
+);
+
 // Cache the Google Fonts stylesheets with a cache first strategy.
 workbox.routing.registerRoute(
     /^https:\/\/fonts\.googleapis\.com/,

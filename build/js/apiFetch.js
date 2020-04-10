@@ -83,6 +83,13 @@ async function findSelectedDateJobs(selectedInstallDate) {
                     jobDiv.innerHTML += buttonHtml;
                 });
 
+                let jobIdList = [];
+                for (let i = 0; i < filteredJobs.length; i++) {
+                    const job = filteredJobs[i];
+                    jobIdList = [...jobIdList, job.jobId];
+                }
+                getJobsDesignSets(jobIdList);
+
                 const buttons = jobDiv.querySelectorAll('.mdc-button');
                 if (typeof mdc !== 'undefined') {
                     for (let i = 0; i < buttons.length; i++) {
@@ -94,6 +101,27 @@ async function findSelectedDateJobs(selectedInstallDate) {
         });
     }).catch(err => {
         console.error(err)
+    });
+}
+
+async function getDesignSets(jobId) {
+    fetch(`${apiURL}/api/installerAppData/getInstallJobDesignSets?jobIdString=${jobId}`)
+    .then(response => response.json());
+}
+
+async function getJobsDesignSets(jobIds) {
+    fetch(`${apiURL}/api/installerAppData/postInstallJobsDesignSets`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            jobIds: jobIds
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data)
     });
 }
 

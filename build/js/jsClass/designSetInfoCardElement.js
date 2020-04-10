@@ -266,55 +266,55 @@ class DesignSetInfoCard extends HTMLElement {
                 <div class="modal-designSet-container">
                     <div class="designSet-detail">
                         <div class="designSet-detail-name">Species:</div>
-                        <div class="designSet-detail-info">${this.specie}</div>
+                        <div class="designSet-detail-info">${designData.specieDisplay}</div>
                     </div>
                     <div class="designSet-detail">
                         <div class="designSet-detail-name">Upper Door:</div>
-                        <div class="designSet-detail-info">${this.upperDoor}</div>
+                        <div class="designSet-detail-info">${designData.upperDoorDisplay}</div>
                     </div>
                     <div class="designSet-detail">
                         <div class="designSet-detail-name">Lower Door:</div>
-                        <div class="designSet-detail-info">${this.lowerDoor}</div>
+                        <div class="designSet-detail-info">${designData.lowerDoorDisplay}</div>
                     </div>
                     <div class="designSet-detail">
                         <div class="designSet-detail-name">Front:</div>
-                        <div class="designSet-detail-info">${this.front}</div>
+                        <div class="designSet-detail-info">${designData.frontDisplay}</div>
                     </div>
                     <div class="designSet-detail">
                         <div class="designSet-detail-name">Finish:</div>
-                        <div class="designSet-detail-info">${this.finish}</div>
+                        <div class="designSet-detail-info">${designData.finishDisplay}</div>
                     </div>
                     <div class="designSet-detail">
                         <div class="designSet-detail-name">Glaze:</div>
-                        <div class="designSet-detail-info">${this.glaze}</div>
+                        <div class="designSet-detail-info">${designData.glazeDisplay}</div>
                     </div>
                     <div class="designSet-detail">
                         <div class="designSet-detail-name">Finish Option:</div>
-                        <div class="designSet-detail-info">${this.finishOption}</div>
+                        <div class="designSet-detail-info">${designData.finishOptionDisplay}</div>
                     </div>
                     <div class="designSet-detail">
                         <div class="designSet-detail-name">Distress:</div>
-                        <div class="designSet-detail-info">${this.distress}</div>
+                        <div class="designSet-detail-info">${designData.distressDisplay}</div>
                     </div>
                     <div class="designSet-detail">
                         <div class="designSet-detail-name">Sheen:</div>
-                        <div class="designSet-detail-info">${this.sheen}</div>
+                        <div class="designSet-detail-info">${designData.sheenDisplay}</div>
                     </div>
                     <div class="designSet-detail">
                         <div class="designSet-detail-name">Interior:</div>
-                        <div class="designSet-detail-info">${this.interior}</div>
+                        <div class="designSet-detail-info">${designData.interiorDisplay}</div>
                     </div>
                     <div class="designSet-detail">
                         <div class="designSet-detail-name">Drawer:</div>
-                        <div class="designSet-detail-info">${this.drawer}</div>
+                        <div class="designSet-detail-info">${designData.drawerDisplay}</div>
                     </div>
                     <div class="designSet-detail">
                         <div class="designSet-detail-name">Hinge:</div>
-                        <div class="designSet-detail-info">${this.hinge}</div>
+                        <div class="designSet-detail-info">${designData.hingeDisplay}</div>
                     </div>
                     <div class="designSet-detail">
                         <div class="designSet-detail-name">Slide:</div>
-                        <div class="designSet-detail-info">${this.slide}</div>
+                        <div class="designSet-detail-info">${designData.slideDisplay}</div>
                     </div>
                     <div class="designSet-detail">
                         <div class="designSet-detail-name">Order Date:</div>
