@@ -243,7 +243,7 @@ class JobCard extends HTMLElement {
                         <div class="mdc-button__ripple"></div>
                             <i class="material-icons">arrow_forward</i>
                         </span> -->
-                    <span class="job-button mdc-button${installColor}" data-buttontype="layouts" title="layouts" jobid="${this.jobId}">
+                    <span class="job-button layout-button mdc-button${installColor}" data-buttontype="layouts" title="layouts" jobid="${this.jobId}" onclick="jobLayouts('${this.jobId}')">
                         <div class="mdc-button__ripple"></div>
                         <i class="material-icons">arrow_forward</i>
                     </span>

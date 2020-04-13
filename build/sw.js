@@ -27,6 +27,13 @@ workbox.routing.registerRoute(
     })
 );
 
+workbox.routing.registerRoute(
+    new RegExp(`${apiURL}/api/installerAppData/getJobsLayouts`),
+    new workbox.strategies.StaleWhileRevalidate({
+        cacheName: 'jobs-layout-list',
+    })
+);
+
 // Cache the Google Fonts stylesheets with a cache first strategy.
 workbox.routing.registerRoute(
     /^https:\/\/fonts\.googleapis\.com/,
@@ -60,4 +67,4 @@ workbox.routing.registerRoute(
     })
 );
 
-workbox.precaching.precacheAndRoute([{"revision":"85657d1bba8e409e99900d08315c4f7c","url":"css/calendar.css"},{"revision":"51849e15079a448e79e2b3da4cd09aa2","url":"css/jobCard.css"},{"revision":"00a771612246876daac3dcd208024e39","url":"css/main.css"},{"revision":"38029eadd97a7a5c56b0a8d0ec475bee","url":"index.html"},{"revision":"114e06b462b00d4cdbdaf83ba029cb09","url":"js/apiFetch.js"},{"revision":"4e6774967fdcfd72564c1a613eaee5c1","url":"js/app.js"},{"revision":"64a79bb704d1325c71dbfd041b116b68","url":"js/calendar.js"},{"revision":"ce904828256f000d8ab324cf043601cb","url":"js/jsClass/designSetInfoCardElement.js"},{"revision":"a0f31cf617d6f27da6036d7ffc8f8490","url":"js/jsClass/jobCardElement.js"},{"revision":"84d013db478d44b918342b92f6d1f860","url":"js/modalCreation.js"},{"revision":"8618cac677171c71ee01a7027cdb659b","url":"js/swiped-events.js"},{"revision":"edd4495e66b5cb260886662b5e5b2e42","url":"js/workbox-7248be78.js"}]);
+workbox.precaching.precacheAndRoute([{"revision":"85657d1bba8e409e99900d08315c4f7c","url":"css/calendar.css"},{"revision":"51849e15079a448e79e2b3da4cd09aa2","url":"css/jobCard.css"},{"revision":"00a771612246876daac3dcd208024e39","url":"css/main.css"},{"revision":"8a9df044e7c65cf4a0b434e82f0e7e09","url":"index.html"},{"revision":"a33f0ae9cf46c2c14ac69ee38cfc20e7","url":"js/apiFetch.js"},{"revision":"4e6774967fdcfd72564c1a613eaee5c1","url":"js/app.js"},{"revision":"64a79bb704d1325c71dbfd041b116b68","url":"js/calendar.js"},{"revision":"fdc15432a04c4d099dd3205bdb1e7d72","url":"js/jsClass/designSetInfoCardElement.js"},{"revision":"f27de4294272e105c70a12471c1b9697","url":"js/jsClass/jobCardElement.js"},{"revision":"558ac803f62d4e2c5fbee31c75e5789d","url":"js/modalCreation.js"},{"revision":"8618cac677171c71ee01a7027cdb659b","url":"js/swiped-events.js"},{"revision":"edd4495e66b5cb260886662b5e5b2e42","url":"js/workbox-7248be78.js"}]);

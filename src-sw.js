@@ -27,6 +27,13 @@ workbox.routing.registerRoute(
     })
 );
 
+workbox.routing.registerRoute(
+    new RegExp(`${apiURL}/api/installerAppData/getJobsLayouts`),
+    new workbox.strategies.StaleWhileRevalidate({
+        cacheName: 'jobs-layout-list',
+    })
+);
+
 // Cache the Google Fonts stylesheets with a cache first strategy.
 workbox.routing.registerRoute(
     /^https:\/\/fonts\.googleapis\.com/,

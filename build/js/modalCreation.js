@@ -1,5 +1,6 @@
 const jobModal = document.getElementById("modalCard_job");
 const designSetModal = document.getElementById("modalCard_designSetInfo");
+const layoutModal = document.getElementById("modalCard_layout");
 
 let hiddenModals = document.getElementsByClassName('modal-card-container-tint');
 let resizable, resizer, startY, startHeight;
@@ -112,6 +113,7 @@ async function jobClicked(jobId) {
                 });
                 filteredJobs.map(fJob => {
                     const modalName = jobModal.querySelector(".modal-jobName");
+                    const layoutModalName = layoutModal.querySelector(".modal-jobName");
 
                     const jobCreatedElement = document.createElement('job-card');
 
@@ -127,6 +129,7 @@ async function jobClicked(jobId) {
                     jobDetailDiv.appendChild(jobCreatedElement);
 
                     modalName.innerHTML = fJob.name;
+                    layoutModalName.innerHTML = fJob.name;
                 });
 
                 const buttons = jobDetailDiv.querySelectorAll('.mdc-button');
@@ -228,6 +231,7 @@ function designSetInfoClicked(jobId) {
                     modalName.innerHTML = fJob.name;
                 });
 
+
                 const buttons = designSetInfoDetailDiv.querySelectorAll('.mdc-button');
                 if (typeof mdc !== 'undefined') {
                     for (let i = 0; i < buttons.length; i++) {
@@ -240,5 +244,46 @@ function designSetInfoClicked(jobId) {
         });
     }).catch(err => {
         console.error(err)
+    });
+}
+
+function jobLayouts(jobId) {
+    const cacheName = 'jobs-layout-list';
+    const request = new Request(`${apiURL}/api/installerAppData/getJobsLayouts?jobIdStrings=${window.currentJobIds}`);
+    const layoutDetailDiv = layoutModal.querySelector(".modal-info-container");
+
+    caches.open(cacheName).then(cache => {
+        cache.match(request).then((response) => {
+            if (response == undefined) {
+                return;
+            }
+            response.json().then(layouts => {
+                let layoutModalDetails = '';
+                for (let i = 0; i < layouts.length; i++) {
+                    const layout = layouts[i];
+                    if (layout.jobId == jobId) {
+                        layoutModalDetails += `
+                            <div class="modal-information">
+                                <div class="job-button mdc-button" title="${layout.url}" data-jobid="${layout.jobId}" onclick="window.open('${layout.url}')">
+                                    <div class="mdc-button__ripple"></div>
+                                    ${layout.name}
+                                </div>
+                            </div>
+                        `;
+                    }
+                }
+                layoutDetailDiv.innerHTML = layoutModalDetails;
+
+                const buttons = layoutDetailDiv.querySelectorAll('.mdc-button');
+                if (typeof mdc !== 'undefined') {
+                    for (let i = 0; i < buttons.length; i++) {
+                        const element = buttons[i];
+                        mdc.ripple.MDCRipple.attachTo(element);
+                    }
+                }
+
+                layoutModal.classList.add("modal-card-container-show");
+            });
+        });
     });
 }

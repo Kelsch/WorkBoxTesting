@@ -89,6 +89,7 @@ async function findSelectedDateJobs(selectedInstallDate) {
                     jobIdList = [...jobIdList, job.jobId];
                 }
                 getDesignSets(jobIdList);
+                getLayouts(jobIdList);
 
                 const buttons = jobDiv.querySelectorAll('.mdc-button');
                 if (typeof mdc !== 'undefined') {
@@ -108,6 +109,12 @@ async function getDesignSets(jobIds) {
     window.currentJobIds = jobIds;
     fetch(`${apiURL}/api/installerAppData/getInstallJobsDesignSets?jobIdStrings=${jobIds.toString()}`)
     .then(response => response.json());
+}
+
+async function getLayouts(jobIds) {
+    fetch(`${apiURL}/api/installerAppData/getJobsLayouts?jobIdStrings=${jobIds.toString()}`)
+    .then(response => response.json())
+    .catch(err => alert("No layout found!"));
 }
 
 // async function getJobsDesignSets(jobIds) {
