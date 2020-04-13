@@ -42,7 +42,7 @@ function getJobs(month, year) {
                 if (installElement !== null) {
                     const installColor = determineInstallColor(job.status);
 
-                    installElement.innerHTML += `<div class="dateNumber-indicator${installColor}"></div>`;
+                    installElement.innerHTML += `<div class="dateNumber-indicator${installColor}" data-jobid="${job.jobId}"></div>`;
                 }
             });
         });
@@ -88,7 +88,7 @@ async function findSelectedDateJobs(selectedInstallDate) {
                     const job = filteredJobs[i];
                     jobIdList = [...jobIdList, job.jobId];
                 }
-                getJobsDesignSets(jobIdList);
+                getDesignSets(jobIdList);
 
                 const buttons = jobDiv.querySelectorAll('.mdc-button');
                 if (typeof mdc !== 'undefined') {
@@ -104,26 +104,16 @@ async function findSelectedDateJobs(selectedInstallDate) {
     });
 }
 
-async function getDesignSets(jobId) {
-    fetch(`${apiURL}/api/installerAppData/getInstallJobDesignSets?jobIdString=${jobId}`)
+async function getDesignSets(jobIds) {
+    window.currentJobIds = jobIds;
+    fetch(`${apiURL}/api/installerAppData/getInstallJobsDesignSets?jobIdStrings=${jobIds.toString()}`)
     .then(response => response.json());
 }
 
-async function getJobsDesignSets(jobIds) {
-    fetch(`${apiURL}/api/installerAppData/postInstallJobsDesignSets`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            jobIds: jobIds
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log(data)
-    });
-}
+// async function getJobsDesignSets(jobIds) {
+//     fetch(`${apiURL}/api/installerAppData/getInstallJobsDesignSets`)
+//     .then(response => response.json());
+// }
 
 function determineInstallColor(jobStatus) {
     let installColor;

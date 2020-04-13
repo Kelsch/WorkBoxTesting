@@ -260,6 +260,30 @@ class DesignSetInfoCard extends HTMLElement {
         let designSetInfomations = "";
         for (let i = 0; i < this.designSetDTOs.length; i++) {
             const designData = this.designSetDTOs[i];
+            
+            let productInfomation = "";
+            for (let p = 0; p < designData.productsDTOs.length; p++) {
+                const product = designData.productsDTOs[p];
+
+                let productModInfomation = "";
+                for (let pm = 0; pm < product.productMods.length; pm++) {
+                    const productMod = product.productMods[pm];
+                    
+                    productModInfomation += `
+                        Notes and Such
+                    `;
+                }
+                
+                productInfomation += `
+                    <div class="designSet-product">
+                        <div class="product-quantity">${product.quantity}</div>
+                        <div class="product-detail product-name">${product.display}</div>
+                        <div class="product-detail product-info product-mods">${product.prodcutNotes === null || product.prodcutNotes === '' || product.prodcutNotes === undefined ? '' : product.prodcutNotes}</div>
+                        <div class="product-detail product-info product-notes">${productModInfomation === '' ? '' : productModInfomation}</div>
+                    </div>
+                `;
+            }
+
             designSetInfomations += `
             <div class="modal-information">
                 <div class="status-item-title">${this.orderId}${designData.shopLabel === '' ? '' : '- ' + designData.shopLabel}</div>
@@ -347,12 +371,7 @@ class DesignSetInfoCard extends HTMLElement {
                 </div>
                 <div class="designSet-product-container">
                     <!---->
-                        <div class="designSet-product">
-                            <div class="product-quantity"><!---->1<!----></div>
-                            <div class="product-detail product-name"><!---->WBK2757*12D<!----></div>
-                            <div class="product-detail product-info product-mods"><!---->Bottom: No Bottom<!----></div>
-                            <div class="product-detail product-info product-notes"><!---->Notes and Such<!----></div>
-                        </div>
+                        ${productInfomation}
                     <!---->
                 </div>
             </div>

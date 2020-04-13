@@ -27,6 +27,14 @@ function doDrag(e) {
     }
     let clientY = e.clientY || e.targetTouches[0].clientY;
     resizable.style.height = (startHeight - clientY + startY) + 'px';
+    if (resizable.classList.contains('modal-card-sub')) {
+        const productContainers = resizable.querySelectorAll('.designSet-product-container');
+        const designSetInfoContainer = resizable.querySelector('.modal-designSet-container');
+        for (let i = 0; i < productContainers.length; i++) {
+            const products = productContainers[i];
+            products.style.height = (startHeight - clientY + startY) - designSetInfoContainer.clientHeight + 'px';
+        }
+    }
     if ((startHeight - clientY + startY) <= 65) {
         resetModal();
     }
@@ -90,7 +98,6 @@ async function jobClicked(jobId) {
     const request = new Request(`${apiURL}/api/installerAppData/getInstallIndicators?businessId=2`);
 
     const jobDetailDiv = jobModal.querySelector(".modal-info-container");
-    // getDesignSets(jobId);
     
     caches.open(cacheName).then(cache => {
         cache.match(request).then((response) => {
@@ -147,7 +154,7 @@ function designSetInfoClicked(jobId) {
     const request = new Request(`${apiURL}/api/installerAppData/getInstallIndicators?businessId=2`);
 
     const cacheNameDesignSet = 'job-designSets-list';
-    const requestDesignSet = new Request(`${apiURL}/api/installerAppData/getInstallJobDesignSets?jobIdString=${jobId}`);
+    const requestDesignSet = new Request(`${apiURL}/api/installerAppData/getInstallJobsDesignSets?jobIdStrings=${window.currentJobIds}`);
 
     const designSetInfoDetailDiv = designSetModal.querySelector(".modal-info-container");
 
@@ -205,8 +212,14 @@ function designSetInfoClicked(jobId) {
                                 return;
                             }
                             responseDs.json().then(designSetDTOs => {
-                                console.log(designSetDTOs)
-                                designSetInfoCreatedElement.designSetDTOs = designSetDTOs;
+                                let designSetDTOsJob = [];
+                                for (let i = 0; i < designSetDTOs.length; i++) {
+                                    const designSetDTO = designSetDTOs[i];
+                                    if (designSetDTO.jobId === jobId) {
+                                        designSetDTOsJob = [...designSetDTOsJob, designSetDTO];
+                                    }
+                                }
+                                designSetInfoCreatedElement.designSetDTOs = designSetDTOsJob;
                                 designSetInfoDetailDiv.appendChild(designSetInfoCreatedElement);
                             });
                         });

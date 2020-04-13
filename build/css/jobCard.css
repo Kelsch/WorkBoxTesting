@@ -91,6 +91,7 @@ job-card {
 .modal-designSets {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-row-gap: 20px;
 }
 
 .status-item-title {
@@ -121,6 +122,7 @@ job-card {
     border-top-style: solid;
     border-top-width: 1px;
     border-top-color: #bdbdbd;
+    overflow-y: auto;
 }
 
 .designSet-product:nth-child(odd) {
@@ -129,6 +131,7 @@ job-card {
 .designSet-product {
     display: grid;
     grid-template-columns: 50px 1fr;
+    padding: 5px;
 }
 
 .product-quantity {
@@ -137,6 +140,7 @@ job-card {
 }
 .product-detail {
     grid-column: 2;
+    height: 17px;
 }
 .product-info {
     font-style: italic;

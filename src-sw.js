@@ -17,15 +17,14 @@ workbox.routing.registerRoute(
     new RegExp(`${apiURL}/api/installerAppData/getInstallIndicators`),
     new workbox.strategies.StaleWhileRevalidate({
         cacheName: 'job-list',
-      })
+    })
 );
 
 workbox.routing.registerRoute(
-    new RegExp(`${apiURL}/api/installerAppData/postInstallJobsDesignSets`),
+    new RegExp(`${apiURL}/api/installerAppData/getInstallJobsDesignSets`),
     new workbox.strategies.StaleWhileRevalidate({
         cacheName: 'job-designSets-list',
-      }),
-    'POST'
+    })
 );
 
 // Cache the Google Fonts stylesheets with a cache first strategy.
