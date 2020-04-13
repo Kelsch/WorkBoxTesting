@@ -270,7 +270,7 @@ class DesignSetInfoCard extends HTMLElement {
                     const productMod = product.productMods[pm];
                     
                     productModInfomation += `
-                        Notes and Such
+                        ${productMod.display}
                     `;
                 }
                 
@@ -278,7 +278,7 @@ class DesignSetInfoCard extends HTMLElement {
                     <div class="designSet-product">
                         <div class="product-quantity">${product.quantity}</div>
                         <div class="product-detail product-name">${product.display}</div>
-                        <div class="product-detail product-info product-mods">${product.prodcutNotes === null || product.prodcutNotes === '' || product.prodcutNotes === undefined ? '' : product.prodcutNotes}</div>
+                        <div class="product-detail product-info product-mods">${product.productNotes === null || product.productNotes === '' || product.productNotes === undefined ? '' : product.productNotes}</div>
                         <div class="product-detail product-info product-notes">${productModInfomation === '' ? '' : productModInfomation}</div>
                     </div>
                 `;
