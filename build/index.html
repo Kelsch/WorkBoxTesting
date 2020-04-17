@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/calendar.css">
     <link rel="stylesheet" href="css/jobCard.css">
+    <link rel="stylesheet" href="css/refreshControl.css">
     <!-- icon in the highest resolution we need it for -->
     <!-- <link rel="icon" sizes="192x192" href="/build/images/icons/icon-152x152.png"> -->
     <!-- reuse same icon for Safari -->
@@ -28,8 +29,14 @@
 </head>
 
 <body>
-
-    <div class="app-container">
+    <div class="refresher">
+        <div class="loading-bar"></div>
+        <div class="loading-bar"></div>
+        <div class="loading-bar"></div>
+        <div class="loading-bar"></div>
+    </div>
+    
+    <div id="app_container" class="app-container">
         <div class="app-title">PDInstall</div>
 
         <div id="create_calendar"></div>
@@ -60,6 +67,7 @@
         </div>
     </div>
 
+    <script src="js/refreshControl.js"></script>
     <script async src="js/calendar.js"></script>
     <script src="js/jsClass/jobCardElement.js"></script>
     <script src="js/jsClass/designSetInfoCardElement.js"></script>
