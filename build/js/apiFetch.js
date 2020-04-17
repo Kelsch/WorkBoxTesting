@@ -112,9 +112,11 @@ async function getDesignSets(jobIds) {
 }
 
 async function getLayouts(jobIds) {
-    fetch(`${apiURL}/api/installerAppData/getJobsLayouts?jobIdStrings=${jobIds.toString()}`)
-    .then(response => response.json())
-    .catch(err => alert("No layout found!"));
+    if (jobIds !== null) {
+        fetch(`${apiURL}/api/installerAppData/getJobsLayouts?jobIdStrings=${jobIds.toString()}`)
+        .then(response => response.json())
+        .catch(err => alert("No layout found!"));
+    }
 }
 
 // async function getJobsDesignSets(jobIds) {

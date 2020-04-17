@@ -9,8 +9,9 @@ appContainer.addEventListener('touchmove', e => {
     const y = e.touches[0].pageY;
     // Activate custom pull-to-refresh effects when at the top of the container
     // and user is scrolling up.
-    if (document.scrollingElement.scrollTop === 0 && y > _startY + 30 && !document.body.classList.contains('refreshing')) {
+    if (document.scrollingElement.scrollTop === 0 && y > _startY + 30 && !document.body.classList.contains('refreshing') && e.target.closest('#jobs') === null) {
         // refresh
+        console.log(this, e.target)
         simulateRefreshAction();
     }
 }, {passive: true});
