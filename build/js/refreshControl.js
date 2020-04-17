@@ -34,10 +34,8 @@ async function simulateRefreshAction() {
     const refresher = document.querySelector('.refresher');
   
     document.body.classList.add('refreshing');
-    
     refreshData();
-
-    await sleep(2000);
+    await sleep(500);
   
     refresher.classList.add('shrink');
     await transitionEnd('transform', refresher);
@@ -50,5 +48,8 @@ async function simulateRefreshAction() {
   }
 
   function refreshData() {
-      console.log('Test')
+      const selectedDateElement = document.querySelectorAll('.calendar-monthHeader')[1];
+      const selectedDate = new Date(selectedDateElement.textContent);
+
+      showCalendar(selectedDate.getMonth(), selectedDate.getFullYear());
   }
