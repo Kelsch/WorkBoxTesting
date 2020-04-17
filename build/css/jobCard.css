@@ -5,7 +5,7 @@
     width: 100%;
     position: absolute;
     display: none;
-    margin-left: -5px;
+    /* margin-left: -5px; */
 }
 
 .modal-card-container-show {
