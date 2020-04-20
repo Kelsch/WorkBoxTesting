@@ -39,6 +39,12 @@
     <div id="app_container" class="app-container">
         <div class="app-title">PDInstall</div>
 
+        <form id="app_loginForm" onsubmit="login(event);" method="POST">
+            <input type="text" name="uname" id="uname" placeholder="User Name" required/>
+            <input type="password" name="upassword" id="upassword" placeholder="Password" required/>
+            <input type="submit" value="Login"/>
+        </form>
+
         <div id="create_calendar"></div>
 
         <div id="date_selected" class="button-container-title"></div>

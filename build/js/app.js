@@ -46,18 +46,49 @@ function isReachable(url) {
     });
 }
 
-async function login(userName, password) {
+function login() {
+  event.preventDefault();
   handleConnection();
+
+  const loginForm = document.getElementById('app_loginForm');
   
-  const installUser = await fetch(`${apiURL}/api/login`, {
+  fetch(`${apiURL}/api/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({UserName: userName, Password: password})
+    body: JSON.stringify({UserName: loginForm.querySelector('#uname').value, Password: loginForm.querySelector('#upassword').value})
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data === null) {
+      return false;
+    }
+
+    if ('credentials' in navigator) {
+      const cred = new PasswordCredential({
+          id: data.userName,
+          password: data.password,
+          name: data.userName,
+          additionalData: data.token
+      });
+
+      console.log(cred)
+      navigator.credentials.store(cred)
+      .then(() => {
+
+      });
+
+      navigator.credentials.get({password: true, mediation: 'silent'})
+      .then(credential => {
+        if (credential) {
+          console.log(credential)
+        }
+      })
+      .catch((err) => console.error('Error reading credentials: ' + err));
+  }
+  })
+  .catch(error => {
+    console.error(error);
   });
-
-  const installerContent = await installUser.json();
-
-  console.log(installerContent)
 }
