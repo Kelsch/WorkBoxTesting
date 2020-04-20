@@ -6,8 +6,8 @@ const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "
 let calendarDayElements;
 const calendarElement = document.getElementById('create_calendar');
 
-showCalendar(currentMonth, currentYear);
-setupSwipeListener(calendarElement);
+// showCalendar(currentMonth, currentYear);
+// setupSwipeListener(calendarElement);
 
 function showCalendar(month, year) {
     const firstDay = (new Date(year, month)).getDay();

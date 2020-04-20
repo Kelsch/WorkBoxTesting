@@ -1,5 +1,5 @@
-const apiURL = 'https://pdwebapi.longformgibberish.com';
-// const apiURL = 'https://pdwebapi-mf5.conveyor.cloud';
+// const apiURL = 'https://pdwebapi.longformgibberish.com';
+const apiURL = 'https://pdwebapi-mf5.conveyor.cloud';
 
 function formatPhoneNumber(phoneNumberString) {
     const cleaned = ('' + phoneNumberString).replace(/\D/g, '')
@@ -44,4 +44,20 @@ function isReachable(url) {
     .catch(function(err) {
       console.warn('[conn test failure]:', err);
     });
+}
+
+async function login(userName, password) {
+  handleConnection();
+  
+  const installUser = await fetch(`${apiURL}/api/login`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({UserName: userName, Password: password})
+  });
+
+  const installerContent = await installUser.json();
+
+  console.log(installerContent)
 }

@@ -16,7 +16,6 @@ function getNonWorkDays() {
 
 let timesRunGetJobs = 0;
 function getJobs(month, year) {
-    // fetch('https://pdwebapi-mf5.conveyor.cloud/api/installerAppData/getInstallIndicators?businessId=2')
     fetch(`${apiURL}/api/installerAppData/getInstallIndicators?businessId=2`)
         .then(response => response.json())
         .then(data => {
@@ -118,11 +117,6 @@ async function getLayouts(jobIds) {
         .catch(err => alert("No layout found!"));
     }
 }
-
-// async function getJobsDesignSets(jobIds) {
-//     fetch(`${apiURL}/api/installerAppData/getInstallJobsDesignSets`)
-//     .then(response => response.json());
-// }
 
 function determineInstallColor(jobStatus) {
     let installColor;
