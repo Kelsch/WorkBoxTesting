@@ -11,7 +11,6 @@ appContainer.addEventListener('touchmove', e => {
     // and user is scrolling up.
     if (document.scrollingElement.scrollTop === 0 && y > _startY + 30 && !document.body.classList.contains('refreshing') && e.target.closest('#jobs') === null) {
         // refresh
-        console.log(this, e.target)
         simulateRefreshAction();
     }
 }, {passive: true});
@@ -50,6 +49,11 @@ async function simulateRefreshAction() {
 
 function refreshData() {
     const selectedDateElement = document.querySelectorAll('.calendar-monthHeader')[1];
+
+    if (typeof selectedDateElement === 'undefined') {
+      return false;
+    }
+
     const selectedDate = new Date(selectedDateElement.textContent);
 
     showCalendar(selectedDate.getMonth(), selectedDate.getFullYear());
