@@ -1,6 +1,14 @@
+let token = localStorage.getItem('token');
+
+TextInputAnimation(document.getElementById('app_loginForm'));
+ButtonAnimation(document.getElementById('app_loginForm'));
+
 function getNonWorkDays() {
-    // fetch('https://pdwebapi-mf5.conveyor.cloud/api/installerAppData/getNonWorkDays')
-    fetch(`${apiURL}/api/installerAppData/getNonWorkDays`)
+    fetch(`${apiURL}/api/installerAppData/getNonWorkDays`, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
         .then(response => response.json())
         .then(data => {
             let days = data;
@@ -15,8 +23,12 @@ function getNonWorkDays() {
 }
 
 let timesRunGetJobs = 0;
-function getJobs(month, year) {
-    fetch(`${apiURL}/api/installerAppData/getInstallIndicators?businessId=2`)
+async function getJobs(month, year) {
+    fetch(`${apiURL}/api/installerAppData/getInstallIndicators?businessId=${cred.name}`, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
         .then(response => response.json())
         .then(data => {
             if (timesRunGetJobs > 0) {
@@ -55,7 +67,7 @@ async function findSelectedDateJobs(selectedInstallDate) {
     }
     const cacheName = 'job-list';
     // const request = new Request(`https://pdwebapi-mf5.conveyor.cloud/api/installerAppData/getInstallIndicators?businessId=2`);
-    const request = new Request(`${apiURL}/api/installerAppData/getInstallIndicators?businessId=2`);
+    const request = new Request(`${apiURL}/api/installerAppData/getInstallIndicators?businessId=${cred.name}`);
 
     const jobDiv = document.getElementById('jobs');
 
@@ -89,14 +101,7 @@ async function findSelectedDateJobs(selectedInstallDate) {
                 }
                 getDesignSets(jobIdList);
                 getLayouts(jobIdList);
-
-                const buttons = jobDiv.querySelectorAll('.mdc-button');
-                if (typeof mdc !== 'undefined') {
-                    for (let i = 0; i < buttons.length; i++) {
-                        const element = buttons[i];
-                        mdc.ripple.MDCRipple.attachTo(element);
-                    }
-                }
+                ButtonAnimation(jobDiv);
             });
         });
     }).catch(err => {
@@ -106,15 +111,45 @@ async function findSelectedDateJobs(selectedInstallDate) {
 
 async function getDesignSets(jobIds) {
     window.currentJobIds = jobIds;
-    fetch(`${apiURL}/api/installerAppData/getInstallJobsDesignSets?jobIdStrings=${jobIds.toString()}`)
-    .then(response => response.json());
+    fetch(`${apiURL}/api/installerAppData/getInstallJobsDesignSets?jobIdStrings=${jobIds.toString()}`, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+        .then(response => response.json());
 }
 
 async function getLayouts(jobIds) {
     if (jobIds !== null) {
-        fetch(`${apiURL}/api/installerAppData/getJobsLayouts?jobIdStrings=${jobIds.toString()}`)
-        .then(response => response.json())
-        .catch(err => alert("No layout found!"));
+        fetch(`${apiURL}/api/installerAppData/getJobsLayouts?jobIdStrings=${jobIds.toString()}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(response => response.json())
+            .catch(err => {
+                console.error(err)
+            });
+    }
+}
+
+function ButtonAnimation(container) {
+    const buttons = container.querySelectorAll('.mdc-button');
+    if (typeof mdc !== 'undefined') {
+        for (let i = 0; i < buttons.length; i++) {
+            const element = buttons[i];
+            mdc.ripple.MDCRipple.attachTo(element);
+        }
+    }
+}
+
+function TextInputAnimation(container) {
+    const  inputs = container.querySelectorAll('.mdc-text-field');
+    if (typeof mdc !== 'undefined') {
+        for (let i = 0; i < inputs.length; i++) {
+            const element = inputs[i];
+            mdc.textField.MDCTextField.attachTo(element);
+        }
     }
 }
 

@@ -96,7 +96,7 @@ async function jobClicked(jobId) {
     }
     const cacheName = 'job-list';
     // const request = new Request(`https://pdwebapi-mf5.conveyor.cloud/api/installerAppData/getInstallIndicators?businessId=2`);
-    const request = new Request(`${apiURL}/api/installerAppData/getInstallIndicators?businessId=2`);
+    const request = new Request(`${apiURL}/api/installerAppData/getInstallIndicators?businessId=${cred.name}`);
 
     const jobDetailDiv = jobModal.querySelector(".modal-info-container");
     
@@ -153,8 +153,7 @@ function designSetInfoClicked(jobId) {
         return;
     }
     const cacheName = 'job-list';
-    // const request = new Request(`https://pdwebapi-mf5.conveyor.cloud/api/installerAppData/getInstallIndicators?businessId=2`);
-    const request = new Request(`${apiURL}/api/installerAppData/getInstallIndicators?businessId=2`);
+    const request = new Request(`${apiURL}/api/installerAppData/getInstallIndicators?businessId=${cred.name}`);
 
     const cacheNameDesignSet = 'job-designSets-list';
     const requestDesignSet = new Request(`${apiURL}/api/installerAppData/getInstallJobsDesignSets?jobIdStrings=${window.currentJobIds}`);

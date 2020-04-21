@@ -48,6 +48,17 @@ body {
     overflow-y: auto;
     margin: 1px;
 }
+
+.loginForm-none {
+    display: none;
+}
+
+.loginForm-show {
+    display: grid;
+    grid-gap: 10px;
+    align-self: center;
+}
+
 /* 
 ul {
     list-style-type: none;

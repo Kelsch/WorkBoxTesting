@@ -1,18 +1,22 @@
 // const apiURL = 'https://pdwebapi.longformgibberish.com';
 const apiURL = 'https://pdwebapi-mf5.conveyor.cloud';
+let loginButtonPressed = false;
+let cred;
+
+checkLogin();
 
 function formatPhoneNumber(phoneNumberString) {
-    const cleaned = ('' + phoneNumberString).replace(/\D/g, '')
-    const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/)
-    if (match) {
-        return '(' + match[1] + ') ' + match[2] + '-' + match[3]
-    }
-    return null
+  const cleaned = ('' + phoneNumberString).replace(/\D/g, '')
+  const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/)
+  if (match) {
+    return '(' + match[1] + ') ' + match[2] + '-' + match[3]
+  }
+  return null
 }
 
 function handleConnection() {
   if (navigator.onLine) {
-    isReachable("https://google.com/").then(function(online) {
+    isReachable("https://google.com/").then(function (online) {
       if (online) {
         // handle online status
         console.log('online');
@@ -38,57 +42,114 @@ function isReachable(url) {
    *   https://noexist.com/noexist does throw
    */
   return fetch(url, { method: 'HEAD', mode: 'no-cors' })
-    .then(function(resp) {
+    .then(function (resp) {
       return resp && (resp.ok || resp.type === 'opaque');
     })
-    .catch(function(err) {
+    .catch(function (err) {
       console.warn('[conn test failure]:', err);
     });
 }
 
-function login() {
-  event.preventDefault();
+async function checkLogin() {
+  if (typeof event !== 'undefined') {
+    event.preventDefault();
+    loginButtonPressed = true;
+  }
+  await navigator.credentials.get({ password: true, mediation: 'optional' })
+    .then(credential => {
+      cred = credential;
+      if (credential && localStorage.hasOwnProperty('token')) {
+        userAuthenticated();
+      }
+      else {
+        localStorage.removeItem('token')
+        login();
+      }
+    })
+    .catch((err) => {
+      console.error('Error reading credentials: ' + err);
+      localStorage.removeItem('token')
+      login();
+    });
   handleConnection();
+}
 
+async function login() {
   const loginForm = document.getElementById('app_loginForm');
+  // const cred = await navigator.credentials.get({ password: true, mediation: 'optional' });
+  let user = {
+    userName: loginForm.querySelector('#uname').value,
+    password: loginForm.querySelector('#upassword').value
+  };
   
+  if (cred != null && !loginButtonPressed) {
+    user.userName = cred.id;
+    user.password = cred.password;
+  }
+  
+  if (user.userName === "") {
+    return false;
+  }
+
   fetch(`${apiURL}/api/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({UserName: loginForm.querySelector('#uname').value, Password: loginForm.querySelector('#upassword').value})
+    body: JSON.stringify({ UserName: user.userName, Password: user.password })
   })
-  .then(response => response.json())
-  .then(data => {
-    if (data === null) {
-      return false;
-    }
+    .then(response => response.json())
+    .then(data => {
+      if (data === null) {
+        return false;
+      }
 
-    if ('credentials' in navigator) {
-      const cred = new PasswordCredential({
-          id: data.userName,
-          password: data.password,
-          name: data.userName,
-          additionalData: data.token
-      });
+      if ('credentials' in navigator) {
+        if (cred == null) {
+          const newCred = new PasswordCredential({
+            id: data.userName,
+            password: data.password,
+            name: data.businessId
+          });
+          
+          navigator.credentials.store(newCred);
 
-      console.log(cred)
-      navigator.credentials.store(cred)
-      .then(() => {
-
-      });
-
-      navigator.credentials.get({password: true, mediation: 'silent'})
-      .then(credential => {
-        if (credential) {
-          console.log(credential)
+          cred = newCred;
         }
-      })
-      .catch((err) => console.error('Error reading credentials: ' + err));
+        
+        localStorage.setItem('token', data.token);
+
+        userAuthenticated();
+      }
+    })
+    .catch(error => {
+      console.error(error);
+    });
+}
+
+function userAuthenticated() {
+  const loginForm = document.getElementById('app_loginForm');
+  if (token === null) {
+    token = localStorage.getItem('token');
   }
-  })
-  .catch(error => {
-    console.error(error);
-  });
+
+  loginForm.classList.remove('loginForm-show');
+  showCalendar(currentMonth, currentYear);
+  setupSwipeListener(calendarElement);
+}
+
+function logout() {
+  token = null;
+  localStorage.removeItem('token');
+
+  const loginForm = document.getElementById('app_loginForm');
+  const calendarContainer = document.getElementById('create_calendar');
+  const dateSelectedContainer = document.getElementById('date_selected');
+  const jobContainer = document.getElementById('jobs');
+
+  calendarContainer.innerHTML = "";
+  dateSelectedContainer.innerHTML = "";
+  jobContainer.innerHTML = "";
+
+  loginForm.classList.add('loginForm-show');
 }
