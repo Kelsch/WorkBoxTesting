@@ -2,23 +2,23 @@ let _startY;
 const appContainer = document.querySelector('#app_container');
 
 appContainer.addEventListener('touchstart', e => {
-    _startY = e.touches[0].pageY;
-}, {passive: true});
+  _startY = e.touches[0].pageY;
+}, { passive: true });
 
 appContainer.addEventListener('touchmove', e => {
-    const y = e.touches[0].pageY;
-    // Activate custom pull-to-refresh effects when at the top of the container
-    // and user is scrolling up.
-    if (document.scrollingElement.scrollTop === 0 && y > _startY + 30 && !document.body.classList.contains('refreshing') && e.target.closest('#jobs') === null) {
-        // refresh
-        simulateRefreshAction();
-    }
-}, {passive: true});
+  const y = e.touches[0].pageY;
+  // Activate custom pull-to-refresh effects when at the top of the container
+  // and user is scrolling up.
+  if (document.scrollingElement.scrollTop === 0 && y > _startY + 30 && !document.body.classList.contains('refreshing') && e.target.closest('#jobs') === null) {
+    // refresh
+    simulateRefreshAction();
+  }
+}, { passive: true });
 
 async function simulateRefreshAction() {
   const sleep = (timeout) => new Promise(resolve => setTimeout(resolve, timeout));
 
-  const transitionEnd = function(propertyName, node) {
+  const transitionEnd = function (propertyName, node) {
     return new Promise(resolve => {
       function callback(e) {
         e.stopPropagation();
@@ -48,13 +48,13 @@ async function simulateRefreshAction() {
 }
 
 function refreshData() {
-    const selectedDateElement = document.querySelectorAll('.calendar-monthHeader')[1];
+  const selectedDateElement = document.querySelectorAll('.calendar-monthHeader')[1];
 
-    if (typeof selectedDateElement === 'undefined') {
-      return false;
-    }
+  if (typeof selectedDateElement === 'undefined') {
+    return false;
+  }
 
-    const selectedDate = new Date(selectedDateElement.textContent);
+  const selectedDate = new Date(selectedDateElement.textContent);
 
-    showCalendar(selectedDate.getMonth(), selectedDate.getFullYear());
+  showCalendar(selectedDate.getMonth(), selectedDate.getFullYear());
 }

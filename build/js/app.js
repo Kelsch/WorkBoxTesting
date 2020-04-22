@@ -50,43 +50,52 @@ function isReachable(url) {
     });
 }
 
-async function checkLogin() {
+function checkLogin() {
   if (typeof event !== 'undefined') {
     event.preventDefault();
     loginButtonPressed = true;
   }
-  await navigator.credentials.get({ password: true, mediation: 'optional' })
-    .then(credential => {
-      cred = credential;
-      if (credential && localStorage.hasOwnProperty('token')) {
-        userAuthenticated();
-      }
-      else {
-        localStorage.removeItem('token')
+  if ('credentials' in navigator) {
+    navigator.credentials.get()
+      .then(async () => {
+        await navigator.credentials.get({ password: true, mediation: 'optional' })
+          .then(credential => {
+            cred = credential;
+            if (credential && localStorage.hasOwnProperty('token')) {
+              userAuthenticated();
+            }
+            else {
+              localStorage.removeItem('token')
+              login();
+            }
+          })
+          .catch((err) => {
+            console.error('Error reading credentials: ' + err);
+            localStorage.removeItem('token');
+            login();
+          });
+      })
+      .catch(result => {
+        // console.log(result);
         login();
-      }
-    })
-    .catch((err) => {
-      console.error('Error reading credentials: ' + err);
-      localStorage.removeItem('token')
-      login();
-    });
+      });
+  }
   handleConnection();
 }
 
 async function login() {
   const loginForm = document.getElementById('app_loginForm');
-  // const cred = await navigator.credentials.get({ password: true, mediation: 'optional' });
-  let user = {
-    userName: loginForm.querySelector('#uname').value,
-    password: loginForm.querySelector('#upassword').value
-  };
   
+  let user = {
+    userName: loginForm.querySelector('#username').value,
+    password: loginForm.querySelector('#password').value
+  };
+
   if (cred != null && !loginButtonPressed) {
     user.userName = cred.id;
     user.password = cred.password;
   }
-  
+
   if (user.userName === "") {
     return false;
   }
@@ -106,25 +115,32 @@ async function login() {
 
       if ('credentials' in navigator) {
         if (cred == null) {
-          const newCred = new PasswordCredential({
-            id: data.userName,
-            password: data.password,
-            name: data.businessId
-          });
-          
-          navigator.credentials.store(newCred);
-
-          cred = newCred;
+          try {
+            const newCred = new PasswordCredential({
+              id: data.userName,
+              password: data.password,
+              name: data.businessId
+            });
+  
+            navigator.credentials.store(newCred);
+            cred = newCred;
+          } catch (error) {
+            cred = {
+              id: data.userName,
+              password: data.password, 
+              name: data.businessId
+            };
+          }
         }
-        
+
         localStorage.setItem('token', data.token);
 
         userAuthenticated();
       }
     })
-    .catch(error => {
-      console.error(error);
-    });
+    // .catch(error => {
+    //   console.error(error);
+    // });
 }
 
 function userAuthenticated() {

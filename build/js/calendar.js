@@ -114,17 +114,20 @@ function dateSelected(element) {
     }
     element.classList.add('calendar-selectedDate');
 
-    const selectedInstallDate = new Date(element.getAttribute('id'));
+    
+    const selectedInstallDate = new Date(element.getAttribute('id').replace(/-/g, '/'));
     const installDateString = new Date(selectedInstallDate.setHours(0, 0, 0, 0)).toJSON();
 
+    
     const buttonContainerTitle = document.getElementById('date_selected');
     buttonContainerTitle.innerHTML = selectedInstallDate.toLocaleDateString();
-
+    
     findSelectedDateJobs(`${installDateString.substring(0, installDateString.indexOf('T'))}T00:00:00`);
 }
 
 document.onkeydown = checkKey;
 
+// TODO: Make sure it doesn't work when not logged in
 function checkKey(e) {
     let event = window.event ? window.event : e;
     if (event.keyCode == 37) {

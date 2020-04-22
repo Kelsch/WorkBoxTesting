@@ -37,22 +37,21 @@ async function getJobs(month, year) {
             timesRunGetJobs++;
             let jobs = data;
             const currentCalendar = document.getElementById('calendar_dayContainer');
-
+            
             year = month - 1 == -1 ? year - 1 : year;
             month = month - 1 == -1 ? 12 : month - 1;
             const selectedInstallMonth = new Date(year, month - 1, 1);
-
+            
             const filteredJobs = jobs.filter(job => {
                 let jobInstallDate = new Date(job.installDate);
                 return jobInstallDate >= selectedInstallMonth;
             });
 
             filteredJobs.map(function (job) {
-                const jobInstallDate = new Date(job.installDate);
+                const jobInstallDate = new Date(job.installDate.substring(0, job.installDate.indexOf('T')).replace(/-/g, '/'));
                 const installElement = currentCalendar.querySelector(`[id='indicatorContainer${jobInstallDate.getMonth() + 1}-${jobInstallDate.getDate()}-${jobInstallDate.getFullYear()}']`);
                 if (installElement !== null) {
                     const installColor = determineInstallColor(job.status);
-
                     installElement.innerHTML += `<div class="dateNumber-indicator${installColor}" data-jobid="${job.jobId}"></div>`;
                 }
             });
@@ -144,7 +143,7 @@ function ButtonAnimation(container) {
 }
 
 function TextInputAnimation(container) {
-    const  inputs = container.querySelectorAll('.mdc-text-field');
+    const inputs = container.querySelectorAll('.mdc-text-field');
     if (typeof mdc !== 'undefined') {
         for (let i = 0; i < inputs.length; i++) {
             const element = inputs[i];
