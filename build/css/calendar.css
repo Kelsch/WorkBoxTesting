@@ -60,10 +60,14 @@
 
     .calendar-day:hover {
         background-color: #efefef;
+        /* TODO: Dark Mode */
+        /* background-color: #6d6d6d; */
     }
 
     .calendar-day:active {
         background-color: #dadada;
+        /* TODO: Dark Mode */
+        /* background-color: #565656; */
     }
 
 .calendar-notCurrentMonth {
@@ -79,10 +83,14 @@
 
 .calendar-currentDay {
     background-color: #e4e4e4;
+    /* TODO: Dark Mode */
+    /* background-color: #6d6d6d; */
 }
 
 .calendar-nonWorkDay {
     background-color: #f7f7f7;
+    /* TODO: Dark Mode */
+    /* background-color: #4c4c4c; */
 }
 
 .calendar-selectedDate {
@@ -150,22 +158,32 @@
 .indicator-notReady.mdc-button--unelevated:not(:disabled) {
     background-color: #f4a041;
     color: var(--mdc-theme-on-primary, #fff);
+    /* TODO: Dark Mode */
+    /* background-color: #f4a041d1; */
 }
 .indicator-onRoute.mdc-button--unelevated:not(:disabled) {
     background-color: #f7e017;
     color: var(--mdc-theme-on-primary, #fff);
+    /* TODO: Dark Mode */
+    /* background-color: #00a208bd; */
 }
 .indicator-ready.mdc-button--unelevated:not(:disabled) {
     background-color: #00a208;
     color: var(--mdc-theme-on-primary, #fff);
+    /* TODO: Dark Mode */
+    /* background-color: #00a208bd; */
 }
 .indicator-installed.mdc-button--unelevated:not(:disabled) {
     background-color: #00ccff;
     color: var(--mdc-theme-on-primary, #fff);
+    /* TODO: Dark Mode */
+    /* background-color: #00ccffc9; */
 }
 .indicator-complete.mdc-button--unelevated:not(:disabled) {
     background-color: #808080;
     color: var(--mdc-theme-on-primary, #fff);
+    /* TODO: Dark Mode */
+    /* background-color: #00a208bd; */
 }
 
 @media only screen and (max-width: 425px) {

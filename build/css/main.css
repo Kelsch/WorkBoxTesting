@@ -9,6 +9,8 @@ body {
     height: 100vh;
     margin: 0px;
     overscroll-behavior: contain;
+    /* TODO: Dark Mode */
+    /* background: #333333; */
 }
 
 .app-offline {
@@ -21,6 +23,8 @@ body {
     display: flex;
     flex-direction: column;
     height: 100%;
+    /* TODO: Dark Mode */
+    /* color: white; */
 }
 
 .app-title {
@@ -28,6 +32,8 @@ body {
     margin: 10px 0px;
     font-weight: bold;
     text-align: center;
+    /* TODO: Dark Mode */
+    /* color: white; */
 }
 
 .button-container-title {
