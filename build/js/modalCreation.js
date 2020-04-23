@@ -246,6 +246,27 @@ function designSetInfoClicked(jobId) {
     });
 }
 
+async function hasLayouts() {
+    const cacheName = 'jobs-layout-list';
+    const request = new Request(`${apiURL}/api/installerAppData/getJobsLayouts?jobIdStrings=${window.currentJobIds}`);
+
+    let result;
+    
+    caches.open(cacheName).then(async cache => {
+        await cache.match(request).then(async (response) => {
+            if (response == undefined) {
+                result = false;
+            }
+            else {
+                result = true;
+            }
+            console.log(result)
+            return await result;
+        });
+    });
+
+}
+
 function jobLayouts(jobId) {
     const cacheName = 'jobs-layout-list';
     const request = new Request(`${apiURL}/api/installerAppData/getJobsLayouts?jobIdStrings=${window.currentJobIds}`);

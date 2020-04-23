@@ -201,55 +201,71 @@ class JobCard extends HTMLElement {
 
     connectedCallback() {
         const installColor = determineInstallColor(this.status);
-        
-        this.innerHTML = `
-            <div class="modal-information">
-                <div class="job-datails job-name job-notes">
-                    ${this.name}
-                </div>
-                <div class="job-datails job-address job-notes">
-                    ${this.address}
-                </div>
-                <div class="job-datails job-cabinetCount job-notes">
-                    <span class="job-label">Cab. Count:</span>
-                    ${this.cabinetCount}
-                </div>
-                <div class="job-datails job-notes">
-                    <span class="job-label">H.O.:</span>
-                    ${this.hasHomeOwner ? 'Yes' : 'No'}
-                </div>
-                <div class="job-datails job-notes">
-                    <span class="job-label">Pay:</span>
-                    $${this.installerPay.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString()}
-                </div>
-                <div class="job-datails job-notes">
-                    <span class="job-label">Notes:</span>
-                    ${this.installerNotes === null || this.installerNotes === '' ? '' : this.installerNotes}
-                </div>
-                <div class="job-datails job-buttons">
-                    <span class="job-button mdc-button${installColor}" data-buttontype="info" title="info" jobid="${this.jobId}" onclick="designSetInfoClicked('${this.jobId}')">
-                        <div class="mdc-button__ripple"></div>
-                        <i class="material-icons">info</i>
-                    </span>
-                    <!-- <span class="job-button mdc-button${installColor}" data-buttontype="status" title="status" jobid="${this.jobId}">
-                        <div class="mdc-button__ripple"></div>
-                            <i class="material-icons">directions_run</i>
-                        </span> -->
-                    <!-- <span class="job-button mdc-button${installColor}" data-buttontype="note" title="note" jobid="${this.jobId}">
-                        <div class="mdc-button__ripple"></div>
-                            <i class="material-icons">note</i>
-                        </span> -->
-                    <!-- <span class="job-button mdc-button${installColor}" data-buttontype="job" title="job" jobid="${this.jobId}">
-                        <div class="mdc-button__ripple"></div>
-                            <i class="material-icons">arrow_forward</i>
-                        </span> -->
-                    <span class="job-button layout-button mdc-button${installColor}" data-buttontype="layouts" title="layouts" jobid="${this.jobId}" onclick="jobLayouts('${this.jobId}')">
-                        <div class="mdc-button__ripple"></div>
-                        <i class="material-icons">perm_media</i>
-                    </span>
-                </div>
-            </div>
-        `;
+
+        const cacheName = 'jobs-layout-list';
+        const request = new Request(`${apiURL}/api/installerAppData/getJobsLayouts?jobIdStrings=${window.currentJobIds}`);
+
+        caches.open(cacheName).then(cache => {
+            cache.match(request).then((response) => {
+                let result;
+                
+                if (response == undefined) {
+                    result = false;
+                }
+                else {
+                    result = true;
+                }
+
+                this.innerHTML = `
+                    <div class="modal-information">
+                        <div class="job-datails job-name job-notes">
+                            ${this.name}
+                        </div>
+                        <div class="job-datails job-address job-notes">
+                            ${this.address}
+                        </div>
+                        <div class="job-datails job-cabinetCount job-notes">
+                            <span class="job-label">Cab. Count:</span>
+                            ${this.cabinetCount}
+                        </div>
+                        <div class="job-datails job-notes">
+                            <span class="job-label">H.O.:</span>
+                            ${this.hasHomeOwner ? 'Yes' : 'No'}
+                        </div>
+                        <div class="job-datails job-notes">
+                            <span class="job-label">Pay:</span>
+                            $${this.installerPay.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString()}
+                        </div>
+                        <div class="job-datails job-notes">
+                            <span class="job-label">Notes:</span>
+                            ${this.installerNotes === null || this.installerNotes === '' ? '' : this.installerNotes}
+                        </div>
+                        <div class="job-datails job-buttons">
+                            <button class="job-button mdc-button${installColor}" data-buttontype="info" title="info" jobid="${this.jobId}" onclick="designSetInfoClicked('${this.jobId}')">
+                                <div class="mdc-button__ripple"></div>
+                                <i class="material-icons">info</i>
+                            </button>
+                            <!-- <button class="job-button mdc-button${installColor}" data-buttontype="status" title="status" jobid="${this.jobId}">
+                                <div class="mdc-button__ripple"></div>
+                                    <i class="material-icons">directions_run</i>
+                                </button> -->
+                            <!-- <button class="job-button mdc-button${installColor}" data-buttontype="note" title="note" jobid="${this.jobId}">
+                                <div class="mdc-button__ripple"></div>
+                                    <i class="material-icons">note</i>
+                                </button> -->
+                            <!-- <button class="job-button mdc-button${installColor}" data-buttontype="job" title="job" jobid="${this.jobId}">
+                                <div class="mdc-button__ripple"></div>
+                                    <i class="material-icons">arrow_forward</i>
+                                </button> -->
+                            <button class="job-button layout-button mdc-button${installColor}" data-buttontype="layouts" title="layouts" jobid="${this.jobId}" onclick="jobLayouts('${this.jobId}')" ${result ? '' : 'disabled'}>
+                                <div class="mdc-button__ripple"></div>
+                                <i class="material-icons">perm_media</i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+        });
     }
 }
 customElements.define('job-card', JobCard);

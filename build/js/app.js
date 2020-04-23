@@ -120,10 +120,12 @@ async function login() {
     .then(response => response.json())
     .then(data => {
       if (data === null) {
+        alert('User Name or Password not valid');
         return;
       }
 
       if (Object.keys(data).length === 0 && data.constructor === Object) {
+        alert('User Name or Password not valid');
         return;
       }
 
@@ -159,6 +161,7 @@ async function login() {
     })
     .catch(error => {
       console.error(error);
+      alert('User Name or Password not valid');
       logout();
     });
 }
