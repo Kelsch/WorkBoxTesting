@@ -5,6 +5,8 @@ let cred;
 
 checkLogin();
 
+// window.addEventListener('DOMContentLoaded', checkLogin, false);
+
 function formatPhoneNumber(phoneNumberString) {
   const cleaned = ('' + phoneNumberString).replace(/\D/g, '')
   const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/)
@@ -20,7 +22,9 @@ function handleConnection() {
       if (online) {
         // handle online status
         console.log('online');
-        document.body.classList.remove("app-offline");
+        if (typeof document !== 'undefined') {
+          document.body.classList.remove("app-offline");
+        }
       } else {
         console.log('no connectivity');
       }
@@ -80,12 +84,18 @@ function checkLogin() {
         login();
       });
   }
+  else {
+    login();
+  }
   handleConnection();
 }
 
 async function login() {
+  if (typeof document === 'undefined') {
+    return;
+  }
   const loginForm = document.getElementById('app_loginForm');
-  
+
   let user = {
     userName: loginForm.querySelector('#username').value,
     password: loginForm.querySelector('#password').value
@@ -110,7 +120,11 @@ async function login() {
     .then(response => response.json())
     .then(data => {
       if (data === null) {
-        return false;
+        return;
+      }
+
+      if (Object.keys(data).length === 0 && data.constructor === Object) {
+        return;
       }
 
       if ('credentials' in navigator) {
@@ -121,26 +135,32 @@ async function login() {
               password: data.password,
               name: data.businessId
             });
-  
+
             navigator.credentials.store(newCred);
             cred = newCred;
           } catch (error) {
             cred = {
               id: data.userName,
-              password: data.password, 
+              password: data.password,
               name: data.businessId
             };
           }
         }
-
-        localStorage.setItem('token', data.token);
-
-        userAuthenticated();
       }
+      else {
+        cred = {
+          id: data.userName,
+          password: data.password,
+          name: data.businessId
+        };
+      }
+      localStorage.setItem('token', data.token);
+      userAuthenticated();
     })
-    // .catch(error => {
-    //   console.error(error);
-    // });
+    .catch(error => {
+      console.error(error);
+      logout();
+    });
 }
 
 function userAuthenticated() {

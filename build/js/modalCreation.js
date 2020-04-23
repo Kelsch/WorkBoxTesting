@@ -7,11 +7,11 @@ let resizable, resizer, startY, startHeight;
 
 let initDrag = function (e) {
     resizable = this.parentElement;
-    
+
     startY = e.clientY || e.targetTouches[0].pageY;
-    
+
     startHeight = parseInt(document.defaultView.getComputedStyle(resizable).height, 10);
-    
+
     if (e.type == 'touchstart') {
         document.querySelector('.list-jobs').classList.add('stopScroll');
 
@@ -42,7 +42,7 @@ function doDrag(e) {
 }
 
 function stopDrag() {
-    document.documentElement.removeEventListener('mousemove', doDrag, false);    
+    document.documentElement.removeEventListener('mousemove', doDrag, false);
     document.documentElement.removeEventListener('mouseup', stopDrag, false);
     document.documentElement.removeEventListener('touchmove', doDrag, false);
     document.documentElement.removeEventListener('touchstop', stopDrag, false);
@@ -59,7 +59,7 @@ function resetModal() {
     document.querySelector('.list-jobs').classList.remove('stopScroll');
 
     stopDrag();
-    
+
     let remainingModal = document.querySelector('.modal-card-container-show');
     if (remainingModal !== null) {
         resizable = remainingModal.querySelector('.modal-card');
@@ -68,7 +68,7 @@ function resetModal() {
 
 for (let index = 0; index < hiddenModals.length; index++) {
     const hiddenModal = hiddenModals[index];
-    
+
     resizable = hiddenModal.querySelector('.modal-card'),
         resizer = hiddenModal.querySelector('.modal-jobName'),
         startY, startHeight;
@@ -78,13 +78,13 @@ for (let index = 0; index < hiddenModals.length; index++) {
             resetModal();
         }
     });
-    
+
     hiddenModal.addEventListener('touchstart', (e) => {
         if (e.target.classList.contains('modal-card-container-tint')) {
             resetModal();
         }
     });
-    
+
     resizer.addEventListener('mousedown', initDrag, false);
     resizer.addEventListener('touchstart', initDrag, false);
 }
@@ -99,14 +99,14 @@ async function jobClicked(jobId) {
     const request = new Request(`${apiURL}/api/installerAppData/getInstallIndicators?businessId=${cred.name}`);
 
     const jobDetailDiv = jobModal.querySelector(".modal-info-container");
-    
+
     caches.open(cacheName).then(cache => {
         cache.match(request).then((response) => {
             if (response == undefined) {
                 return;
             }
             response.json().then(jobs => {
-                
+
                 jobDetailDiv.innerHTML = '';
                 const filteredJobs = jobs.filter(job => {
                     return job.jobId === jobId;
@@ -174,7 +174,7 @@ function designSetInfoClicked(jobId) {
                     const modalName = designSetModal.querySelector(".modal-jobName");
 
                     const designSetInfoCreatedElement = document.createElement('designset-card');
-                    
+
                     designSetInfoCreatedElement.name = fJob.name;
                     designSetInfoCreatedElement.orderId = fJob.orderId;
                     designSetInfoCreatedElement.salesRepName = fJob.salesRepName;
@@ -226,7 +226,7 @@ function designSetInfoClicked(jobId) {
                             });
                         });
                     });
-                    
+
                     modalName.innerHTML = fJob.name;
                 });
 

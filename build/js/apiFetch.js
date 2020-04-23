@@ -19,7 +19,8 @@ function getNonWorkDays() {
                     dateElement.classList.add('calendar-nonWorkDay');
                 }
             });
-        });
+        })
+        .catch(() => logout());
 }
 
 let timesRunGetJobs = 0;
@@ -37,11 +38,11 @@ async function getJobs(month, year) {
             timesRunGetJobs++;
             let jobs = data;
             const currentCalendar = document.getElementById('calendar_dayContainer');
-            
+
             year = month - 1 == -1 ? year - 1 : year;
             month = month - 1 == -1 ? 12 : month - 1;
             const selectedInstallMonth = new Date(year, month - 1, 1);
-            
+
             const filteredJobs = jobs.filter(job => {
                 let jobInstallDate = new Date(job.installDate);
                 return jobInstallDate >= selectedInstallMonth;
@@ -55,7 +56,8 @@ async function getJobs(month, year) {
                     installElement.innerHTML += `<div class="dateNumber-indicator${installColor}" data-jobid="${job.jobId}"></div>`;
                 }
             });
-        });
+        })
+        .catch(() => logout());
     timesRunGetJobs = 0;
 }
 
