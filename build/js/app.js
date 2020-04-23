@@ -165,12 +165,14 @@ async function login() {
 }
 
 function userAuthenticated() {
+  const topbarMenu = document.getElementById('settings_menu');
   const loginForm = document.getElementById('app_loginForm');
   if (token === null) {
     token = localStorage.getItem('token');
   }
 
   loginForm.classList.remove('loginForm-show');
+  topbarMenu.classList.remove('loginForm-none');
   showCalendar(currentMonth, currentYear);
   setupSwipeListener(calendarElement);
 }
@@ -179,6 +181,7 @@ function logout() {
   token = null;
   localStorage.removeItem('token');
 
+  const topbarMenu = document.getElementById('settings_menu');
   const loginForm = document.getElementById('app_loginForm');
   const calendarContainer = document.getElementById('create_calendar');
   const dateSelectedContainer = document.getElementById('date_selected');
@@ -187,6 +190,8 @@ function logout() {
   calendarContainer.innerHTML = "";
   dateSelectedContainer.innerHTML = "";
   jobContainer.innerHTML = "";
+
+  topbarMenu.classList.add('loginForm-none');
 
   loginForm.classList.add('loginForm-show');
 }

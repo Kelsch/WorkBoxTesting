@@ -19,8 +19,7 @@
 }
 
     .calendar-monthHeader:hover {
-        /* color: #c3c3c3; */
-        background-color: #e4e4e4;
+        background-color: var(--hover);
         border-radius: 20px;
     }
 
@@ -59,15 +58,13 @@
 }
 
     .calendar-day:hover {
-        background-color: #efefef;
-        /* TODO: Dark Mode */
-        /* background-color: #6d6d6d; */
+        /* Dark/Light Mode */
+        background-color: var(--hover);
     }
 
     .calendar-day:active {
-        background-color: #dadada;
-        /* TODO: Dark Mode */
-        /* background-color: #565656; */
+        /* Dark/Light Mode */
+        background-color: var(--active);
     }
 
 .calendar-notCurrentMonth {
@@ -83,18 +80,18 @@
 
 .calendar-currentDay {
     background-color: #e4e4e4;
-    /* TODO: Dark Mode */
-    /* background-color: #6d6d6d; */
+    /* Dark/Light Mode */
+    background-color: var(--currentDay);
 }
 
 .calendar-nonWorkDay {
-    background-color: #f7f7f7;
-    /* TODO: Dark Mode */
-    /* background-color: #4c4c4c; */
+    /* Dark/Light Mode */
+    background-color: var(--nonWorkDay);
 }
 
 .calendar-selectedDate {
-    background-color: #e8e8e8;
+    /* Dark/Light Mode */
+    background-color: var(--selected);
 }
 
 .dateNumber-jobIndicator {
@@ -124,66 +121,66 @@
 }
 
 .indicator-notReady {
-    background-color: #f4a041;
+    background-color: var(--notReady);
 }
 .indicator-onRoute {
-    background-color: #f7e017;
+    background-color: var(--onRoute);
 }
 .indicator-ready {
-    background-color: #00a208;
+    background-color: var(--ready);
 }
 .indicator-installed {
-    background-color: #00ccff;
+    background-color: var(--installed);
 }
 .indicator-complete {
-    background-color: #808080;
+    background-color: var(--complete);
 }
 
 .indicator-notReady.mdc-button:not(:disabled) {
-    color: #f4a041;
+    color: var(--notReady);
 }
 .indicator-onRoute.mdc-button:not(:disabled) {
-    color: #f7e017;
+    color: var(--onRoute);
 }
 .indicator-ready.mdc-button:not(:disabled) {
-    color: #00a208;
+    color: var(--ready);
 }
 .indicator-installed.mdc-button:not(:disabled) {
-    color: #00ccff;
+    color: var(--installed);
 }
 .indicator-complete.mdc-button:not(:disabled) {
-    color: #808080;
+    color: var(--complete);
 }
 
 .indicator-notReady.mdc-button--unelevated:not(:disabled) {
     background-color: #f4a041;
-    color: var(--mdc-theme-on-primary, #fff);
-    /* TODO: Dark Mode */
-    /* background-color: #f4a041d1; */
+    color: var(--text);
+    /* Dark/Light Mode */
+    background-color: var(--notReady);
 }
 .indicator-onRoute.mdc-button--unelevated:not(:disabled) {
     background-color: #f7e017;
-    color: var(--mdc-theme-on-primary, #fff);
-    /* TODO: Dark Mode */
-    /* background-color: #00a208bd; */
+    color: var(--text);
+    /* Dark/Light Mode */
+    background-color: var(--onRoute);
 }
 .indicator-ready.mdc-button--unelevated:not(:disabled) {
     background-color: #00a208;
-    color: var(--mdc-theme-on-primary, #fff);
-    /* TODO: Dark Mode */
-    /* background-color: #00a208bd; */
+    color: var(--text);
+    /* Dark/Light Mode */
+    background-color: var(--ready);
 }
 .indicator-installed.mdc-button--unelevated:not(:disabled) {
     background-color: #00ccff;
-    color: var(--mdc-theme-on-primary, #fff);
-    /* TODO: Dark Mode */
-    /* background-color: #00ccffc9; */
+    color: var(--text);
+    /* Dark/Light Mode */
+    background-color: var(--installed);
 }
 .indicator-complete.mdc-button--unelevated:not(:disabled) {
-    background-color: #808080;
-    color: var(--mdc-theme-on-primary, #fff);
-    /* TODO: Dark Mode */
-    /* background-color: #00a208bd; */
+    /* background-color: #808080; */
+    color: var(--text);
+    /* Dark/Light Mode */
+    background-color: var(--complete);
 }
 
 @media only screen and (max-width: 425px) {

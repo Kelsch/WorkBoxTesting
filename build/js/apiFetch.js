@@ -1,7 +1,23 @@
 let token = localStorage.getItem('token');
+const appTopBar = document.getElementById('app_topBar');
+const darkModeCheckbox = appTopBar.querySelector('#darkMode-checkbox');
+const body = document.body;
+
+// Get user's current theme
+const theme = localStorage.getItem('theme');
+if (theme) {
+    body.classList.add(theme);
+}
+
+const sleep = (timeout) => new Promise(resolve => setTimeout(resolve, timeout));
 
 TextInputAnimation(document.getElementById('app_loginForm'));
 ButtonAnimation(document.getElementById('app_loginForm'));
+IconButtonAnimation(appTopBar);
+MenuAnimation(appTopBar);
+CheckboxAnimation(appTopBar);
+
+// darkModeCheck();
 
 function getNonWorkDays() {
     fetch(`${apiURL}/api/installerAppData/getNonWorkDays`, {
@@ -144,6 +160,47 @@ function ButtonAnimation(container) {
     }
 }
 
+function IconButtonAnimation(container) {
+    const buttons = container.querySelectorAll('.mdc-icon-button');
+    if (typeof mdc !== 'undefined') {
+        for (let i = 0; i < buttons.length; i++) {
+            const element = buttons[i];
+            const rippleIcon = mdc.ripple.MDCRipple.attachTo(element);
+            rippleIcon.unbounded = true;
+        }
+    }
+}
+
+function MenuAnimation(container) {
+    const buttons = container.querySelectorAll('.mdc-menu');
+
+    if (typeof mdc !== 'undefined') {
+        for (let i = 0; i < buttons.length; i++) {
+            const element = buttons[i];
+            const menu = mdc.menu.MDCMenu.attachTo(element);
+
+            const btn = container.querySelector('.settings-button');
+            btn.addEventListener('click', async () => {
+                menu.open = !menu.open;
+
+                await sleep(100);
+                element.style.top = '10px';
+                element.style.right = '10px';
+            });
+        }
+    }
+}
+
+function CheckboxAnimation(container) {
+    const buttons = container.querySelectorAll('.mdc-checkbox');
+    if (typeof mdc !== 'undefined') {
+        for (let i = 0; i < buttons.length; i++) {
+            const element = buttons[i];
+            const ckbx = mdc.checkbox.MDCCheckbox.attachTo(element);
+        }
+    }
+}
+
 function TextInputAnimation(container) {
     const inputs = container.querySelectorAll('.mdc-text-field');
     if (typeof mdc !== 'undefined') {
@@ -152,6 +209,19 @@ function TextInputAnimation(container) {
             mdc.textField.MDCTextField.attachTo(element);
         }
     }
+}
+
+async function darkModeCheck() {
+    await sleep(100);
+
+    // if (localStorage.hasOwnProperty('darkMode') && !boxChecked) {
+    //     darkModeCheckbox.checked = (localStorage.getItem('darkMode') === 'true');
+    // }
+    // localStorage.removeItem('darkMode');
+    // localStorage.setItem('darkMode', darkModeCheckbox.checked);
+
+    body.classList.replace('light', 'dark');
+    localStorage.setItem('theme', darkModeCheckbox.checked ? 'dark' : 'light');
 }
 
 function determineInstallColor(jobStatus) {

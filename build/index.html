@@ -26,7 +26,7 @@
     <script src="js/swiped-events.js"></script>
 </head>
 
-<body>
+<body class="light">
     <div class="refresher">
         <div class="loading-bar"></div>
         <div class="loading-bar"></div>
@@ -35,9 +35,33 @@
     </div>
 
     <div id="app_container" class="app-container">
-        <div class="app-topBar">
+        <div id="app_topBar" class="app-topBar">
             <div class="app-title">PDInstall</div>
-            <button class="mdc-icon-button material-icons settings-button">settings</button>
+            <div id="settings_menu" class="mdc-menu-surface--anchor">
+                <button class="mdc-icon-button material-icons settings-button">settings</button>
+                <div class="mdc-menu mdc-menu-surface">
+                    <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical" tabindex="-1">
+                        <li class="mdc-list-item" role="menuitem" onclick="darkModeCheck()">
+                            <div class="mdc-checkbox">
+                                <input type="checkbox" class="mdc-checkbox__native-control" id="darkMode-checkbox"/>
+                                <div class="mdc-checkbox__background">
+                                    <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                                        <path class="mdc-checkbox__checkmark-path" fill="none"
+                                            d="M1.73,12.91 8.1,19.28 22.79,4.59" />
+                                    </svg>
+                                    <div class="mdc-checkbox__mixedmark"></div>
+                                </div>
+                                <div class="mdc-checkbox__ripple"></div>
+                            </div>
+                            <label for="darkMode-checkbox" class="mdc-list-item__text">Dark Mode</label>
+
+                        </li>
+                        <li class="mdc-list-item" role="menuitem" onclick="logout()">
+                            <span class="mdc-list-item__text">Logout</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
 
         <form id="app_loginForm" class="loginForm-none loginForm-show" onsubmit="checkLogin(event);" method="POST">

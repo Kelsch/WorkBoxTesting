@@ -3,19 +3,75 @@ body, html {
     width: 100%;
 }
 
+:root {
+    --black0: #000;
+    --white0: #fff;
+    --white1: #e4e4e4;
+    --white2: #dadada;
+    --white3: #f7f7f7;
+    --white4: #e8e8e8;
+    --gray0: #333333;
+    --gray1: #6b6b6b;
+    --gray2: #565656;
+    --gray3: #4c4c4c;
+
+    --orange0: #f4a041;
+    --yellow0: #f7e017;
+    --green0: #00a208;
+    --blue0: #00ccff;
+    --gray4: #808080;
+
+    --orange1: #f4a041d1;
+    --yellow1: #00a208bd;
+    --green1: #00a208bd;
+    --blue1: #00ccffc9;
+    --gray5: #808080a6;
+}
+
+.light {
+    --bg: var(--white0);
+    --text: var(--black0);
+    --hover: var(--white1);
+    --active: var(--white2);
+    --selected: var(--white4);
+
+    --currentDay: var(--white1);
+    --nonWorkDay: var(--white3);
+
+    --notReady: var(--orange0);
+    --onRoute: var(--yellow0);
+    --ready: var(--green0);
+    --installed: var(--blue0);
+    --complete: var(--gray4);
+}
+
+.dark {
+    --bg: var(--gray0);
+    --text: var(--white0);
+    --hover: var(--gray1);
+    --active: var(--gray2);
+    --selected: var(--gray3);
+
+    --currentDay: var(--gray1);
+    --nonWorkDay: var(--gray3);
+
+    --notReady: var(--orange1);
+    --onRoute: var(--yellow1);
+    --ready: var(--green1);
+    --installed: var(--blue1);
+    --complete: var(--gray5);
+}
+
 body {
     font-family: 'Roboto', 'sans-serif';
-    background: white;
 
     box-sizing: border-box;
-    /* padding: 8px 8px 0px 8px; */
-    /* overflow: hidden; */
-    /* width: 100%; */
     height: 100vh;
     margin: 0px;
     overscroll-behavior: contain;
-    /* TODO: Dark Mode */
-    /* background: #333333; */
+    /* Dark/Light Mode */
+    background: var(--bg);
+    transition: background 500ms ease-in-out, color 1000ms ease-in-out;
 }
 
 .app-offline {
@@ -32,8 +88,8 @@ body {
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-    /* TODO: Dark Mode */
-    /* color: white; */
+    /* Dark/Light Mode */
+    color: var(--text);
 }
 
 .app-title {
@@ -42,8 +98,6 @@ body {
     font-weight: bold;
     text-align: center;
     flex-grow: 1;
-    /* TODO: Dark Mode */
-    /* color: white; */
 }
 
 .button-container-title {
@@ -51,11 +105,11 @@ body {
     font-size: 0.9rem;
     text-align: center;
     font-weight: bold;
-    color: #6b6b6b;
+    user-select: none;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-    user-select: none;
+    color: var(--text);
 }
 
 .list-jobs {
@@ -82,6 +136,6 @@ body {
 
 .settings-button.mdc-icon-button:not(:disabled) {
     position: absolute;
-    align-self: center;
+    top: 5px;
     right: 10px;
 }
