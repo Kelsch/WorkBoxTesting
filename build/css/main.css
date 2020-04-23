@@ -28,6 +28,10 @@ body {
     display: flex;
     flex-direction: column;
     height: 100%;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
     /* TODO: Dark Mode */
     /* color: white; */
 }
@@ -37,6 +41,7 @@ body {
     margin: 10px 0px;
     font-weight: bold;
     text-align: center;
+    flex-grow: 1;
     /* TODO: Dark Mode */
     /* color: white; */
 }
@@ -70,24 +75,13 @@ body {
     align-self: center;
 }
 
-/* 
-ul {
-    list-style-type: none;
-    padding: 0;
-    overflow-y: auto;
-    margin: 1px;
+.app-topBar {
+    display: flex;
+    justify-content: flex-end;
 }
 
-li {
-    background: #fff;
-    padding: 1em;
-    box-shadow: 1px 1px rgba(0,0,0,.1);
-    margin-bottom: 10px;
-    font-weight: bold;
+.settings-button.mdc-icon-button:not(:disabled) {
+    position: absolute;
+    align-self: center;
+    right: 10px;
 }
-
-li span {
-    display: block;
-    font-weight: normal;
-    font-size: .8em;
-} */

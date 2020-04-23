@@ -1,5 +1,5 @@
-// const apiURL = 'https://pdwebapi.longformgibberish.com';
-const apiURL = 'https://pdwebapi-mf5.conveyor.cloud';
+const apiURL = 'https://pdwebapi.longformgibberish.com';
+// const apiURL = 'https://pdwebapi-mf5.conveyor.cloud';
 let loginButtonPressed = false;
 let cred;
 
@@ -120,7 +120,6 @@ async function login() {
     .then(response => response.json())
     .then(data => {
       if (data === null) {
-        alert('User Name or Password not valid');
         return;
       }
 
@@ -161,7 +160,6 @@ async function login() {
     })
     .catch(error => {
       console.error(error);
-      alert('User Name or Password not valid');
       logout();
     });
 }

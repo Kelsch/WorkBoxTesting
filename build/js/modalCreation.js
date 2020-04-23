@@ -119,6 +119,7 @@ async function jobClicked(jobId) {
 
                     jobCreatedElement.jobId = fJob.jobId;
                     jobCreatedElement.name = fJob.name;
+                    jobCreatedElement.orderId = fJob.orderId;
                     jobCreatedElement.cabinetCount = fJob.cabinetCount;
                     jobCreatedElement.hasHomeOwner = fJob.hasHomeOwner;
                     jobCreatedElement.installerPay = fJob.installerPay;
@@ -128,8 +129,8 @@ async function jobClicked(jobId) {
 
                     jobDetailDiv.appendChild(jobCreatedElement);
 
-                    modalName.innerHTML = fJob.name;
-                    layoutModalName.innerHTML = fJob.name;
+                    modalName.innerHTML = `${fJob.orderId} - ${fJob.name}`;
+                    layoutModalName.innerHTML = `${fJob.orderId} - ${fJob.name}`;
                 });
 
                 const buttons = jobDetailDiv.querySelectorAll('.mdc-button');
@@ -227,7 +228,7 @@ function designSetInfoClicked(jobId) {
                         });
                     });
 
-                    modalName.innerHTML = fJob.name;
+                    modalName.innerHTML = `${fJob.orderId} - ${fJob.name}`;
                 });
 
 

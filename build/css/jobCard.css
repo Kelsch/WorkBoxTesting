@@ -19,10 +19,10 @@
     /* transition: all 45ms ease-in; */
     font-weight: 500;
     letter-spacing: .0892857143em;
+    /* user-select: none;
     -webkit-user-select: none;
     -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+    -ms-user-select: none; */
     max-height: 90vh;
     height: 400px;
     bottom: 0;

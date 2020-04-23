@@ -219,7 +219,7 @@ class JobCard extends HTMLElement {
                 this.innerHTML = `
                     <div class="modal-information">
                         <div class="job-datails job-name job-notes">
-                            ${this.name}
+                            ${this.orderId} - ${this.name}
                         </div>
                         <div class="job-datails job-address job-notes">
                             ${this.address}
