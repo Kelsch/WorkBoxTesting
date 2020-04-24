@@ -13,7 +13,9 @@
 }
 
 .modal-card {
-    background-color: #e2e2e2;
+    /* Dark/Light Mode */
+    background-color: var(--modal-bg);
+    color: var(--text);
     font-size: .875rem;
     pointer-events: none;
     /* transition: all 45ms ease-in; */
@@ -72,7 +74,8 @@ job-card {
     margin: 5px;
     padding: 5px;
     border-radius: 3px;
-    background-color: white;
+    /* Dark/Light Mode */
+    background-color: var(--modal-info-bg);
     height: auto;
 }
 
@@ -130,7 +133,7 @@ job-card {
 }
 
 .designSet-product:nth-child(odd) {
-    background-color: #cacaca;
+    background-color: var(--product-odd);
 }
 .designSet-product {
     display: grid;

@@ -23,7 +23,7 @@ function handleConnection() {
         // handle online status
         console.log('online');
         if (typeof document !== 'undefined') {
-          document.body.classList.remove("app-offline");
+          document.getElementById('offline_indicator').classList.remove("offline-show");
         }
       } else {
         console.log('no connectivity');
@@ -32,7 +32,7 @@ function handleConnection() {
   } else {
     // handle offline status
     console.log('offline');
-    document.body.classList.add("app-offline");
+    document.getElementById('offline_indicator').classList.add("offline-show");
   }
 }
 

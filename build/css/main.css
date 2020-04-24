@@ -5,15 +5,22 @@ body, html {
 
 :root {
     --black0: #000;
+    --black2: #00000061;
+    --black3: #000000de;
     --white0: #fff;
     --white1: #e4e4e4;
     --white2: #dadada;
     --white3: #f7f7f7;
     --white4: #e8e8e8;
+    --white5: #e2e2e2;
+    --white6: #cacaca;
     --gray0: #333333;
     --gray1: #6b6b6b;
     --gray2: #565656;
     --gray3: #4c4c4c;
+    --gray6: #c5c5c5;
+    --gray7: #ffffffb5;
+    --gray8: #00000099;
 
     --orange0: #f4a041;
     --yellow0: #f7e017;
@@ -26,6 +33,10 @@ body, html {
     --green1: #00a208bd;
     --blue1: #00ccffc9;
     --gray5: #808080a6;
+
+    --orange2: #ee9a00;
+    --red0: #b00020;
+    --red1: #ff002e;
 }
 
 .light {
@@ -37,12 +48,27 @@ body, html {
 
     --currentDay: var(--white1);
     --nonWorkDay: var(--white3);
+    --notCurrentMonth: var(--gray6);
 
     --notReady: var(--orange0);
     --onRoute: var(--yellow0);
     --ready: var(--green0);
     --installed: var(--blue0);
     --complete: var(--gray4);
+
+    --jobButton-text: var(--white0);
+    --input-border: var(--black2);
+    --input-border-hover: var(--black3);
+    --input-border-focus: var(--orange2);
+    --input-color: var(--gray8);
+    --input-color-focus: var(--orange2);
+    --input-color-invalid: var(--red0);
+    --mdc-theme-primary: var(--orange2);
+
+    --modal-bg: var(--white5);
+    --modal-info-bg: var(--white0);
+
+    --product-odd: var(--white6);
 }
 
 .dark {
@@ -54,12 +80,27 @@ body, html {
 
     --currentDay: var(--gray1);
     --nonWorkDay: var(--gray3);
+    --notCurrentMonth: var(--gray6);
 
     --notReady: var(--orange1);
     --onRoute: var(--yellow1);
     --ready: var(--green1);
     --installed: var(--blue1);
     --complete: var(--gray5);
+
+    --jobButton-text: var(--white0);
+    --input-border: var(--gray7);
+    --input-border-hover: var(--white0);
+    --input-border-focus: var(--orange2);
+    --input-color: var(--white3);
+    --input-color-focus: var(--orange2);
+    --input-color-invalid: var(--red1);
+    --mdc-theme-primary: var(--orange2);
+
+    --modal-bg: var(--gray1);
+    --modal-info-bg: var(--gray3);
+
+    --product-odd: var(--gray1);
 }
 
 body {
@@ -74,10 +115,18 @@ body {
     transition: background 500ms ease-in-out, color 1000ms ease-in-out;
 }
 
-.app-offline {
-    border-style: solid;
-    border-width: 2px;
-    border-color: red;
+.offline-none {
+    position: absolute;
+    opacity: 0;
+    top: 20px;
+    right: 0px;
+    color: var(--red1);
+    transition: opacity 1000ms ease-in-out, right 500ms ease-in-out;
+}
+.offline-show {
+    opacity: 1;
+    top: 20px;
+    right: 55px;
 }
 
 .app-container {
@@ -138,4 +187,31 @@ body {
     position: absolute;
     top: 5px;
     right: 10px;
+}
+
+.mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__leading.customInputBorder,
+.mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__notch.customInputBorder,
+.mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__trailing.customInputBorder {
+    border-color: var(--input-border);
+}
+
+.mdc-text-field--outlined:not(.mdc-text-field--disabled):not(.mdc-text-field--focused) .mdc-text-field__input:hover~.mdc-notched-outline .mdc-notched-outline__leading.customInputBorder,
+.mdc-text-field--outlined:not(.mdc-text-field--disabled):not(.mdc-text-field--focused) .mdc-text-field__input:hover~.mdc-notched-outline .mdc-notched-outline__notch.customInputBorder,
+.mdc-text-field--outlined:not(.mdc-text-field--disabled):not(.mdc-text-field--focused) .mdc-text-field__input:hover~.mdc-notched-outline .mdc-notched-outline__trailing.customInputBorder,
+.mdc-text-field--outlined:not(.mdc-text-field--disabled):not(.mdc-text-field--focused) .mdc-text-field__icon:hover~.mdc-notched-outline .mdc-notched-outline__leading.customInputBorder,
+.mdc-text-field--outlined:not(.mdc-text-field--disabled):not(.mdc-text-field--focused) .mdc-text-field__icon:hover~.mdc-notched-outline .mdc-notched-outline__notch.customInputBorder,
+.mdc-text-field--outlined:not(.mdc-text-field--disabled):not(.mdc-text-field--focused) .mdc-text-field__icon:hover~.mdc-notched-outline .mdc-notched-outline__trailing.customInputBorder {
+    border-color: var(--input-border-hover);
+}
+
+.mdc-text-field:not(.mdc-text-field--disabled):not(.mdc-text-field--invalid) .mdc-floating-label.customInputColor {
+    color: var(--input-color);
+}
+
+.mdc-text-field--invalid:not(.mdc-text-field--disabled) .mdc-floating-label.customInputColor {
+    color: var(--input-color-invalid);
+}
+
+.mdc-text-field--focused:not(.mdc-text-field--disabled):not(.mdc-text-field--invalid) .mdc-floating-label.customInputColor {
+    color: var(--input-color-focus);
 }

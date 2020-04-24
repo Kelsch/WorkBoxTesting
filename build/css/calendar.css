@@ -68,7 +68,7 @@
     }
 
 .calendar-notCurrentMonth {
-    color: #a0a0a0;
+    color: var(--notCurrentMonth);
 }
 
 .calendar-date {
@@ -153,32 +153,27 @@
 }
 
 .indicator-notReady.mdc-button--unelevated:not(:disabled) {
-    background-color: #f4a041;
-    color: var(--text);
+    color: var(--jobButton-text);
     /* Dark/Light Mode */
     background-color: var(--notReady);
 }
 .indicator-onRoute.mdc-button--unelevated:not(:disabled) {
-    background-color: #f7e017;
-    color: var(--text);
+    color: var(--jobButton-text);
     /* Dark/Light Mode */
     background-color: var(--onRoute);
 }
 .indicator-ready.mdc-button--unelevated:not(:disabled) {
-    background-color: #00a208;
-    color: var(--text);
+    color: var(--jobButton-text);
     /* Dark/Light Mode */
     background-color: var(--ready);
 }
 .indicator-installed.mdc-button--unelevated:not(:disabled) {
-    background-color: #00ccff;
-    color: var(--text);
+    color: var(--jobButton-text);
     /* Dark/Light Mode */
     background-color: var(--installed);
 }
 .indicator-complete.mdc-button--unelevated:not(:disabled) {
-    /* background-color: #808080; */
-    color: var(--text);
+    color: var(--jobButton-text);
     /* Dark/Light Mode */
     background-color: var(--complete);
 }

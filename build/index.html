@@ -38,6 +38,7 @@
         <div id="app_topBar" class="app-topBar">
             <div class="app-title">PDInstall</div>
             <div id="settings_menu" class="mdc-menu-surface--anchor">
+                <div id="offline_indicator" class="offline-none">Offline</div>
                 <button class="mdc-icon-button material-icons settings-button">settings</button>
                 <div class="mdc-menu mdc-menu-surface">
                     <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical" tabindex="-1">
@@ -68,21 +69,21 @@
             <div class="mdc-text-field mdc-text-field--outlined">
                 <input class="mdc-text-field__input" type="text" id="username" required>
                 <div class="mdc-notched-outline">
-                    <div class="mdc-notched-outline__leading"></div>
-                    <div class="mdc-notched-outline__notch">
-                        <label for="username" class="mdc-floating-label">User Name</label>
+                    <div class="mdc-notched-outline__leading customInputBorder"></div>
+                    <div class="mdc-notched-outline__notch customInputBorder">
+                        <label for="username" class="mdc-floating-label customInputColor">User Name</label>
                     </div>
-                    <div class="mdc-notched-outline__trailing"></div>
+                    <div class="mdc-notched-outline__trailing customInputBorder"></div>
                 </div>
             </div>
             <div class="mdc-text-field mdc-text-field--outlined">
                 <input class="mdc-text-field__input" type="password" id="password" required>
                 <div class="mdc-notched-outline">
-                    <div class="mdc-notched-outline__leading"></div>
-                    <div class="mdc-notched-outline__notch">
-                        <label for="password" class="mdc-floating-label">Password</label>
+                    <div class="mdc-notched-outline__leading customInputBorder"></div>
+                    <div class="mdc-notched-outline__notch customInputBorder">
+                        <label for="password" class="mdc-floating-label customInputColor">Password</label>
                     </div>
-                    <div class="mdc-notched-outline__trailing"></div>
+                    <div class="mdc-notched-outline__trailing customInputBorder"></div>
                 </div>
             </div>
             <button type="submit" class="mdc-button mdc-button--unelevated" value="Login">

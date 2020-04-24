@@ -7,6 +7,7 @@ const body = document.body;
 const theme = localStorage.getItem('theme');
 if (theme) {
     body.classList.add(theme);
+    darkModeCheckbox.checked = theme == 'dark' ? true : false;
 }
 
 const sleep = (timeout) => new Promise(resolve => setTimeout(resolve, timeout));
@@ -16,8 +17,6 @@ ButtonAnimation(document.getElementById('app_loginForm'));
 IconButtonAnimation(appTopBar);
 MenuAnimation(appTopBar);
 CheckboxAnimation(appTopBar);
-
-// darkModeCheck();
 
 function getNonWorkDays() {
     fetch(`${apiURL}/api/installerAppData/getNonWorkDays`, {
@@ -128,6 +127,9 @@ async function findSelectedDateJobs(selectedInstallDate) {
 
 async function getDesignSets(jobIds) {
     window.currentJobIds = jobIds;
+    if (jobIds.length <= 0) {
+        return;
+    }
     fetch(`${apiURL}/api/installerAppData/getInstallJobsDesignSets?jobIdStrings=${jobIds.toString()}`, {
         headers: {
             'Authorization': `Bearer ${token}`
@@ -137,17 +139,18 @@ async function getDesignSets(jobIds) {
 }
 
 async function getLayouts(jobIds) {
-    if (jobIds !== null) {
-        fetch(`${apiURL}/api/installerAppData/getJobsLayouts?jobIdStrings=${jobIds.toString()}`, {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        })
-            .then(response => response.json())
-            .catch(err => {
-                // console.error(err);
-            });
+    if (jobIds.length <= 0) {
+        return;
     }
+    fetch(`${apiURL}/api/installerAppData/getJobsLayouts?jobIdStrings=${jobIds.toString()}`, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+        .then(response => response.json())
+        .catch(err => {
+            // console.error(err);
+        });
 }
 
 function ButtonAnimation(container) {
@@ -220,8 +223,14 @@ async function darkModeCheck() {
     // localStorage.removeItem('darkMode');
     // localStorage.setItem('darkMode', darkModeCheckbox.checked);
 
-    body.classList.replace('light', 'dark');
-    localStorage.setItem('theme', darkModeCheckbox.checked ? 'dark' : 'light');
+    const themeStyle = darkModeCheckbox.checked ? 'dark' : 'light';
+    if (themeStyle == 'dark') {
+        body.classList.replace('light', 'dark');
+    }
+    else {
+        body.classList.replace('dark', 'light');
+    }
+    localStorage.setItem('theme', themeStyle);
 }
 
 function determineInstallColor(jobStatus) {
