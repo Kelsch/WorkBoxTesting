@@ -1,13 +1,14 @@
 let token = localStorage.getItem('token');
 const appTopBar = document.getElementById('app_topBar');
 const darkModeCheckbox = appTopBar.querySelector('#darkMode-checkbox');
+const darkModeSwitch = appTopBar.querySelector('#darkMode-switch');
 const body = document.body;
 
 // Get user's current theme
 const theme = localStorage.getItem('theme');
 if (theme) {
     body.classList.add(theme);
-    darkModeCheckbox.checked = theme == 'dark' ? true : false;
+    darkModeSwitch.checked = theme == 'dark' ? true : false;
 }
 
 const sleep = (timeout) => new Promise(resolve => setTimeout(resolve, timeout));
@@ -17,6 +18,7 @@ ButtonAnimation(document.getElementById('app_loginForm'));
 IconButtonAnimation(appTopBar);
 MenuAnimation(appTopBar);
 CheckboxAnimation(appTopBar);
+SwitchAnimation(appTopBar);
 
 function getNonWorkDays() {
     fetch(`${apiURL}/api/installerAppData/getNonWorkDays`, {
@@ -139,18 +141,20 @@ async function getDesignSets(jobIds) {
 }
 
 async function getLayouts(jobIds) {
-    if (jobIds.length <= 0) {
-        return;
+    // if (jobIds.length <= 0) {
+    //     return;
+    // }
+    if (jobIds !== null) {
+        fetch(`${apiURL}/api/installerAppData/getJobsLayouts?jobIdStrings=${jobIds.toString()}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(response => response.json())
+            .catch(err => {
+                // console.error(err);
+            });
     }
-    fetch(`${apiURL}/api/installerAppData/getJobsLayouts?jobIdStrings=${jobIds.toString()}`, {
-        headers: {
-            'Authorization': `Bearer ${token}`
-        }
-    })
-        .then(response => response.json())
-        .catch(err => {
-            // console.error(err);
-        });
 }
 
 function ButtonAnimation(container) {
@@ -204,6 +208,16 @@ function CheckboxAnimation(container) {
     }
 }
 
+function SwitchAnimation(container) {
+    const switches = container.querySelectorAll('.mdc-switch');
+    if (typeof mdc !== 'undefined') {
+        for (let i = 0; i < switches.length; i++) {
+            const element = switches[i];
+            const switchMDC = mdc.switchControl.MDCSwitch.attachTo(element);
+        }
+    }
+}
+
 function TextInputAnimation(container) {
     const inputs = container.querySelectorAll('.mdc-text-field');
     if (typeof mdc !== 'undefined') {
@@ -215,15 +229,13 @@ function TextInputAnimation(container) {
 }
 
 async function darkModeCheck() {
-    await sleep(100);
-
     // if (localStorage.hasOwnProperty('darkMode') && !boxChecked) {
     //     darkModeCheckbox.checked = (localStorage.getItem('darkMode') === 'true');
     // }
     // localStorage.removeItem('darkMode');
     // localStorage.setItem('darkMode', darkModeCheckbox.checked);
 
-    const themeStyle = darkModeCheckbox.checked ? 'dark' : 'light';
+    const themeStyle = darkModeSwitch.checked ? 'dark' : 'light';
     if (themeStyle == 'dark') {
         body.classList.replace('light', 'dark');
     }

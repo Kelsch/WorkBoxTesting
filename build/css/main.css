@@ -105,7 +105,6 @@ body, html {
 
 body {
     font-family: 'Roboto', 'sans-serif';
-
     box-sizing: border-box;
     height: 100vh;
     margin: 0px;
@@ -183,6 +182,10 @@ body {
     justify-content: flex-end;
 }
 
+.darkMode-switch-label {
+    padding-left: 10px;
+}
+
 .settings-button.mdc-icon-button:not(:disabled) {
     position: absolute;
     top: 5px;
@@ -214,4 +217,21 @@ body {
 
 .mdc-text-field--focused:not(.mdc-text-field--disabled):not(.mdc-text-field--invalid) .mdc-floating-label.customInputColor {
     color: var(--input-color-focus);
+}
+
+@media only screen and (max-width: 768px) {
+    .offline-none {
+        top: 10px;
+    }
+    .offline-show {
+        top: 10px;
+    }
+
+    .app-title {
+        font-size: 1.5em;
+    }
+
+    .settings-button.mdc-icon-button:not(:disabled) {
+        top: 0px;
+    }
 }

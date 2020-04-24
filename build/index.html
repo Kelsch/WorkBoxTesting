@@ -43,7 +43,8 @@
                 <div class="mdc-menu mdc-menu-surface">
                     <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical" tabindex="-1">
                         <li class="mdc-list-item" role="menuitem" onclick="darkModeCheck()">
-                            <div class="mdc-checkbox">
+
+                            <!-- <div class="mdc-checkbox">
                                 <input type="checkbox" class="mdc-checkbox__native-control" id="darkMode-checkbox"/>
                                 <div class="mdc-checkbox__background">
                                     <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
@@ -54,7 +55,17 @@
                                 </div>
                                 <div class="mdc-checkbox__ripple"></div>
                             </div>
-                            <label for="darkMode-checkbox" class="mdc-list-item__text">Dark Mode</label>
+                            <label for="darkMode-checkbox" class="mdc-list-item__text">Dark Mode</label> -->
+
+                            <div class="mdc-switch">
+                                <div class="mdc-switch__track"></div>
+                                <div class="mdc-switch__thumb-underlay">
+                                    <div class="mdc-switch__thumb"></div>
+                                    <input type="checkbox" id="darkMode-switch" class="mdc-switch__native-control"
+                                        role="switch" aria-checked="false">
+                                </div>
+                            </div>
+                            <label for="darkMode-switch" class="mdc-list-item__text darkMode-switch-label">Dark Mode</label>
 
                         </li>
                         <li class="mdc-list-item" role="menuitem" onclick="logout()">
