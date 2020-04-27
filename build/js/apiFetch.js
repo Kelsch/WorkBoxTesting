@@ -2,6 +2,7 @@ let token = localStorage.getItem('token');
 const appTopBar = document.getElementById('app_topBar');
 const darkModeCheckbox = appTopBar.querySelector('#darkMode-checkbox');
 const darkModeSwitch = appTopBar.querySelector('#darkMode-switch');
+const dialog = document.getElementById('app_done_dialog');
 const body = document.body;
 
 // Get user's current theme
@@ -19,6 +20,7 @@ IconButtonAnimation(appTopBar);
 MenuAnimation(appTopBar);
 CheckboxAnimation(appTopBar);
 SwitchAnimation(appTopBar);
+DialogAnimation(dialog);
 
 function getNonWorkDays() {
     fetch(`${apiURL}/api/installerAppData/getNonWorkDays`, {
@@ -228,13 +230,28 @@ function TextInputAnimation(container) {
     }
 }
 
-async function darkModeCheck() {
-    // if (localStorage.hasOwnProperty('darkMode') && !boxChecked) {
-    //     darkModeCheckbox.checked = (localStorage.getItem('darkMode') === 'true');
+function DialogAnimation(container) {
+    // const dialogs = container.querySelectorAll('.mdc-dialog .mdc-list');
+    // if (typeof mdc !== 'undefined') {
+    //     for (let i = 0; i < dialogs.length; i++) {
+    //         const element = dialogs[i];
+    //         // mdc.list.MDCList.attachTo(element);
+    //         console.log(element, dialogs)
+    //     }
     // }
-    // localStorage.removeItem('darkMode');
-    // localStorage.setItem('darkMode', darkModeCheckbox.checked);
+    if (typeof mdc !== 'undefined') {
+        const dialog = mdc.dialog.MDCDialog.attachTo(container.querySelector('.mdc-dialog'));
+        const list = mdc.list.MDCList.attachTo(container.querySelector('.mdc-dialog .mdc-list'));
 
+        dialog.listen('MDCDialog:opened', () => {
+            list.layout();
+        });
+
+        window.dialog = dialog;
+    }
+}
+
+async function darkModeCheck() {
     const themeStyle = darkModeSwitch.checked ? 'dark' : 'light';
     if (themeStyle == 'dark') {
         body.classList.replace('light', 'dark');

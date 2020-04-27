@@ -308,3 +308,9 @@ function jobLayouts(jobId) {
         });
     });
 }
+
+function jobDone(jobId) {
+    this.dialog.open();
+    
+    console.log(this)
+}
