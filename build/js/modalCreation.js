@@ -100,6 +100,8 @@ async function jobClicked(jobId) {
 
     const jobDetailDiv = jobModal.querySelector(".modal-info-container");
 
+    document.activeElement.blur();
+
     caches.open(cacheName).then(cache => {
         cache.match(request).then((response) => {
             if (response == undefined) {
@@ -160,6 +162,8 @@ function designSetInfoClicked(jobId) {
     const requestDesignSet = new Request(`${apiURL}/api/installerAppData/getInstallJobsDesignSets?jobIdStrings=${window.currentJobIds}`);
 
     const designSetInfoDetailDiv = designSetModal.querySelector(".modal-info-container");
+
+    document.activeElement.blur();
 
     caches.open(cacheName).then(cache => {
         cache.match(request).then((response) => {
@@ -273,6 +277,8 @@ function jobLayouts(jobId) {
     const request = new Request(`${apiURL}/api/installerAppData/getJobsLayouts?jobIdStrings=${window.currentJobIds}`);
     const layoutDetailDiv = layoutModal.querySelector(".modal-info-container");
 
+    document.activeElement.blur();
+
     caches.open(cacheName).then(cache => {
         cache.match(request).then((response) => {
             if (response == undefined) {
@@ -311,6 +317,5 @@ function jobLayouts(jobId) {
 
 function jobDone(jobId) {
     this.dialog.open();
-    
-    console.log(this)
+    this.currentJobId = jobId;
 }

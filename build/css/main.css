@@ -186,6 +186,13 @@ body {
     padding-left: 10px;
 }
 
+#app_done_dialog {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
 .settings-button.mdc-icon-button:not(:disabled) {
     position: absolute;
     top: 5px;

@@ -1,11 +1,16 @@
-const apiURL = 'https://pdwebapi.longformgibberish.com';
-// const apiURL = 'https://pdwebapi-mf5.conveyor.cloud';
+// const apiURL = 'https://pdwebapi.longformgibberish.com';
+const apiURL = 'https://pdwebapi-mf5.conveyor.cloud';
 let loginButtonPressed = false;
 let cred;
 
 checkLogin();
 
-// window.addEventListener('DOMContentLoaded', checkLogin, false);
+// After: JSON.stringify keeps date as-is!
+Date.prototype.toLocalJSON = function(){
+  const hoursDiff = this.getHours() - this.getTimezoneOffset() / 60;
+  this.setHours(hoursDiff);
+  return this.toISOString();
+};
 
 function formatPhoneNumber(phoneNumberString) {
   const cleaned = ('' + phoneNumberString).replace(/\D/g, '')

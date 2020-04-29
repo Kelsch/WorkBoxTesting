@@ -137,32 +137,60 @@
     <div id="app_done_dialog">
         <div class="mdc-dialog">
             <div class="mdc-dialog__container">
-                <div class="mdc-dialog__surface" role="alertdialog" aria-modal="true" aria-labelledby="my-dialog-title"
-                    aria-describedby="my-dialog-content">
+                <div class="mdc-dialog__surface" role="alertdialog" aria-modal="true" aria-labelledby="job-dialog-title"
+                    aria-describedby="job-dialog-content">
                     <!-- Title cannot contain leading whitespace due to mdc-typography-baseline-top() -->
-                    <h2 class="mdc-dialog__title" id="my-dialog-title">
-                        <!--
-               -->Choose a Ringtone
-                        <!--
-             -->
+                    <h2 class="mdc-dialog__title" id="job-dialog-title">
+                        Job Complete
                     </h2>
-                    <div class="mdc-dialog__content" id="my-dialog-content">
+                    <div class="mdc-dialog__content" id="job-dialog-content">
                         <ul class="mdc-list">
-                            <li class="mdc-list-item" tabindex="0">
-                                <span class="mdc-list-item__graphic">
-                                    <div class="mdc-radio">
-                                        <input class="mdc-radio__native-control" type="radio"
-                                            id="test-dialog-baseline-confirmation-radio-1"
-                                            name="test-dialog-baseline-confirmation-radio-group" checked>
-                                        <div class="mdc-radio__background">
-                                            <div class="mdc-radio__outer-circle"></div>
-                                            <div class="mdc-radio__inner-circle"></div>
-                                        </div>
+                            <li class="mdc-list-item" tabindex="1" data-install-complete="readyForTemplate">
+                                <div class="mdc-checkbox">
+                                    <input type="checkbox" class="mdc-checkbox__native-control"
+                                        id="ready-for-template-checkbox" />
+                                    <div class="mdc-checkbox__background">
+                                        <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                                            <path class="mdc-checkbox__checkmark-path" fill="none"
+                                                d="M1.73,12.91 8.1,19.28 22.79,4.59" />
+                                        </svg>
+                                        <div class="mdc-checkbox__mixedmark"></div>
                                     </div>
-                                </span>
-                                <label id="test-dialog-baseline-confirmation-radio-1-label"
-                                    for="test-dialog-baseline-confirmation-radio-1"
-                                    class="mdc-list-item__text">None</label>
+                                    <div class="mdc-checkbox__ripple"></div>
+                                </div>
+                                <label for="ready-for-template-checkbox" class="mdc-list-item__text">Ready for
+                                    Template</label>
+                            </li>
+                            <li class="mdc-list-item" tabindex="2" data-install-complete="returnTripRequired">
+                                <div class="mdc-checkbox">
+                                    <input type="checkbox" class="mdc-checkbox__native-control"
+                                        id="return-trip-required-checkbox" />
+                                    <div class="mdc-checkbox__background">
+                                        <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                                            <path class="mdc-checkbox__checkmark-path" fill="none"
+                                                d="M1.73,12.91 8.1,19.28 22.79,4.59" />
+                                        </svg>
+                                        <div class="mdc-checkbox__mixedmark"></div>
+                                    </div>
+                                    <div class="mdc-checkbox__ripple"></div>
+                                </div>
+                                <label for="return-trip-required-checkbox" class="mdc-list-item__text">Return Trip
+                                    Required</label>
+                            </li>
+                            <li class="mdc-list-item" tabindex="3" data-install-complete="docsUploaded">
+                                <div class="mdc-checkbox">
+                                    <input type="checkbox" class="mdc-checkbox__native-control"
+                                        id="docs-uploaded-checkbox" />
+                                    <div class="mdc-checkbox__background">
+                                        <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                                            <path class="mdc-checkbox__checkmark-path" fill="none"
+                                                d="M1.73,12.91 8.1,19.28 22.79,4.59" />
+                                        </svg>
+                                        <div class="mdc-checkbox__mixedmark"></div>
+                                    </div>
+                                    <div class="mdc-checkbox__ripple"></div>
+                                </div>
+                                <label for="docs-uploaded-checkbox" class="mdc-list-item__text">Docs Uploaded</label>
                             </li>
                             <!-- ... -->
                         </ul>

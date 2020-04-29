@@ -159,6 +159,27 @@ async function getLayouts(jobIds) {
     }
 }
 
+async function postJobCompletion(installCompletion) {
+    const jobId = this.currentJobId;
+    installCompletion.InstallCompletionJobId = jobId;
+    installCompletion.InstallCompletionInstallerId = cred.name;
+    installCompletion.DateCompleted = new Date().toLocalJSON().replace(/"/g, "");
+    if (jobId != null) {
+        fetch(`${apiURL}/api/installerAppData/postJobInstallCompletion`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(installCompletion)
+        })
+            .then(response => response.json())
+            .catch(err => {
+                // console.error(err);
+            });
+    }
+}
+
 function ButtonAnimation(container) {
     const buttons = container.querySelectorAll('.mdc-button');
     if (typeof mdc !== 'undefined') {
@@ -231,20 +252,34 @@ function TextInputAnimation(container) {
 }
 
 function DialogAnimation(container) {
-    // const dialogs = container.querySelectorAll('.mdc-dialog .mdc-list');
-    // if (typeof mdc !== 'undefined') {
-    //     for (let i = 0; i < dialogs.length; i++) {
-    //         const element = dialogs[i];
-    //         // mdc.list.MDCList.attachTo(element);
-    //         console.log(element, dialogs)
-    //     }
-    // }
     if (typeof mdc !== 'undefined') {
         const dialog = mdc.dialog.MDCDialog.attachTo(container.querySelector('.mdc-dialog'));
         const list = mdc.list.MDCList.attachTo(container.querySelector('.mdc-dialog .mdc-list'));
 
         dialog.listen('MDCDialog:opened', () => {
+            list.foundation_.adapter_.setCheckedCheckboxOrRadioAtIndex(1, true)
+            for (let i = 0; i < list.listElements.length; i++) {
+                const element = list.listElements[i];
+                console.log(list, element)
+            }
             list.layout();
+        });
+
+        dialog.listen('MDCDialog:closing', event => {
+            if (event.detail.action == "accept") {
+                let installCompletion = {};
+                for (let i = 0; i < list.selectedIndex.length; i++) {
+                    const selectedIndex = list.selectedIndex[i];
+                    const element = list.listElements[selectedIndex];
+                    installCompletion[`${element.getAttribute('data-install-complete')}`] = true;
+                }
+                if (installCompletion != null) {
+                    postJobCompletion(installCompletion);
+                }
+            }
+            if (event.detail.action == "close") {
+
+            }
         });
 
         window.dialog = dialog;
