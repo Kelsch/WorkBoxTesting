@@ -2,6 +2,7 @@ let token = localStorage.getItem('token');
 const appTopBar = document.getElementById('app_topBar');
 const darkModeCheckbox = appTopBar.querySelector('#darkMode-checkbox');
 const darkModeSwitch = appTopBar.querySelector('#darkMode-switch');
+const darkModeListItem = appTopBar.querySelector('#darkMode-liItem');
 const dialog = document.getElementById('app_done_dialog');
 const body = document.body;
 
@@ -23,6 +24,7 @@ SwitchAnimation(appTopBar);
 DialogAnimation(dialog);
 
 function getNonWorkDays() {
+    let token = localStorage.getItem('token');
     fetch(`${apiURL}/api/installerAppData/getNonWorkDays`, {
         headers: {
             'Authorization': `Bearer ${token}`
@@ -44,6 +46,7 @@ function getNonWorkDays() {
 
 let timesRunGetJobs = 0;
 async function getJobs(month, year) {
+    let token = localStorage.getItem('token');
     fetch(`${apiURL}/api/installerAppData/getInstallIndicators?businessId=${cred.name}`, {
         headers: {
             'Authorization': `Bearer ${token}`
@@ -86,7 +89,6 @@ async function findSelectedDateJobs(selectedInstallDate) {
         return;
     }
     const cacheName = 'job-list';
-    // const request = new Request(`https://pdwebapi-mf5.conveyor.cloud/api/installerAppData/getInstallIndicators?businessId=2`);
     const request = new Request(`${apiURL}/api/installerAppData/getInstallIndicators?businessId=${cred.name}`);
 
     const jobDiv = document.getElementById('jobs');
@@ -134,12 +136,14 @@ async function getDesignSets(jobIds) {
     if (jobIds.length <= 0) {
         return;
     }
+    let token = localStorage.getItem('token');
     fetch(`${apiURL}/api/installerAppData/getInstallJobsDesignSets?jobIdStrings=${jobIds.toString()}`, {
         headers: {
             'Authorization': `Bearer ${token}`
         }
     })
-        .then(response => response.json());
+        .then(response => response.json())
+        .catch(err => logout());
 }
 
 async function getLayouts(jobIds) {
@@ -147,14 +151,21 @@ async function getLayouts(jobIds) {
     //     return;
     // }
     if (jobIds !== null) {
+        let token = localStorage.getItem('token');
         fetch(`${apiURL}/api/installerAppData/getJobsLayouts?jobIdStrings=${jobIds.toString()}`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
         })
-            .then(response => response.json())
+            .then(response => {
+                if (response.status !== 200) {
+                    throw new Error(response.status);
+                }
+
+                return response.json();
+            })
             .catch(err => {
-                // console.error(err);
+                logout();
             });
     }
 }
@@ -162,9 +173,10 @@ async function getLayouts(jobIds) {
 async function postJobCompletion(installCompletion) {
     const jobId = this.currentJobId;
     installCompletion.InstallCompletionJobId = jobId;
-    installCompletion.InstallCompletionInstallerId = cred.name;
+    installCompletion.InstallCompletionInstallerId = parseInt(cred.name);
     installCompletion.DateCompleted = new Date().toLocalJSON().replace(/"/g, "");
     if (jobId != null) {
+        let token = localStorage.getItem('token');
         fetch(`${apiURL}/api/installerAppData/postJobInstallCompletion`, {
             method: 'POST',
             headers: {
@@ -173,9 +185,17 @@ async function postJobCompletion(installCompletion) {
             },
             body: JSON.stringify(installCompletion)
         })
-            .then(response => response.json())
+            .then(response => {
+                if (response.status !== 200) {
+                    throw response;
+                }
+                
+                return response.json();
+            })
             .catch(err => {
-                // console.error(err);
+                if (err.status === 401) {
+                    logout();
+                }
             });
     }
 }
@@ -257,12 +277,38 @@ function DialogAnimation(container) {
         const list = mdc.list.MDCList.attachTo(container.querySelector('.mdc-dialog .mdc-list'));
 
         dialog.listen('MDCDialog:opened', () => {
-            list.foundation_.adapter_.setCheckedCheckboxOrRadioAtIndex(1, true)
-            for (let i = 0; i < list.listElements.length; i++) {
-                const element = list.listElements[i];
-                console.log(list, element)
+            const cacheAvailable = 'caches' in self;
+            if (!cacheAvailable) {
+                return;
             }
-            list.layout();
+            const cacheName = 'job-list';
+            const request = new Request(`${apiURL}/api/installerAppData/getInstallIndicators?businessId=${cred.name}`);
+            let currentJob;
+            caches.open(cacheName).then(cache => {
+                cache.match(request).then((response) => {
+                    if (response == undefined) {
+                        return;
+                    }
+                    response.json().then(jobs => {
+                        const filteredJobs = jobs.filter(job => {
+                            return job.jobId === window.currentJobId;
+                        });
+                        currentJob = filteredJobs[0];
+                        let selectedBoxes = [];
+                        for (let i = 0; i < list.listElements.length; i++) {
+                            const element = list.listElements[i];
+                            const attributeTrue = currentJob[element.getAttribute('data-install-complete')] ?? false;
+                            if (attributeTrue) {
+                                selectedBoxes = [...selectedBoxes, i];
+                            }
+                        }
+                        list.selectedIndex = selectedBoxes;
+                        list.layout();
+                    });
+                });
+            }).catch(err => {
+                console.error(err)
+            });
         });
 
         dialog.listen('MDCDialog:closing', event => {
@@ -277,9 +323,6 @@ function DialogAnimation(container) {
                     postJobCompletion(installCompletion);
                 }
             }
-            if (event.detail.action == "close") {
-
-            }
         });
 
         window.dialog = dialog;
@@ -287,7 +330,7 @@ function DialogAnimation(container) {
 }
 
 async function darkModeCheck() {
-    const themeStyle = darkModeSwitch.checked ? 'dark' : 'light';
+    const themeStyle = darkModeSwitch.parentElement.parentElement.classList.contains('mdc-switch--checked') ? 'light' : 'dark';
     if (themeStyle == 'dark') {
         body.classList.replace('light', 'dark');
     }
