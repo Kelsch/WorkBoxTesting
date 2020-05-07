@@ -58,3 +58,35 @@ function refreshData() {
 
   showCalendar(selectedDate.getMonth(), selectedDate.getFullYear());
 }
+
+async function simulateLoginAction() {
+  const sleep = (timeout) => new Promise(resolve => setTimeout(resolve, timeout));
+
+  const transitionEnd = function (propertyName, node) {
+    return new Promise(resolve => {
+      function callback(e) {
+        e.stopPropagation();
+        if (e.propertyName === propertyName) {
+          node.removeEventListener('transitionend', callback);
+          resolve(e);
+        }
+      }
+      node.addEventListener('transitionend', callback);
+    });
+  }
+
+  const refresher = document.querySelector('.refresher');
+
+  document.body.classList.add('refreshing');
+  login();
+  await sleep(500);
+
+  refresher.classList.add('shrink');
+  await transitionEnd('transform', refresher);
+  refresher.classList.add('done');
+
+  refresher.classList.remove('shrink');
+  document.body.classList.remove('refreshing');
+  await sleep(0); // let new styles settle.
+  refresher.classList.remove('done');
+}

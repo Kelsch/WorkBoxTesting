@@ -42,9 +42,9 @@ workbox.routing.registerRoute(
     })
 );
 
-// Material Components CSS not including the Javascript because it is not essential
+// Material Components CSS and JS
 workbox.routing.registerRoute(
-    new RegExp('https://unpkg.com/material-components-web@v4.0.0/dist/material-components-web.min.css'),
+    new RegExp('https://unpkg.com/material-components-web@v4.0.0/dist/'),
     new workbox.strategies.StaleWhileRevalidate({
         cacheName: 'google-material-components',
     })

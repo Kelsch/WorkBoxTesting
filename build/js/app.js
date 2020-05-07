@@ -6,7 +6,7 @@ let cred;
 checkLogin();
 
 // After: JSON.stringify keeps date as-is!
-Date.prototype.toLocalJSON = function(){
+Date.prototype.toLocalJSON = function () {
   const hoursDiff = this.getHours() - this.getTimezoneOffset() / 60;
   this.setHours(hoursDiff);
   return this.toISOString();
@@ -32,6 +32,7 @@ function handleConnection() {
         }
       } else {
         console.log('no connectivity');
+        document.getElementById('offline_indicator').classList.add("offline-show");
       }
     });
   } else {
@@ -74,19 +75,22 @@ function checkLogin() {
               userAuthenticated();
             }
             else {
-              localStorage.removeItem('token')
-              login();
+              localStorage.removeItem('token');
+              simulateLoginAction();
+              // login();
             }
           })
           .catch((err) => {
             console.error('Error reading credentials: ' + err);
             localStorage.removeItem('token');
-            login();
+            simulateLoginAction();
+            // login();
           });
       })
       .catch(result => {
         // console.log(result);
-        login();
+        simulateLoginAction();
+        // login();
       });
   }
   else {
@@ -95,7 +99,7 @@ function checkLogin() {
   handleConnection();
 }
 
-async function login() {
+function login() {
   if (typeof document === 'undefined') {
     return;
   }
@@ -114,7 +118,7 @@ async function login() {
   if (user.userName === "") {
     return false;
   }
-
+  
   fetch(`${apiURL}/api/login`, {
     method: 'POST',
     headers: {
@@ -165,7 +169,16 @@ async function login() {
     })
     .catch(error => {
       console.error(error);
-      logout();
+      // const serverDownElement = document.getElementById('offline_indicator');
+      // if (navigator.onLine && cred != null && user != null && error == "TypeError: Failed to fetch") {
+      //   serverDownElement.textContent = "Server Down";
+      //   serverDownElement.classList.add("offline-show");
+      //   userAuthenticated();
+      // }
+      // else {
+      //   serverDownElement.classList.remove("offline-show");
+        logout();
+      // }
     });
 }
 

@@ -42,9 +42,9 @@ workbox.routing.registerRoute(
     })
 );
 
-// Material Components CSS not including the Javascript because it is not essential
+// Material Components CSS and JS
 workbox.routing.registerRoute(
-    new RegExp('https://unpkg.com/material-components-web@v4.0.0/dist/material-components-web.min.css'),
+    new RegExp('https://unpkg.com/material-components-web@v4.0.0/dist/'),
     new workbox.strategies.StaleWhileRevalidate({
         cacheName: 'google-material-components',
     })
@@ -67,4 +67,4 @@ workbox.routing.registerRoute(
     })
 );
 
-workbox.precaching.precacheAndRoute([{"revision":"3a94fe1fa46941d3062a72e119fb9136","url":"css/calendar.css"},{"revision":"89e763e694d665f3445b195c63e8ab14","url":"css/jobCard.css"},{"revision":"d2d263b1caa77ea4e01cc16335ecaf79","url":"css/main.css"},{"revision":"e8b3d535cea3eac50e33901aa60fabbb","url":"css/refreshControl.css"},{"revision":"87b5980f44369f50e48cd13957d7de2e","url":"index.html"},{"revision":"04fce7907207078481291a94284ed98c","url":"js/apiFetch.js"},{"revision":"fcad219f564936376a603d85ac402010","url":"js/app.js"},{"revision":"6f8102a25d5b91861a23c3b9036205b0","url":"js/calendar.js"},{"revision":"fdc15432a04c4d099dd3205bdb1e7d72","url":"js/jsClass/designSetInfoCardElement.js"},{"revision":"c11abe07bea2d35928e50c1a3b58b767","url":"js/jsClass/jobCardElement.js"},{"revision":"eef47629f598b1b4ab690eafed11e318","url":"js/modalCreation.js"},{"revision":"ec509908c126fc30563afeaf5907a777","url":"js/refreshControl.js"},{"revision":"8618cac677171c71ee01a7027cdb659b","url":"js/swiped-events.js"},{"revision":"edd4495e66b5cb260886662b5e5b2e42","url":"js/workbox-7248be78.js"}]);
+workbox.precaching.precacheAndRoute([{"revision":"3a94fe1fa46941d3062a72e119fb9136","url":"css/calendar.css"},{"revision":"89e763e694d665f3445b195c63e8ab14","url":"css/jobCard.css"},{"revision":"a325237483b741baced09eae85dfb5d4","url":"css/main.css"},{"revision":"e8b3d535cea3eac50e33901aa60fabbb","url":"css/refreshControl.css"},{"revision":"c6d9406d6a00e940660b22d376223eba","url":"index.html"},{"revision":"bf1ee4affaa60bf4ddddaee7686edf99","url":"js/apiFetch.js"},{"revision":"441a7ae57ff85cf920050270ebf2a80b","url":"js/app.js"},{"revision":"6f8102a25d5b91861a23c3b9036205b0","url":"js/calendar.js"},{"revision":"fdc15432a04c4d099dd3205bdb1e7d72","url":"js/jsClass/designSetInfoCardElement.js"},{"revision":"c11abe07bea2d35928e50c1a3b58b767","url":"js/jsClass/jobCardElement.js"},{"revision":"eef47629f598b1b4ab690eafed11e318","url":"js/modalCreation.js"},{"revision":"dfc20073d069c76c1b67606f3b916e8c","url":"js/refreshControl.js"},{"revision":"8618cac677171c71ee01a7027cdb659b","url":"js/swiped-events.js"},{"revision":"edd4495e66b5cb260886662b5e5b2e42","url":"js/workbox-7248be78.js"}]);
