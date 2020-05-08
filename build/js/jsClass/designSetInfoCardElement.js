@@ -385,7 +385,7 @@ class DesignSetInfoCard extends HTMLElement {
                         <div class="modal-job-detail modal-salesRep">Sales Rep: ${this.salesRepName}</div>
                         <div class="modal-job-detail modal-branch">Branch: ${this.branchName}</div>
                         <div class="modal-job-detail modal-costs">
-                            <div class="modal-cost-detail">Sales #: ${this.salesNumber === null || this.salesNumber === '' ? '' : this.salesNumber}</div>
+                            <div class="modal-cost-detail" onclick="OpenPhoneNumber('${this.salesNumber === null || this.salesNumber === '' ? '' : this.salesNumber}')">Sales #: ${this.salesNumber === null || this.salesNumber === '' ? '' : this.salesNumber}</div>
                             <div class="modal-cost-detail">Status: ${this.statusName}</div>
                         </div>
                     </div>

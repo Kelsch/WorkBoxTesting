@@ -65,38 +65,38 @@ async function getJobs(month, year) {
             'Authorization': `Bearer ${token}`
         }
     })
-    .then(response => {
-        if (response.status !== 200) {
-            throw new Error(response.status);
-        }
-        
-        return response.json();
-    })
-    .then(data => {
-        if (timesRunGetJobs > 0) {
-            return;
-        }
-        timesRunGetJobs++;
-        let jobs = data;
-        const currentCalendar = document.getElementById('calendar_dayContainer');
-        
-        year = month - 1 == -1 ? year - 1 : year;
-        month = month - 1 == -1 ? 12 : month - 1;
-        const selectedInstallMonth = new Date(year, month - 1, 1);
-        
-        const filteredJobs = jobs.filter(job => {
-            let jobInstallDate = new Date(job.installDate);
-            return jobInstallDate >= selectedInstallMonth;
-        });
-        
-        filteredJobs.map(function (job) {
-            const jobInstallDate = new Date(job.installDate.substring(0, job.installDate.indexOf('T')).replace(/-/g, '/'));
-            const installElement = currentCalendar.querySelector(`[id='indicatorContainer${jobInstallDate.getMonth() + 1}-${jobInstallDate.getDate()}-${jobInstallDate.getFullYear()}']`);
-            if (installElement !== null) {
-                const installColor = determineInstallColor(job.status);
-                installElement.innerHTML += `<div class="dateNumber-indicator${installColor}" data-jobid="${job.jobId}"></div>`;
+        .then(response => {
+            if (response.status !== 200) {
+                throw new Error(response.status);
             }
-        });
+
+            return response.json();
+        })
+        .then(data => {
+            if (timesRunGetJobs > 0) {
+                return;
+            }
+            timesRunGetJobs++;
+            let jobs = data;
+            const currentCalendar = document.getElementById('calendar_dayContainer');
+
+            year = month - 1 == -1 ? year - 1 : year;
+            month = month - 1 == -1 ? 12 : month - 1;
+            const selectedInstallMonth = new Date(year, month - 1, 1);
+
+            const filteredJobs = jobs.filter(job => {
+                let jobInstallDate = new Date(job.installDate);
+                return jobInstallDate >= selectedInstallMonth;
+            });
+
+            filteredJobs.map(function (job) {
+                const jobInstallDate = new Date(job.installDate.substring(0, job.installDate.indexOf('T')).replace(/-/g, '/'));
+                const installElement = currentCalendar.querySelector(`[id='indicatorContainer${jobInstallDate.getMonth() + 1}-${jobInstallDate.getDate()}-${jobInstallDate.getFullYear()}']`);
+                if (installElement !== null) {
+                    const installColor = determineInstallColor(job.status);
+                    installElement.innerHTML += `<div class="dateNumber-indicator${installColor}" data-jobid="${job.jobId}"></div>`;
+                }
+            });
         })
         .catch(err => {
             console.error(err);
@@ -263,7 +263,7 @@ async function updateChangedJob(installCompletion) {
             if (response == undefined) {
                 return;
             }
-            
+
             response.json().then(jobs => {
                 jobDiv.innerHTML = '';
                 let jobIndex = 0;
@@ -281,7 +281,7 @@ async function updateChangedJob(installCompletion) {
 
                 jobs[jobIndex] = filteredJobs[0];
                 jsonJobs = JSON.stringify(jobs);
-                
+
                 cache.put(request, new Response(jsonJobs));
 
                 dateSelected(document.querySelector('.calendar-selectedDate'));
@@ -387,7 +387,7 @@ function DialogAnimation(container) {
                         });
                         currentJob = filteredJobs[0];
                         let selectedBoxes = [];
-                        
+
                         for (let i = 0; i < list.listElements.length; i++) {
                             const element = list.listElements[i];
                             const attributeTrue = currentJob[element.getAttribute('data-install-complete')] ?? false;
@@ -419,6 +419,37 @@ function DialogAnimation(container) {
         });
 
         window.dialog = dialog;
+    }
+}
+
+async function OpenMaps(place, specificPlace) {
+    let setLocation;
+
+    if (!isEmptyOrSpaces(specificPlace) && specificPlace.length >= 5) {
+        setLocation = specificPlace;
+    }
+    else {
+        setLocation = place;
+    }
+
+    if (!isEmptyOrSpaces(setLocation) && setLocation.length >= 5) {
+        if (confirm("Open Location in Map?", place, "Yes", "No")) {
+            if ((navigator.platform.indexOf('iPhone') != -1) || (navigator.platform.indexOf('iPad') != -1) || (navigator.platform.indexOf('iPod') != -1)) {/* if we're on iOS, open in Apple Maps */
+                window.open('http://maps.apple.com/?q=' + setLocation);
+            } else { /* else use Google */
+                window.open('https://maps.google.com/maps?q=' + setLocation);
+            }
+        }
+    }
+}
+
+async function OpenPhoneNumber(phoneNumber) {
+    if (isEmptyOrSpaces(phoneNumber)) {
+        return;
+    }
+
+    if (confirm("Open Phone Number?", phoneNumber, "Yes", "No")) {
+        window.open('tel:' + phoneNumber);
     }
 }
 
@@ -462,4 +493,8 @@ function determineInstallColor(jobStatus) {
     }
 
     return installColor;
+}
+
+function isEmptyOrSpaces(str) {
+    return str === null || str.match(/^ *$/) !== null;
 }

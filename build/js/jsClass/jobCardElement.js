@@ -26,6 +26,7 @@ class JobCard extends HTMLElement {
         this._installerNotes = "";
         this._hasHomeOwner = false;
         this._address = "";
+        this._longLat = "";
     }
 
     //#region getter/setter
@@ -197,6 +198,13 @@ class JobCard extends HTMLElement {
     get address() {
         return this._address;
     }
+
+    set longLat(value) {
+        this._address = value;
+    }
+    get longLat() {
+        return this._longLat;
+    }
     //#endregion
 
     connectedCallback() {
@@ -235,7 +243,7 @@ function jobCardHTML(data, result, installColor) {
             <div class="job-datails job-name job-notes">
                 ${data.orderId} - ${data.name}
             </div>
-            <div class="job-datails job-address job-notes">
+            <div class="job-datails job-address job-notes" onclick="OpenMaps('${data.address}', '${data.longLat}')">
                 ${data.address}
             </div>
             <div class="job-datails job-cabinetCount job-notes">
@@ -243,7 +251,7 @@ function jobCardHTML(data, result, installColor) {
                 ${data.cabinetCount}
             </div>
             <div class="job-datails job-notes">
-                <span class="job-label">H.O.:</span>
+                <span class="job-label">Home Owner:</span>
                 ${data.hasHomeOwner ? 'Yes' : 'No'}
             </div>
             <div class="job-datails job-notes">
