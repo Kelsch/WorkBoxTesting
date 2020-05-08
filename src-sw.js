@@ -1,4 +1,4 @@
-importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.0.0/workbox-sw.js', '/js/app.js');
+importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.1.3/workbox-sw.js', '/js/app.js');
 
 // workbox.routing.registerRoute(
 //     // new RegExp('https://jsonplaceholder.typicode.com/users'),
@@ -56,15 +56,27 @@ workbox.routing.registerRoute(
     new workbox.strategies.CacheFirst({
         cacheName: 'google-fonts-webfonts',
         plugins: [
-        new workbox.cacheableResponse.CacheableResponsePlugin({
-            statuses: [0, 200],
-        }),
-        new workbox.expiration.ExpirationPlugin({
-            maxAgeSeconds: 60 * 60 * 24 * 365,
-            maxEntries: 30,
-        }),
+            new workbox.cacheableResponse.CacheableResponsePlugin({
+                statuses: [0, 200],
+            }),
+            new workbox.expiration.ExpirationPlugin({
+                maxAgeSeconds: 60 * 60 * 24 * 365,
+                maxEntries: 30,
+            }),
         ],
     })
+);
+
+const bgSyncPlugin = new workbox.backgroundSync.BackgroundSyncPlugin('bgPluginConfig', {
+    maxRetentionTime: 24 * 60 // Retry for max of 24 hours (specified in minutes)
+});
+
+workbox.routing.registerRoute(
+    new RegExp(`${apiURL}/api/installerAppData/postJobInstallCompletion`),
+    new workbox.strategies.NetworkOnly({
+        plugins: [bgSyncPlugin]
+    }),
+    'POST'
 );
 
 workbox.precaching.precacheAndRoute(self.__WB_MANIFEST);

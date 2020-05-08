@@ -42,6 +42,7 @@ body, html {
 .light {
     --bg: var(--white0);
     --text: var(--black0);
+    --sub-text: var(--gray4);
     --hover: var(--white1);
     --active: var(--white2);
     --selected: var(--white4);
@@ -74,6 +75,7 @@ body, html {
 .dark {
     --bg: var(--gray0);
     --text: var(--white0);
+    --sub-text: var(--white2);
     --hover: var(--gray1);
     --active: var(--gray2);
     --selected: var(--gray3);
@@ -118,9 +120,9 @@ body {
     position: absolute;
     opacity: 0;
     top: 20px;
-    right: 0px;
+    right: 15px;
     color: var(--red1);
-    transition: opacity 1000ms ease-in-out, right 500ms ease-in-out;
+    transition: opacity 500ms ease-in-out, right 700ms ease-in-out;
     pointer-events: none;
 }
 .offline-show {
@@ -166,7 +168,7 @@ body {
     display: grid;
     grid-gap: 5px;
     overflow-y: auto;
-    margin: 1px;
+    margin: 1px 5px;
 }
 
 .loginForm-none {

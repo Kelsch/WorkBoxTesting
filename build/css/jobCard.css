@@ -122,6 +122,8 @@ job-card {
 
 .designSet-detail-name {
     text-align: right;
+    font-style: italic;
+    color: var(--sub-text);
 }
 
 .designSet-product-container {

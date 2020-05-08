@@ -118,7 +118,7 @@ function login() {
   if (user.userName === "") {
     return false;
   }
-  
+
   fetch(`${apiURL}/api/login`, {
     method: 'POST',
     headers: {
@@ -169,15 +169,25 @@ function login() {
     })
     .catch(error => {
       console.error(error);
-      // const serverDownElement = document.getElementById('offline_indicator');
-      // if (navigator.onLine && cred != null && user != null && error == "TypeError: Failed to fetch") {
-      //   serverDownElement.textContent = "Server Down";
-      //   serverDownElement.classList.add("offline-show");
-      //   userAuthenticated();
-      // }
+      const serverDownElement = document.getElementById('offline_indicator');
+      if (navigator.onLine && cred != null && user != null && error == "TypeError: Failed to fetch") {
+        serverDownElement.textContent = "Server Down";
+        serverDownElement.classList.add("offline-show");
+
+        const cacheAvailable = 'caches' in self;
+        if (!cacheAvailable) {
+            return;
+        }
+        const cacheName = 'job-list';
+
+        caches.has(cacheName).then(() => {
+          userAuthenticated();
+        });
+
+      }
       // else {
       //   serverDownElement.classList.remove("offline-show");
-        logout();
+      // logout();
       // }
     });
 }

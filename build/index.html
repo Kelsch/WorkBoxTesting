@@ -222,7 +222,7 @@
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js');
+                navigator.serviceWorker.register('/sw.js', {scope: '/'});
 
                 window.addEventListener('online', handleConnection);
                 window.addEventListener('offline', handleConnection);
