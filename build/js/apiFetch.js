@@ -30,7 +30,13 @@ function getNonWorkDays() {
             'Authorization': `Bearer ${token}`
         }
     })
-        .then(response => response.json())
+        .then(response => {
+            if (response.status !== 200) {
+                throw new Error(response.status);
+            }
+
+            return response.json();
+        })
         .then(data => {
             let days = data;
             const currentCalendar = document.getElementById('calendar_dayContainer');
@@ -41,7 +47,14 @@ function getNonWorkDays() {
                 }
             });
         })
-        .catch(() => logout());
+        .catch(err => {
+            if (parseInt(err.message) === 401) {
+                login();
+            }
+            else {
+                logout();
+            }
+        });
 }
 
 let timesRunGetJobs = 0;
@@ -52,7 +65,13 @@ async function getJobs(month, year) {
             'Authorization': `Bearer ${token}`
         }
     })
-        .then(response => response.json())
+        .then(response => {
+            if (response.status !== 200) {
+                throw new Error(response.status);
+            }
+
+            return response.json();
+        })
         .then(data => {
             if (timesRunGetJobs > 0) {
                 return;
@@ -79,7 +98,15 @@ async function getJobs(month, year) {
                 }
             });
         })
-        .catch(() => logout());
+        .catch(err => {
+            console.error(err);
+            if (parseInt(err.message) === 401) {
+                login();
+            }
+            else {
+                logout();
+            }
+        });
     timesRunGetJobs = 0;
 }
 
@@ -142,8 +169,21 @@ async function getDesignSets(jobIds) {
             'Authorization': `Bearer ${token}`
         }
     })
-        .then(response => response.json())
-        .catch(err => logout());
+        .then(response => {
+            if (response.status !== 200) {
+                throw new Error(response.status);
+            }
+
+            return response.json();
+        })
+        .catch(err => {
+            if (parseInt(err.message) === 401) {
+                login();
+            }
+            else {
+                logout();
+            }
+        });
 }
 
 async function getLayouts(jobIds) {
@@ -165,7 +205,12 @@ async function getLayouts(jobIds) {
                 return response.json();
             })
             .catch(err => {
-                logout();
+                if (parseInt(err.message) === 401) {
+                    login();
+                }
+                else {
+                    logout();
+                }
             });
     }
 }
@@ -189,11 +234,14 @@ async function postJobCompletion(installCompletion) {
                 if (response.status !== 200) {
                     throw response;
                 }
-                
+
                 return response.json();
             })
             .catch(err => {
-                if (err.status === 401) {
+                if (parseInt(err.message) === 401) {
+                    login();
+                }
+                else {
                     logout();
                 }
             });
