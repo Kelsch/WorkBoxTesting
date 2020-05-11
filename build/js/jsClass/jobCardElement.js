@@ -283,6 +283,10 @@ function jobCardHTML(data, result, installColor) {
                     <div class="mdc-button__ripple"></div>
                     <i class="material-icons">perm_media</i>
                 </button>
+                <button class="job-button mdc-button${installColor}" data-buttontype="PORequest" title="PO Request" jobid="${data.jobId}" onclick="createPORequest('${data.jobId}')">
+                    <div class="mdc-button__ripple"></div>
+                    <i class="material-icons">receipt</i>
+                </button>
                 <button class="job-button mdc-button${installColor}" data-buttontype="done" title="done" jobid="${data.jobId}" onclick="jobDone('${data.jobId}')">
                     <div class="mdc-button__ripple"></div>
                     <i class="material-icons">done</i>

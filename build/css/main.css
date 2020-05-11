@@ -21,6 +21,7 @@ body, html {
     --gray6: #c5c5c5;
     --gray7: #ffffffb5;
     --gray8: #00000099;
+    
 
     --orange0: #f4a041;
     --yellow0: #f7e017;
@@ -81,7 +82,7 @@ body, html {
     --selected: var(--gray3);
 
     --currentDay: var(--gray1);
-    --nonWorkDay: var(--gray3);
+    --nonWorkDay: var(--gray2);
     --notCurrentMonth: var(--gray6);
 
     --notReady: var(--orange1);

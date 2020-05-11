@@ -3,7 +3,8 @@ const appTopBar = document.getElementById('app_topBar');
 const darkModeCheckbox = appTopBar.querySelector('#darkMode-checkbox');
 const darkModeSwitch = appTopBar.querySelector('#darkMode-switch');
 const darkModeListItem = appTopBar.querySelector('#darkMode-liItem');
-const dialog = document.getElementById('app_done_dialog');
+const dialog = document.getElementById('dialog_container');
+// const poRequstDialog = document.getElementById('app_porequest_dialog');
 const body = document.body;
 
 // Get user's current theme
@@ -22,6 +23,7 @@ MenuAnimation(appTopBar);
 CheckboxAnimation(appTopBar);
 SwitchAnimation(appTopBar);
 DialogAnimation(dialog);
+TextInputAnimation(document.getElementById('job-poRequest-content'));
 
 function getNonWorkDays() {
     let token = localStorage.getItem('token');
@@ -187,10 +189,10 @@ async function getDesignSets(jobIds) {
 }
 
 async function getLayouts(jobIds) {
-    // if (jobIds.length <= 0) {
-    //     return;
-    // }
     if (jobIds !== null) {
+        if (jobIds.length <= 0) {
+            return;
+        }
         let token = localStorage.getItem('token');
         fetch(`${apiURL}/api/installerAppData/getJobsLayouts?jobIdStrings=${jobIds.toString()}`, {
             headers: {
@@ -365,74 +367,108 @@ function TextInputAnimation(container) {
 
 function DialogAnimation(container) {
     if (typeof mdc !== 'undefined') {
-        const dialog = mdc.dialog.MDCDialog.attachTo(container.querySelector('.mdc-dialog'));
-        const list = mdc.list.MDCList.attachTo(container.querySelector('.mdc-dialog .mdc-list'));
 
-        dialog.listen('MDCDialog:opened', () => {
-            const cacheAvailable = 'caches' in self;
-            if (!cacheAvailable) {
-                return;
-            }
-            const cacheName = 'job-list';
-            const request = new Request(`${apiURL}/api/installerAppData/getInstallIndicators?businessId=${cred.name}`);
-            let currentJob;
-            caches.open(cacheName).then(cache => {
-                cache.match(request).then((response) => {
-                    if (response == undefined) {
-                        return;
-                    }
-                    response.json().then(jobs => {
-                        const filteredJobs = jobs.filter(job => {
-                            return job.jobId === window.currentJobId;
-                        });
-                        currentJob = filteredJobs[0];
-                        let selectedBoxes = [];
+        for (const mdcDialog of container.querySelectorAll('.mdc-dialog')) {
+            const dialog = mdc.dialog.MDCDialog.attachTo(mdcDialog);
+            const list = mdc.list.MDCList.attachTo(mdcDialog.querySelector('.mdc-dialog .mdc-list'));
 
-                        for (let i = 0; i < list.listElements.length; i++) {
-                            const element = list.listElements[i];
-                            const attributeTrue = currentJob[element.getAttribute('data-install-complete')] ?? false;
-                            if (attributeTrue) {
-                                selectedBoxes = [...selectedBoxes, i];
-                            }
+            dialog.listen('MDCDialog:opened', (dialogElement) => {
+                const cacheAvailable = 'caches' in self;
+                if (!cacheAvailable) {
+                    return;
+                }
+                
+                const cacheName = 'job-list';
+                const request = new Request(`${apiURL}/api/installerAppData/getInstallIndicators?businessId=${cred.name}`);
+                let currentJob;
+                caches.open(cacheName).then(cache => {
+                    cache.match(request).then((response) => {
+                        if (response == undefined) {
+                            return;
                         }
-                        list.selectedIndex = selectedBoxes;
-                        list.layout();
+                        response.json().then(jobs => {
+                            const filteredJobs = jobs.filter(job => {
+                                return job.jobId === window.currentJobId;
+                            });
+                            currentJob = filteredJobs[0];
+                            let selectedBoxes = [];
+                            for (let i = 0; i < list.listElements.length; i++) {
+                                const element = list.listElements[i];
+                                let dataName = '';
+                                if (mdcDialog.parentElement.getAttribute('id') == "app_porequest_dialog") {
+                                    // console.log(mdcDialog)
+                                    dataName = 'data-install-porequest';
+                                }
+                                if (mdcDialog.parentElement.getAttribute('id') == "app_done_dialog") {
+                                    // console.log(mdcDialog)
+                                    dataName = 'data-install-complete';
+                                }
+                                const attributeTrue = element.getAttribute('data-input-type') == 'checkbox' ? currentJob[element.getAttribute(dataName)] ?? false : false;
+                                if (attributeTrue) {
+                                    selectedBoxes = [...selectedBoxes, i];
+                                }
+                            }
+                            if (selectedBoxes.length > 0) {
+                                list.selectedIndex = selectedBoxes;
+                            }
+                            list.layout();
+                        });
                     });
+                }).catch(err => {
+                    console.error(err)
                 });
-            }).catch(err => {
-                console.error(err)
             });
-        });
 
-        dialog.listen('MDCDialog:closing', event => {
-            if (event.detail.action == "accept") {
-                let installCompletion = {};
-                for (let i = 0; i < list.selectedIndex.length; i++) {
-                    const selectedIndex = list.selectedIndex[i];
-                    const element = list.listElements[selectedIndex];
-                    installCompletion[`${element.getAttribute('data-install-complete')}`] = true;
+            dialog.listen('MDCDialog:closing', event => {
+                if (mdcDialog.parentElement.getAttribute('id') == "app_porequest_dialog") {
+                    if (event.detail.action == "accept") {
+                        let installCompletion = {};
+                        for (let i = 0; i < list.selectedIndex.length; i++) {
+                            const selectedIndex = list.selectedIndex[i];
+                            const element = list.listElements[selectedIndex];
+                            installCompletion[`${element.getAttribute('data-install-porequest')}`] = true;
+                        }
+                        if (installCompletion != null) {
+                            
+                        }
+                    }
                 }
-                if (installCompletion != null) {
-                    postJobCompletion(installCompletion);
+                if (mdcDialog.parentElement.getAttribute('id') == "app_done_dialog") {
+                    if (event.detail.action == "accept") {
+                        let installCompletion = {};
+                        for (let i = 0; i < list.selectedIndex.length; i++) {
+                            const selectedIndex = list.selectedIndex[i];
+                            const element = list.listElements[selectedIndex];
+                            installCompletion[`${element.getAttribute('data-install-complete')}`] = true;
+                        }
+                        if (installCompletion != null) {
+                            postJobCompletion(installCompletion);
+                        }
+                    }
                 }
+            });
+
+            if (mdcDialog.parentElement.getAttribute('id') == "app_porequest_dialog") {
+                window.dialogPORequest = dialog;
             }
-        });
-
-        window.dialog = dialog;
+            if (mdcDialog.parentElement.getAttribute('id') == "app_done_dialog") {
+                window.dialog = dialog;
+            }
+        }
     }
 }
 
 async function OpenMaps(place, specificPlace) {
     let setLocation;
 
-    if (!isEmptyOrSpaces(specificPlace) && specificPlace.length >= 5) {
+    if (!isEmptyOrSpaces(specificPlace) && specificPlace.length >= 5 && specificPlace !== 'undefined') {
         setLocation = specificPlace;
     }
     else {
         setLocation = place;
     }
 
-    if (!isEmptyOrSpaces(setLocation) && setLocation.length >= 5) {
+    if (!isEmptyOrSpaces(setLocation) && setLocation.length >= 5 && setLocation !== 'undefined') {
         if (confirm("Open Location in Map?", place, "Yes", "No")) {
             if ((navigator.platform.indexOf('iPhone') != -1) || (navigator.platform.indexOf('iPad') != -1) || (navigator.platform.indexOf('iPod') != -1)) {/* if we're on iOS, open in Apple Maps */
                 window.open('http://maps.apple.com/?q=' + setLocation);

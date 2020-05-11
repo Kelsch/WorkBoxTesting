@@ -177,9 +177,9 @@ function designSetInfoClicked(jobId) {
                 });
                 filteredJobs.map(fJob => {
                     const modalName = designSetModal.querySelector(".modal-jobName");
-
+                    
                     const designSetInfoCreatedElement = document.createElement('designset-card');
-
+                    
                     designSetInfoCreatedElement.name = fJob.name;
                     designSetInfoCreatedElement.orderId = fJob.orderId;
                     designSetInfoCreatedElement.salesRepName = fJob.salesRepName;
@@ -212,7 +212,7 @@ function designSetInfoClicked(jobId) {
                     designSetInfoCreatedElement.closeDate = fJob.closeDate;
                     designSetInfoCreatedElement.products = fJob.products;
                     // designSetInfoCreatedElement.designSetDTOs = fJob.designSetDTOs;
-
+                    
                     caches.open(cacheNameDesignSet).then(cacheDs => {
                         cacheDs.match(requestDesignSet).then((responseDs) => {
                             if (responseDs == undefined) {
@@ -317,5 +317,10 @@ function jobLayouts(jobId) {
 
 function jobDone(jobId) {
     this.dialog.open();
+    this.currentJobId = jobId;
+}
+
+function createPORequest(jobId) {
+    this.dialogPORequest.open();
     this.currentJobId = jobId;
 }

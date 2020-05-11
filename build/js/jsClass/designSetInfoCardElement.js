@@ -293,44 +293,12 @@ class DesignSetInfoCard extends HTMLElement {
                         <div class="designSet-detail-info">${designData.specieDisplay}</div>
                     </div>
                     <div class="designSet-detail">
-                        <div class="designSet-detail-name">Upper Door:</div>
-                        <div class="designSet-detail-info">${designData.upperDoorDisplay}</div>
-                    </div>
-                    <div class="designSet-detail">
-                        <div class="designSet-detail-name">Lower Door:</div>
-                        <div class="designSet-detail-info">${designData.lowerDoorDisplay}</div>
-                    </div>
-                    <div class="designSet-detail">
-                        <div class="designSet-detail-name">Front:</div>
-                        <div class="designSet-detail-info">${designData.frontDisplay}</div>
-                    </div>
-                    <div class="designSet-detail">
                         <div class="designSet-detail-name">Finish:</div>
                         <div class="designSet-detail-info">${designData.finishDisplay}</div>
                     </div>
                     <div class="designSet-detail">
-                        <div class="designSet-detail-name">Glaze:</div>
-                        <div class="designSet-detail-info">${designData.glazeDisplay}</div>
-                    </div>
-                    <div class="designSet-detail">
-                        <div class="designSet-detail-name">Finish Option:</div>
-                        <div class="designSet-detail-info">${designData.finishOptionDisplay}</div>
-                    </div>
-                    <div class="designSet-detail">
-                        <div class="designSet-detail-name">Distress:</div>
-                        <div class="designSet-detail-info">${designData.distressDisplay}</div>
-                    </div>
-                    <div class="designSet-detail">
-                        <div class="designSet-detail-name">Sheen:</div>
-                        <div class="designSet-detail-info">${designData.sheenDisplay}</div>
-                    </div>
-                    <div class="designSet-detail">
                         <div class="designSet-detail-name">Interior:</div>
                         <div class="designSet-detail-info">${designData.interiorDisplay}</div>
-                    </div>
-                    <div class="designSet-detail">
-                        <div class="designSet-detail-name">Drawer:</div>
-                        <div class="designSet-detail-info">${designData.drawerDisplay}</div>
                     </div>
                     <div class="designSet-detail">
                         <div class="designSet-detail-name">Hinge:</div>
@@ -341,32 +309,12 @@ class DesignSetInfoCard extends HTMLElement {
                         <div class="designSet-detail-info">${designData.slideDisplay}</div>
                     </div>
                     <div class="designSet-detail">
-                        <div class="designSet-detail-name">Order Date:</div>
-                        <div class="designSet-detail-info">${isNaN(this.orderDate.getTime()) ? '' : this.orderDate.toLocaleDateString()}</div>
-                    </div>
-                    <div class="designSet-detail">
                         <div class="designSet-detail-name">Ship Date:</div>
                         <div class="designSet-detail-info">${isNaN(this.shipDate.getTime()) ? '' : this.shipDate.toLocaleDateString()}</div>
                     </div>
                     <div class="designSet-detail">
-                        <div class="designSet-detail-name">Scheduled Time:</div>
-                        <div class="designSet-detail-info">${isNaN(this.scheduledTime.getTime()) ? '' : this.scheduledTime.toLocaleDateString()}</div>
-                    </div>
-                    <div class="designSet-detail">
-                        <div class="designSet-detail-name">Completion Date:</div>
-                        <div class="designSet-detail-info">${isNaN(this.completionDate.getTime()) ? '' : this.completionDate.toLocaleDateString()}</div>
-                    </div>
-                    <div class="designSet-detail">
-                        <div class="designSet-detail-name">Installer:</div>
-                        <div class="designSet-detail-info">${this.installer}</div>
-                    </div>
-                    <div class="designSet-detail">
                         <div class="designSet-detail-name">Install Date:</div>
                         <div class="designSet-detail-info">${isNaN(this.installDate.getTime()) ? '' : this.installDate.toLocaleDateString()}</div>
-                    </div>
-                    <div class="designSet-detail">
-                        <div class="designSet-detail-name">Close Date:</div>
-                        <div class="designSet-detail-info">${isNaN(this.closeDate.getTime()) ? '' : this.closeDate.toLocaleDateString()}</div>
                     </div>
                 </div>
                 <div class="designSet-product-container">
@@ -385,13 +333,13 @@ class DesignSetInfoCard extends HTMLElement {
                         <div class="modal-job-detail modal-salesRep">Sales Rep: ${this.salesRepName}</div>
                         <div class="modal-job-detail modal-branch">Branch: ${this.branchName}</div>
                         <div class="modal-job-detail modal-costs">
-                            <div class="modal-cost-detail" onclick="OpenPhoneNumber('${this.salesNumber === null || this.salesNumber === '' ? '' : this.salesNumber}')">Sales #: ${this.salesNumber === null || this.salesNumber === '' ? '' : this.salesNumber}</div>
+                            <div class="modal-cost-detail modal-phoneNumber" onclick="OpenPhoneNumber('${this.salesNumber === null || this.salesNumber === '' ? '' : this.salesNumber}')">Sales #: ${this.salesNumber === null || this.salesNumber === '' ? '' : this.salesNumber}</div>
                             <div class="modal-cost-detail">Status: ${this.statusName}</div>
                         </div>
                     </div>
                     <div class="modal-job-detail modal-address">
                         <div class="modal-address-detail">${this.addressName}</div>
-                        <div class="modal-address-detail">${this.address}</div>
+                        <div class="modal-address-detail job-address" onclick="OpenMaps('${this.address}', '${this.longLat}')">${this.address}</div>
                         <div class="modal-address-detail">${this.addressNumber === null || this.addressNumber === '' ? '' : this.addressNumber}</div>
                     </div>
                 </div>
