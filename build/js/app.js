@@ -106,8 +106,8 @@ function login() {
   const loginForm = document.getElementById('app_loginForm');
 
   let user = {
-    userName: loginForm.querySelector('#username').value,
-    password: loginForm.querySelector('#password').value
+    userName: loginForm.querySelector('.mdc-text-field__input[aria-labelledby="loginForm-username-label"]').value,
+    password: loginForm.querySelector('.mdc-text-field__input[aria-labelledby="loginForm-password-label"]').value
   };
 
   if (cred != null && !loginButtonPressed) {
@@ -118,6 +118,7 @@ function login() {
   if (user.userName === "") {
     return false;
   }
+
 
   fetch(`${apiURL}/api/login`, {
     method: 'POST',

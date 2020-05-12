@@ -21,6 +21,7 @@ body, html {
     --gray6: #c5c5c5;
     --gray7: #ffffffb5;
     --gray8: #00000099;
+    --gray9: #5e5e5e;
     
 
     --orange0: #f4a041;
@@ -38,6 +39,8 @@ body, html {
     --orange2: #ee9a00;
     --red0: #b00020;
     --red1: #ff002e;
+
+    --mdc-theme-primary: var(--orange2);
 }
 
 .light {
@@ -71,6 +74,9 @@ body, html {
     --modal-info-bg: var(--white0);
 
     --product-odd: var(--white6);
+
+    --filled-bg: var(--white1);
+    --mdc-theme-surface: var(--white5);
 }
 
 .dark {
@@ -104,6 +110,9 @@ body, html {
     --modal-info-bg: var(--gray3);
 
     --product-odd: var(--gray1);
+
+    --filled-bg: var(--gray9);
+    --mdc-theme-surface: var(--gray1);
 }
 
 body {
@@ -196,39 +205,6 @@ body {
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-}
-
-.settings-button.mdc-icon-button:not(:disabled) {
-    position: absolute;
-    top: 5px;
-    right: 10px;
-}
-
-.mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__leading.customInputBorder,
-.mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__notch.customInputBorder,
-.mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__trailing.customInputBorder {
-    border-color: var(--input-border);
-}
-
-.mdc-text-field--outlined:not(.mdc-text-field--disabled):not(.mdc-text-field--focused) .mdc-text-field__input:hover~.mdc-notched-outline .mdc-notched-outline__leading.customInputBorder,
-.mdc-text-field--outlined:not(.mdc-text-field--disabled):not(.mdc-text-field--focused) .mdc-text-field__input:hover~.mdc-notched-outline .mdc-notched-outline__notch.customInputBorder,
-.mdc-text-field--outlined:not(.mdc-text-field--disabled):not(.mdc-text-field--focused) .mdc-text-field__input:hover~.mdc-notched-outline .mdc-notched-outline__trailing.customInputBorder,
-.mdc-text-field--outlined:not(.mdc-text-field--disabled):not(.mdc-text-field--focused) .mdc-text-field__icon:hover~.mdc-notched-outline .mdc-notched-outline__leading.customInputBorder,
-.mdc-text-field--outlined:not(.mdc-text-field--disabled):not(.mdc-text-field--focused) .mdc-text-field__icon:hover~.mdc-notched-outline .mdc-notched-outline__notch.customInputBorder,
-.mdc-text-field--outlined:not(.mdc-text-field--disabled):not(.mdc-text-field--focused) .mdc-text-field__icon:hover~.mdc-notched-outline .mdc-notched-outline__trailing.customInputBorder {
-    border-color: var(--input-border-hover);
-}
-
-.mdc-text-field:not(.mdc-text-field--disabled):not(.mdc-text-field--invalid) .mdc-floating-label.customInputColor {
-    color: var(--input-color);
-}
-
-.mdc-text-field--invalid:not(.mdc-text-field--disabled) .mdc-floating-label.customInputColor {
-    color: var(--input-color-invalid);
-}
-
-.mdc-text-field--focused:not(.mdc-text-field--disabled):not(.mdc-text-field--invalid) .mdc-floating-label.customInputColor {
-    color: var(--input-color-focus);
 }
 
 @media only screen and (max-width: 768px) {

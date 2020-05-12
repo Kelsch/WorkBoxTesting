@@ -250,7 +250,38 @@ async function postJobCompletion(installCompletion) {
     }
 }
 
-async function updateChangedJob(installCompletion) {
+async function postPORequest(installPORequest) {
+    const jobId = this.currentJobId;
+    installPORequest.InstallerPORequestJobId = jobId;
+    installPORequest.PORequestInstallerId = parseInt(cred.name);
+    installPORequest.DateCompleted = new Date().toLocalJSON().replace(/"/g, "");
+    if (jobId != null) {
+        let token = localStorage.getItem('token');
+
+        fetch(`${apiURL}/api/installerAppData/postJobinstallPORequest`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(installPORequest)
+        })
+            .then(response => {
+                if (response.status !== 200) {
+                    throw response;
+                }
+
+                return response.json();
+            })
+            .catch(err => {
+                if (parseInt(err.message) === 401) {
+                    login();
+                }
+            });
+    }
+}
+
+async function updateChangedJob(jobUpdate) {
     const cacheAvailable = 'caches' in self;
     if (!cacheAvailable && selectedInstallDate != null) {
         return;
@@ -270,15 +301,15 @@ async function updateChangedJob(installCompletion) {
                 jobDiv.innerHTML = '';
                 let jobIndex = 0;
                 const filteredJobs = jobs.filter((job, index) => {
-                    if (job.jobId === installCompletion.InstallCompletionJobId) {
+                    if (job.jobId === jobUpdate.InstallCompletionJobId) {
                         jobIndex = index;
                     }
-                    return job.jobId === installCompletion.InstallCompletionJobId;
+                    return job.jobId === jobUpdate.InstallCompletionJobId;
                 });
                 filteredJobs.map(fJob => {
-                    fJob.docsUploaded = installCompletion.docsUploaded ?? false;
-                    fJob.readyForTemplate = installCompletion.readyForTemplate ?? false;
-                    fJob.returnTripRequired = installCompletion.returnTripRequired ?? false;
+                    fJob.docsUploaded = jobUpdate.docsUploaded ?? false;
+                    fJob.readyForTemplate = jobUpdate.readyForTemplate ?? false;
+                    fJob.returnTripRequired = jobUpdate.returnTripRequired ?? false;
                 });
 
                 jobs[jobIndex] = filteredJobs[0];
@@ -377,7 +408,7 @@ function DialogAnimation(container) {
                 if (!cacheAvailable) {
                     return;
                 }
-                
+
                 const cacheName = 'job-list';
                 const request = new Request(`${apiURL}/api/installerAppData/getInstallIndicators?businessId=${cred.name}`);
                 let currentJob;
@@ -391,16 +422,27 @@ function DialogAnimation(container) {
                                 return job.jobId === window.currentJobId;
                             });
                             currentJob = filteredJobs[0];
+
+                            if (mdcDialog.parentElement.getAttribute('id') == "app_porequest_dialog") {
+                                for (let index = 0; index < list.root_.children.length; index++) {
+                                    const element = list.root_.children[index];
+
+                                    if (element.getAttribute('data-input-type') == "checkbox") {
+                                        element.querySelector('#salesrep-confirmed-checkbox').checked = false;
+                                    }
+                                    if (element.getAttribute('data-input-type') == "text" || element.getAttribute('data-input-type') == "number") {
+                                        element.querySelector('.mdc-floating-label').classList.remove('mdc-floating-label--float-above');
+                                        element.querySelector('.mdc-text-field__input').value = null;
+                                        element.classList.remove('mdc-text-field--label-floating');
+                                    }
+                                }
+                            }
+
                             let selectedBoxes = [];
                             for (let i = 0; i < list.listElements.length; i++) {
                                 const element = list.listElements[i];
                                 let dataName = '';
-                                if (mdcDialog.parentElement.getAttribute('id') == "app_porequest_dialog") {
-                                    // console.log(mdcDialog)
-                                    dataName = 'data-install-porequest';
-                                }
                                 if (mdcDialog.parentElement.getAttribute('id') == "app_done_dialog") {
-                                    // console.log(mdcDialog)
                                     dataName = 'data-install-complete';
                                 }
                                 const attributeTrue = element.getAttribute('data-input-type') == 'checkbox' ? currentJob[element.getAttribute(dataName)] ?? false : false;
@@ -422,14 +464,20 @@ function DialogAnimation(container) {
             dialog.listen('MDCDialog:closing', event => {
                 if (mdcDialog.parentElement.getAttribute('id') == "app_porequest_dialog") {
                     if (event.detail.action == "accept") {
-                        let installCompletion = {};
-                        for (let i = 0; i < list.selectedIndex.length; i++) {
-                            const selectedIndex = list.selectedIndex[i];
-                            const element = list.listElements[selectedIndex];
-                            installCompletion[`${element.getAttribute('data-install-porequest')}`] = true;
+                        let installPORequest = {};
+
+                        for (let i = 0; i < list.root_.children.length; i++) {
+                            const listElement = list.root_.children[i];
+                            if (listElement.getAttribute('data-input-type') == "checkbox") {
+                                installPORequest[`${listElement.getAttribute('data-install-porequest')}`] = listElement.querySelector('#salesrep-confirmed-checkbox').checked;
+                            }
+                            if (listElement.getAttribute('data-input-type') == "text" || listElement.getAttribute('data-input-type') == "number") {
+                                const elementValue = listElement.querySelector('.mdc-text-field__input').value;
+                                installPORequest[`${listElement.getAttribute('data-install-porequest')}`] = listElement.getAttribute('data-input-type') == "number" ? parseInt(elementValue) || 0 : elementValue;
+                            }
                         }
-                        if (installCompletion != null) {
-                            
+                        if (installPORequest != null) {
+                            postPORequest(installPORequest);
                         }
                     }
                 }

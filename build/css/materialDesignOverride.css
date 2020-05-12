@@ -1,0 +1,54 @@
+.settings-button.mdc-icon-button:not(:disabled) {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+}
+
+.customSpacingBottom {
+    margin-bottom: 7px;
+}
+
+.mdc-text-field {
+    color: var(--black0);
+}
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled), .mdc-menu-surface {
+    background-color: var(--filled-bg);
+}
+
+.mdc-text-field--focused {
+    color: var(--mdc-theme-primary);
+}
+
+.mdc-text-field:not(.mdc-text-field--disabled) .mdc-floating-label, .mdc-list-item__text {
+    color: var(--text);
+}
+
+.mdc-text-field--focused:not(.mdc-text-field--disabled) .mdc-floating-label {
+    color: var(--mdc-theme-primary);
+}
+
+.mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__input {
+    color: var(--text);
+}
+
+.mdc-dialog .mdc-dialog__surface {
+    background-color: var(--modal-bg);
+}
+
+.mdc-dialog .mdc-dialog__title {
+    color: rgba(0,0,0,.87);
+    color: var(--text);
+}
+
+.mdc-checkbox__native-control:enabled:not(:checked):not(:indeterminate):not([data-indeterminate=true])~.mdc-checkbox__background {
+    border-color: var(--text);
+}
+
+.mdc-list-item__text[for] {
+    color: var(--text);
+}
+
+.mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__affix--prefix {
+    color: var(--text);
+}

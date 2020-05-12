@@ -21,7 +21,8 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-    <link href="https://unpkg.com/material-components-web@v4.0.0/dist/material-components-web.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/material-components-web@v6.0.0/dist/material-components-web.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/materialDesignOverride.css">
 
     <script src="js/swiped-events.js"></script>
 </head>
@@ -78,27 +79,20 @@
         </div>
 
         <form id="app_loginForm" class="loginForm-none loginForm-show" onsubmit="checkLogin(event);" method="POST">
-            <div class="mdc-text-field mdc-text-field--outlined">
-                <input class="mdc-text-field__input" type="text" id="username" required>
-                <div class="mdc-notched-outline">
-                    <div class="mdc-notched-outline__leading customInputBorder"></div>
-                    <div class="mdc-notched-outline__notch customInputBorder">
-                        <label for="username" class="mdc-floating-label customInputColor">User Name</label>
-                    </div>
-                    <div class="mdc-notched-outline__trailing customInputBorder"></div>
-                </div>
-            </div>
-            <div class="mdc-text-field mdc-text-field--outlined">
-                <input class="mdc-text-field__input" type="password" id="password" required>
-                <div class="mdc-notched-outline">
-                    <div class="mdc-notched-outline__leading customInputBorder"></div>
-                    <div class="mdc-notched-outline__notch customInputBorder">
-                        <label for="password" class="mdc-floating-label customInputColor">Password</label>
-                    </div>
-                    <div class="mdc-notched-outline__trailing customInputBorder"></div>
-                </div>
-            </div>
-            <button type="submit" class="mdc-button mdc-button--unelevated" value="Login">
+            <label class="mdc-text-field mdc-text-field--filled" data-input-type="text">
+                <span class="mdc-text-field__ripple"></span>
+                <input class="mdc-text-field__input" type="text" aria-labelledby="loginForm-username-label" required>
+                <span class="mdc-floating-label" id="loginForm-username-label">User Name</span>
+                <span class="mdc-line-ripple"></span>
+            </label>
+            <label class="mdc-text-field mdc-text-field--filled" data-input-type="password">
+                <span class="mdc-text-field__ripple"></span>
+                <input class="mdc-text-field__input" type="password" aria-labelledby="loginForm-password-label"
+                    required>
+                <span class="mdc-floating-label" id="loginForm-password-label">Password</span>
+                <span class="mdc-line-ripple"></span>
+            </label>
+            <button type="submit" class="mdc-button mdc-button--unelevated" value="Login" type="submit">
                 <div class="mdc-button__ripple"></div>
                 <span class="mdc-button__label">
                     Login
@@ -145,9 +139,9 @@
                             PO Request
                         </h2>
                         <div class="mdc-dialog__content" id="job-poRequest-content">
-                            <ul class="mdc-list">
+                            <ul class="mdc-list" style="max-width: 250px;">
                                 <li class="mdc-list-item" tabindex="1" data-install-porequest="salesrepConfirmed"
-                                    data-input-type="checkbox">
+                                    data-input-type="checkbox" style="margin-bottom: 6px;">
                                     <div class="mdc-checkbox">
                                         <input type="checkbox" class="mdc-checkbox__native-control"
                                             id="salesrep-confirmed-checkbox" />
@@ -163,31 +157,32 @@
                                     <label for="salesrep-confirmed-checkbox" class="mdc-list-item__text">Sales Rep
                                         Confirmed</label>
                                 </li>
-                                <label class="mdc-text-field mdc-text-field--filled" data-install-porequest="jobDescriptor"
-                                data-input-type="text">
+                                <label class="mdc-text-field mdc-text-field--filled customSpacingBottom"
+                                    data-install-porequest="jobDescriptor" data-input-type="text">
                                     <span class="mdc-text-field__ripple"></span>
-                                    <input class="mdc-text-field__input" type="text" aria-labelledby="jobDescriptor-label">
-                                    <span class="mdc-floating-label" id="jobDescriptor-label">Job Name / Lot Number</span>
+                                    <input class="mdc-text-field__input" type="text"
+                                        aria-labelledby="jobDescriptor-label">
+                                    <span class="mdc-floating-label" id="jobDescriptor-label">Job Name / Lot
+                                        Number</span>
                                     <span class="mdc-line-ripple"></span>
                                 </label>
-                                <li class="mdc-list-item" tabindex="3" data-install-porequest="docsUploaded"
-                                    data-input-type="text">
-                                    <div class="mdc-checkbox">
-                                        <input type="checkbox" class="mdc-checkbox__native-control"
-                                            id="docs-uploaded-checkbox" />
-                                        <div class="mdc-checkbox__background">
-                                            <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
-                                                <path class="mdc-checkbox__checkmark-path" fill="none"
-                                                    d="M1.73,12.91 8.1,19.28 22.79,4.59" />
-                                            </svg>
-                                            <div class="mdc-checkbox__mixedmark"></div>
-                                        </div>
-                                        <div class="mdc-checkbox__ripple"></div>
-                                    </div>
-                                    <label for="docs-uploaded-checkbox" class="mdc-list-item__text">Docs
-                                        Uploaded</label>
-                                </li>
-                                <!-- ... -->
+                                <label class="mdc-text-field mdc-text-field--filled customSpacingBottom"
+                                    data-install-porequest="poRequestReason" data-input-type="text">
+                                    <span class="mdc-text-field__ripple"></span>
+                                    <input class="mdc-text-field__input" type="text"
+                                        aria-labelledby="poRequestReason-label">
+                                    <span class="mdc-floating-label" id="poRequestReason-label">Why?</span>
+                                    <span class="mdc-line-ripple"></span>
+                                </label>
+                                <label class="mdc-text-field mdc-text-field--filled customSpacingBottom"
+                                    data-install-porequest="poRequestCost" data-input-type="number">
+                                    <span class="mdc-text-field__ripple"></span>
+                                    <span class="mdc-text-field__affix mdc-text-field__affix--prefix">$</span>
+                                    <input class="mdc-text-field__input" type="number" aria-labelledby="poRequest-cost"
+                                        min="0.01" step="0.01" max="99999">
+                                    <span class="mdc-floating-label" id="poRequest-cost">Cost</span>
+                                    <span class="mdc-line-ripple"></span>
+                                </label>
                             </ul>
                         </div>
                         <footer class="mdc-dialog__actions">
@@ -284,7 +279,7 @@
             </div>
         </div>
 
-        <script src="https://unpkg.com/material-components-web@v4.0.0/dist/material-components-web.min.js"></script>
+        <script src="https://unpkg.com/material-components-web@v6.0.0/dist/material-components-web.min.js"></script>
         <script src="js/calendar.js"></script>
         <script src="js/app.js"></script>
         <script src="js/apiFetch.js"></script>
