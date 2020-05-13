@@ -209,10 +209,10 @@ body {
 
 @media only screen and (max-width: 768px) {
     .offline-none {
-        top: 10px;
+        top: 20px;
     }
     .offline-show {
-        top: 10px;
+        top: 20px;
     }
 
     .app-title {

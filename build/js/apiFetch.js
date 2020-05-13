@@ -99,6 +99,19 @@ async function getJobs(month, year) {
                     installElement.innerHTML += `<div class="dateNumber-indicator${installColor}" data-jobid="${job.jobId}"></div>`;
                 }
             });
+
+            // Get design sets and layouts for every job in the month LIMITED TO 55 AT A TIME
+            let jobIdList = [];
+            for (let i = 0; i < filteredJobs.length; i++) {
+                const job = filteredJobs[i];
+                jobIdList = [...jobIdList, job.jobId];
+                
+                if (jobIdList.length/5 == 11) {
+                    getDesignSets(jobIdList);
+                    getLayouts(jobIdList);
+                    jobIdList = [];
+                }
+            }
         })
         .catch(err => {
             console.error(err);
@@ -145,13 +158,6 @@ async function findSelectedDateJobs(selectedInstallDate) {
                     jobDiv.innerHTML += buttonHtml;
                 });
 
-                let jobIdList = [];
-                for (let i = 0; i < filteredJobs.length; i++) {
-                    const job = filteredJobs[i];
-                    jobIdList = [...jobIdList, job.jobId];
-                }
-                getDesignSets(jobIdList);
-                getLayouts(jobIdList);
                 ButtonAnimation(jobDiv);
             });
         });
@@ -166,6 +172,7 @@ async function getDesignSets(jobIds) {
         return;
     }
     let token = localStorage.getItem('token');
+    
     fetch(`${apiURL}/api/installerAppData/getInstallJobsDesignSets?jobIdStrings=${jobIds.toString()}`, {
         headers: {
             'Authorization': `Bearer ${token}`
@@ -258,7 +265,7 @@ async function postPORequest(installPORequest) {
     installPORequest.DateRequested = new Date().toLocalJSON().replace(/"/g, "");
     if (jobId != null) {
         let token = localStorage.getItem('token');
-        
+
         fetch(`${apiURL}/api/installerAppData/postJobinstallPORequest`, {
             method: 'POST',
             headers: {
@@ -437,7 +444,7 @@ function DialogAnimation(container) {
                                     }
                                 }
                             }
-                            
+
                             let selectedBoxes = [];
                             for (let i = 0; i < list.listElements.length; i++) {
                                 const element = list.listElements[i];
