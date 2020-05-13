@@ -128,7 +128,7 @@ function dateSelected(element) {
 document.onkeydown = checkKey;
 
 function checkKey(e) {
-    if (!localStorage.hasOwnProperty('token')) {
+    if (!localStorage.hasOwnProperty('token') || window.jobOpened == true) {
         return;
     }
     let event = window.event ? window.event : e;

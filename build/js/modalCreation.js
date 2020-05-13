@@ -64,6 +64,9 @@ function resetModal() {
     if (remainingModal !== null) {
         resizable = remainingModal.querySelector('.modal-card');
     }
+    else {
+        window.jobOpened = false;
+    }
 }
 
 for (let index = 0; index < hiddenModals.length; index++) {
@@ -90,6 +93,7 @@ for (let index = 0; index < hiddenModals.length; index++) {
 }
 
 async function jobClicked(jobId) {
+    window.jobOpened = true;
     const cacheAvailable = 'caches' in self;
     if (!cacheAvailable && selectedInstallDate != null) {
         return;

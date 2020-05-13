@@ -79,18 +79,25 @@
         </div>
 
         <form id="app_loginForm" class="loginForm-none loginForm-show" onsubmit="checkLogin(event);" method="POST">
-            <label class="mdc-text-field mdc-text-field--filled" data-input-type="text">
-                <span class="mdc-text-field__ripple"></span>
-                <input class="mdc-text-field__input" type="text" aria-labelledby="loginForm-username-label" required>
-                <span class="mdc-floating-label" id="loginForm-username-label">User Name</span>
-                <span class="mdc-line-ripple"></span>
+            <label class="mdc-text-field mdc-text-field--outlined">
+                <input type="text" class="mdc-text-field__input" aria-labelledby="loginForm-username-label" data-input-type="text" required>
+                <span class="mdc-notched-outline">
+                    <span class="mdc-notched-outline__leading"></span>
+                    <span class="mdc-notched-outline__notch">
+                        <span class="mdc-floating-label" id="loginForm-username-label">User Name</span>
+                    </span>
+                    <span class="mdc-notched-outline__trailing"></span>
+                </span>
             </label>
-            <label class="mdc-text-field mdc-text-field--filled" data-input-type="password">
-                <span class="mdc-text-field__ripple"></span>
-                <input class="mdc-text-field__input" type="password" aria-labelledby="loginForm-password-label"
-                    required>
-                <span class="mdc-floating-label" id="loginForm-password-label">Password</span>
-                <span class="mdc-line-ripple"></span>
+            <label class="mdc-text-field mdc-text-field--outlined">
+                <input type="password" class="mdc-text-field__input" aria-labelledby="loginForm-password-label" data-input-type="password" required>
+                <span class="mdc-notched-outline">
+                    <span class="mdc-notched-outline__leading"></span>
+                    <span class="mdc-notched-outline__notch">
+                        <span class="mdc-floating-label" id="loginForm-password-label">Password</span>
+                    </span>
+                    <span class="mdc-notched-outline__trailing"></span>
+                </span>
             </label>
             <button type="submit" class="mdc-button mdc-button--unelevated" value="Login" type="submit">
                 <div class="mdc-button__ripple"></div>
@@ -212,7 +219,7 @@
                         </h2>
                         <div class="mdc-dialog__content" id="job-dialog-content">
                             <ul class="mdc-list">
-                                <li class="mdc-list-item" tabindex="1" data-install-complete="readyForTemplate">
+                                <li class="mdc-list-item" tabindex="1" data-install-complete="readyForTemplate" data-input-type="checkbox">
                                     <div class="mdc-checkbox">
                                         <input type="checkbox" class="mdc-checkbox__native-control"
                                             id="ready-for-template-checkbox" />
@@ -228,7 +235,7 @@
                                     <label for="ready-for-template-checkbox" class="mdc-list-item__text">Ready for
                                         Template</label>
                                 </li>
-                                <li class="mdc-list-item" tabindex="2" data-install-complete="returnTripRequired">
+                                <li class="mdc-list-item" tabindex="2" data-install-complete="returnTripRequired" data-input-type="checkbox">
                                     <div class="mdc-checkbox">
                                         <input type="checkbox" class="mdc-checkbox__native-control"
                                             id="return-trip-required-checkbox" />
@@ -244,7 +251,7 @@
                                     <label for="return-trip-required-checkbox" class="mdc-list-item__text">Return Trip
                                         Required</label>
                                 </li>
-                                <li class="mdc-list-item" tabindex="3" data-install-complete="docsUploaded">
+                                <li class="mdc-list-item" tabindex="3" data-install-complete="docsUploaded" data-input-type="checkbox">
                                     <div class="mdc-checkbox">
                                         <input type="checkbox" class="mdc-checkbox__native-control"
                                             id="docs-uploaded-checkbox" />

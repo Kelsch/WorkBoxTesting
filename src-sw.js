@@ -71,9 +71,7 @@ const bgSyncPlugin = new workbox.backgroundSync.BackgroundSyncPlugin('bgPluginCo
     maxRetentionTime: 24 * 60, // Retry for max of 24 hours (specified in minutes)
     onSync: async (queue) => {
         try {
-            console.log(queue)
-            console.log(queue.o)
-            await queue.replayRequests();
+            await queue.queue.replayRequests();
 
             // The replay was successful! Notification logic can go here.
             console.log('Replay complete!');
@@ -83,26 +81,6 @@ const bgSyncPlugin = new workbox.backgroundSync.BackgroundSyncPlugin('bgPluginCo
         }
     }
 });
-
-// const queue = new workbox.backgroundSync.Queue('bgQueueConfig', {
-//     onSync: async (queue) => {
-//       let entry;
-//       while (entry = await this.shiftRequest()) {
-//           console.log(entry, queue)
-//         try {
-//           await fetch(entry.request);
-//           console.error('Replay successful for request', entry.request);
-//         } catch (error) {
-//           console.error('Replay failed for request', entry.request, error);
-
-//           // Put the entry back in the queue and re-throw the error:
-//           await this.unshiftRequest(entry);
-//           throw error;
-//         }
-//       }
-//       console.log('Replay complete!');
-//     }
-//   });
 
 workbox.routing.registerRoute(
     new RegExp(`${apiURL}/api/installerAppData/postJobInstallCompletion`),
@@ -119,5 +97,15 @@ workbox.routing.registerRoute(
     }),
     'POST'
 );
+
+self.addEventListener('fetch', (event) => {
+    // Clone the request to ensure it's safe to read when
+    // adding to the Queue.
+    const promiseChain = fetch(event.request.clone()).catch((err) => {
+        return queue.pushRequest({ request: event.request });
+    });
+
+    event.waitUntil(promiseChain);
+});
 
 workbox.precaching.precacheAndRoute(self.__WB_MANIFEST);

@@ -71,9 +71,7 @@ const bgSyncPlugin = new workbox.backgroundSync.BackgroundSyncPlugin('bgPluginCo
     maxRetentionTime: 24 * 60, // Retry for max of 24 hours (specified in minutes)
     onSync: async (queue) => {
         try {
-            console.log(queue)
-            console.log(queue.o)
-            await queue.replayRequests();
+            await queue.queue.replayRequests();
 
             // The replay was successful! Notification logic can go here.
             console.log('Replay complete!');
@@ -83,26 +81,6 @@ const bgSyncPlugin = new workbox.backgroundSync.BackgroundSyncPlugin('bgPluginCo
         }
     }
 });
-
-// const queue = new workbox.backgroundSync.Queue('bgQueueConfig', {
-//     onSync: async (queue) => {
-//       let entry;
-//       while (entry = await this.shiftRequest()) {
-//           console.log(entry, queue)
-//         try {
-//           await fetch(entry.request);
-//           console.error('Replay successful for request', entry.request);
-//         } catch (error) {
-//           console.error('Replay failed for request', entry.request, error);
-
-//           // Put the entry back in the queue and re-throw the error:
-//           await this.unshiftRequest(entry);
-//           throw error;
-//         }
-//       }
-//       console.log('Replay complete!');
-//     }
-//   });
 
 workbox.routing.registerRoute(
     new RegExp(`${apiURL}/api/installerAppData/postJobInstallCompletion`),
@@ -120,4 +98,14 @@ workbox.routing.registerRoute(
     'POST'
 );
 
-workbox.precaching.precacheAndRoute([{"revision":"3a94fe1fa46941d3062a72e119fb9136","url":"css/calendar.css"},{"revision":"25245eb36e8e452b743fdad734d47671","url":"css/jobCard.css"},{"revision":"212ae1f33efb2c47984d6f94d2ec1b04","url":"css/main.css"},{"revision":"0bb0bb1ba22fee03c54afe37d749b6b5","url":"css/materialDesignOverride.css"},{"revision":"e8b3d535cea3eac50e33901aa60fabbb","url":"css/refreshControl.css"},{"revision":"ae3b7da9c6e1e3c9994cd7c3d8035a36","url":"index.html"},{"revision":"e25ab196065565940bc3c0c38632efaf","url":"js/apiFetch.js"},{"revision":"a4bd17453e1ad75b0b2a1c31d78b677c","url":"js/app.js"},{"revision":"6f8102a25d5b91861a23c3b9036205b0","url":"js/calendar.js"},{"revision":"c3b12a0f396e416ae47b228b76280af9","url":"js/jsClass/designSetInfoCardElement.js"},{"revision":"8f7b27db8c8edae1581ef4d43ac709d9","url":"js/jsClass/jobCardElement.js"},{"revision":"a507f0cf47b1b7b93fb6b15efbfe8adb","url":"js/modalCreation.js"},{"revision":"dfc20073d069c76c1b67606f3b916e8c","url":"js/refreshControl.js"},{"revision":"8618cac677171c71ee01a7027cdb659b","url":"js/swiped-events.js"},{"revision":"edd4495e66b5cb260886662b5e5b2e42","url":"js/workbox-7248be78.js"}]);
+self.addEventListener('fetch', (event) => {
+    // Clone the request to ensure it's safe to read when
+    // adding to the Queue.
+    const promiseChain = fetch(event.request.clone()).catch((err) => {
+        return queue.pushRequest({ request: event.request });
+    });
+
+    event.waitUntil(promiseChain);
+});
+
+workbox.precaching.precacheAndRoute([{"revision":"3a94fe1fa46941d3062a72e119fb9136","url":"css/calendar.css"},{"revision":"25245eb36e8e452b743fdad734d47671","url":"css/jobCard.css"},{"revision":"212ae1f33efb2c47984d6f94d2ec1b04","url":"css/main.css"},{"revision":"0bb0bb1ba22fee03c54afe37d749b6b5","url":"css/materialDesignOverride.css"},{"revision":"e8b3d535cea3eac50e33901aa60fabbb","url":"css/refreshControl.css"},{"revision":"ae3b7da9c6e1e3c9994cd7c3d8035a36","url":"index.html"},{"revision":"78874f80da68145469ef14d3c52e4c3a","url":"js/apiFetch.js"},{"revision":"e0c0d808710f5b654f27864bbb541057","url":"js/app.js"},{"revision":"be9c8e7fc3f43cb182e1a63721a97a9e","url":"js/calendar.js"},{"revision":"c3b12a0f396e416ae47b228b76280af9","url":"js/jsClass/designSetInfoCardElement.js"},{"revision":"8f7b27db8c8edae1581ef4d43ac709d9","url":"js/jsClass/jobCardElement.js"},{"revision":"4203bbb0a1a4a5fb4cd4b57b472f2f41","url":"js/modalCreation.js"},{"revision":"dfc20073d069c76c1b67606f3b916e8c","url":"js/refreshControl.js"},{"revision":"8618cac677171c71ee01a7027cdb659b","url":"js/swiped-events.js"},{"revision":"edd4495e66b5cb260886662b5e5b2e42","url":"js/workbox-7248be78.js"}]);

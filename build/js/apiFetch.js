@@ -243,6 +243,7 @@ async function postJobCompletion(installCompletion) {
                 return response.json();
             })
             .catch(err => {
+                console.error(err)
                 if (parseInt(err.message) === 401) {
                     login();
                 }
@@ -254,10 +255,10 @@ async function postPORequest(installPORequest) {
     const jobId = this.currentJobId;
     installPORequest.InstallerPORequestJobId = jobId;
     installPORequest.PORequestInstallerId = parseInt(cred.name);
-    installPORequest.DateCompleted = new Date().toLocalJSON().replace(/"/g, "");
+    installPORequest.DateRequested = new Date().toLocalJSON().replace(/"/g, "");
     if (jobId != null) {
         let token = localStorage.getItem('token');
-
+        
         fetch(`${apiURL}/api/installerAppData/postJobinstallPORequest`, {
             method: 'POST',
             headers: {
@@ -422,7 +423,6 @@ function DialogAnimation(container) {
                                 return job.jobId === window.currentJobId;
                             });
                             currentJob = filteredJobs[0];
-
                             if (mdcDialog.parentElement.getAttribute('id') == "app_porequest_dialog") {
                                 for (let index = 0; index < list.root_.children.length; index++) {
                                     const element = list.root_.children[index];
@@ -437,7 +437,7 @@ function DialogAnimation(container) {
                                     }
                                 }
                             }
-
+                            
                             let selectedBoxes = [];
                             for (let i = 0; i < list.listElements.length; i++) {
                                 const element = list.listElements[i];
