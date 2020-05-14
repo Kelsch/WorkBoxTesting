@@ -495,7 +495,8 @@ function DialogAnimation(container) {
                             }
                             if (listElement.getAttribute('data-input-type') == "text" || listElement.getAttribute('data-input-type') == "number") {
                                 const elementValue = listElement.querySelector('.mdc-text-field__input').value;
-                                installPORequest[`${listElement.getAttribute('data-install-porequest')}`] = listElement.getAttribute('data-input-type') == "number" ? parseInt(elementValue) || 0 : elementValue;
+                                
+                                installPORequest[`${listElement.getAttribute('data-install-porequest')}`] = listElement.getAttribute('data-input-type') == "number" ? parseFloat(elementValue) || 0 : elementValue;
                             }
                         }
 
