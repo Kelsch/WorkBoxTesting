@@ -65,3 +65,13 @@
 .mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__affix--prefix {
     color: var(--text);
 }
+
+.loginForm-none {
+    display: none;
+}
+
+.loginForm-show {
+    display: grid;
+    grid-gap: 10px;
+    align-self: center;
+}

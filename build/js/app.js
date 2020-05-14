@@ -1,5 +1,5 @@
-// const apiURL = 'https://pdwebapi.longformgibberish.com';
-const apiURL = 'https://pdwebapi-mf5.conveyor.cloud';
+const apiURL = 'https://pdwebapi.longformgibberish.com';
+// const apiURL = 'https://pdwebapi-mf5.conveyor.cloud';
 // const apiURL = 'https://192.168.1.43:45455';
 let loginButtonPressed = false;
 let cred;
@@ -197,12 +197,14 @@ function login() {
 function userAuthenticated() {
   const topbarMenu = document.getElementById('settings_menu');
   const loginForm = document.getElementById('app_loginForm');
+  const fabRequestButton = document.getElementById('fab_PORequest');
   if (token === null) {
     token = localStorage.getItem('token');
   }
 
   loginForm.classList.remove('loginForm-show');
   topbarMenu.classList.remove('loginForm-none');
+  fabRequestButton.classList.remove('loginForm-none');
   showCalendar(currentMonth, currentYear);
   setupSwipeListener(calendarElement);
 }
@@ -216,10 +218,13 @@ function logout() {
   const calendarContainer = document.getElementById('create_calendar');
   const dateSelectedContainer = document.getElementById('date_selected');
   const jobContainer = document.getElementById('jobs');
+  const fabRequestButton = document.getElementById('fab_PORequest');
 
   calendarContainer.innerHTML = "";
   dateSelectedContainer.innerHTML = "";
   jobContainer.innerHTML = "";
+
+  fabRequestButton.classList.add('loginForm-none');
 
   topbarMenu.classList.add('loginForm-none');
 

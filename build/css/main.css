@@ -181,16 +181,6 @@ body {
     margin: 1px 5px;
 }
 
-.loginForm-none {
-    display: none;
-}
-
-.loginForm-show {
-    display: grid;
-    grid-gap: 10px;
-    align-self: center;
-}
-
 .app-topBar {
     display: flex;
     justify-content: flex-end;
