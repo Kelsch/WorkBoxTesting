@@ -42,10 +42,10 @@ function doDrag(e) {
 }
 
 function stopDrag() {
-    document.documentElement.removeEventListener('mousemove', doDrag, false);
-    document.documentElement.removeEventListener('mouseup', stopDrag, false);
-    document.documentElement.removeEventListener('touchmove', doDrag, false);
-    document.documentElement.removeEventListener('touchstop', stopDrag, false);
+    document.documentElement.removeEventListener('mousemove', doDrag, {passive: true});
+    document.documentElement.removeEventListener('mouseup', stopDrag, {passive: true});
+    document.documentElement.removeEventListener('touchmove', doDrag, {passive: true});
+    document.documentElement.removeEventListener('touchstop', stopDrag, {passive: true});
 }
 
 function resetModal() {
@@ -80,16 +80,16 @@ for (let index = 0; index < hiddenModals.length; index++) {
         if (e.target.classList.contains('modal-card-container-tint')) {
             resetModal();
         }
-    }, Modernizr.passiveeventlisteners ? {passive: true} : false);
+    }, {passive: true});
 
     hiddenModal.addEventListener('touchstart', (e) => {
         if (e.target.classList.contains('modal-card-container-tint')) {
             resetModal();
         }
-    }, Modernizr.passiveeventlisteners ? {passive: true} : false);
+    }, {passive: true});
 
-    resizer.addEventListener('mousedown', initDrag, false);
-    resizer.addEventListener('touchstart', initDrag, false);
+    resizer.addEventListener('mousedown', initDrag, {passive: true});
+    resizer.addEventListener('touchstart', initDrag, {passive: true});
 }
 
 async function jobClicked(jobId) {
