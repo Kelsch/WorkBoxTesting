@@ -162,6 +162,20 @@ function designSetInfoClicked(jobId) {
     const cacheName = 'job-list';
     const request = new Request(`${apiURL}/api/installerAppData/getInstallIndicators?businessId=${cred.name}`);
 
+    // Get design sets and layouts for every job in the month LIMITED TO 55 AT A TIME
+    // let jobIdList = [];
+    // for (let i = 0; i < window.currentJobs.length; i++) {
+    //     const job = window.currentJobs[i];
+    //     jobIdList = [...jobIdList, job.jobId];
+
+    //     if (jobIdList.length / 5 == 11) {
+    //         getDesignSets(jobIdList);
+    //         getLayouts(jobIdList);
+    //         jobIdList = [];
+    //     }
+    // }
+
+    // console.log(window.currentJobIds)
     const cacheNameDesignSet = 'job-designSets-list';
     const requestDesignSet = new Request(`${apiURL}/api/installerAppData/getInstallJobsDesignSets?jobIdStrings=${window.currentJobIds}`);
 

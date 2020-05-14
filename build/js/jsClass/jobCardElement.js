@@ -210,23 +210,27 @@ class JobCard extends HTMLElement {
     connectedCallback() {
         const installColor = determineInstallColor(this.status);
 
+        
         const cacheName = 'jobs-layout-list';
         const request = new Request(`${apiURL}/api/installerAppData/getJobsLayouts?jobIdStrings=${window.currentJobIds}`);
-
+        
         caches.open(cacheName).then(cache => {
             cache.match(request).then((response) => {
                 let result;
-
+                
                 if (response == undefined) {
                     result = false;
-
+                    
                     this.innerHTML = jobCardHTML(this, result, installColor);
                 }
                 else {
                     response.json().then(data => {
                         for (let i = 0; i < data.length; i++) {
-                            const layout = data[i];
-                            result = !result ? layout.jobId == this.jobId : result;
+                            if (!result) {
+                                const layout = data[i];
+                                console.log(layout)
+                                result = !result ? layout.jobId == this.jobId : result;
+                            }
                         }
     
                         this.innerHTML = jobCardHTML(this, result, installColor);

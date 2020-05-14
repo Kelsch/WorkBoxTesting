@@ -106,14 +106,17 @@ async function getJobs(month, year) {
 
             // Get design sets and layouts for every job in the month LIMITED TO 55 AT A TIME
             let jobIdList = [];
+            let timesReset = 0;
             for (let i = 0; i < filteredJobs.length; i++) {
                 const job = filteredJobs[i];
                 jobIdList = [...jobIdList, job.jobId];
-
-                if (jobIdList.length / 5 == 11) {
+                
+                
+                if (jobIdList.length / 5 == 11 || (((timesReset * 55) - filteredJobs.length) * -1 < 55 && (((timesReset * 55) - filteredJobs.length) * -1 > -1 && filteredJobs.length - 1 == i))) {
                     getDesignSets(jobIdList);
                     getLayouts(jobIdList);
                     jobIdList = [];
+                    timesReset++;
                 }
             }
         })
