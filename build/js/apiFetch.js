@@ -4,6 +4,8 @@ const darkModeCheckbox = appTopBar.querySelector('#darkMode-checkbox');
 const darkModeSwitch = appTopBar.querySelector('#darkMode-switch');
 const darkModeListItem = appTopBar.querySelector('#darkMode-liItem');
 const dialog = document.getElementById('dialog_container');
+// const fab = document.getElementById('fab_PORequest');
+const fab = document.querySelector('.mdc-fab');
 // const poRequstDialog = document.getElementById('app_porequest_dialog');
 const body = document.body;
 
@@ -18,12 +20,14 @@ const sleep = (timeout) => new Promise(resolve => setTimeout(resolve, timeout));
 
 TextInputAnimation(document.getElementById('app_loginForm'));
 ButtonAnimation(document.getElementById('app_loginForm'));
+FabButtonAnimation(fab);
 IconButtonAnimation(appTopBar);
 MenuAnimation(appTopBar);
 CheckboxAnimation(appTopBar);
 SwitchAnimation(appTopBar);
 DialogAnimation(dialog);
 TextInputAnimation(document.getElementById('job-poRequest-content'));
+
 
 function getNonWorkDays() {
     let token = localStorage.getItem('token');
@@ -105,8 +109,8 @@ async function getJobs(month, year) {
             for (let i = 0; i < filteredJobs.length; i++) {
                 const job = filteredJobs[i];
                 jobIdList = [...jobIdList, job.jobId];
-                
-                if (jobIdList.length/5 == 11) {
+
+                if (jobIdList.length / 5 == 11) {
                     getDesignSets(jobIdList);
                     getLayouts(jobIdList);
                     jobIdList = [];
@@ -172,7 +176,7 @@ async function getDesignSets(jobIds) {
         return;
     }
     let token = localStorage.getItem('token');
-    
+
     fetch(`${apiURL}/api/installerAppData/getInstallJobsDesignSets?jobIdStrings=${jobIds.toString()}`, {
         headers: {
             'Authorization': `Bearer ${token}`
@@ -263,30 +267,29 @@ async function postPORequest(installPORequest) {
     installPORequest.InstallerPORequestJobId = jobId;
     installPORequest.PORequestInstallerId = parseInt(cred.name);
     installPORequest.DateRequested = new Date().toLocalJSON().replace(/"/g, "");
-    if (jobId != null) {
-        let token = localStorage.getItem('token');
 
-        fetch(`${apiURL}/api/installerAppData/postJobinstallPORequest`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify(installPORequest)
+    let token = localStorage.getItem('token');
+
+    fetch(`${apiURL}/api/installerAppData/postJobinstallPORequest`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(installPORequest)
+    })
+        .then(response => {
+            if (response.status !== 200) {
+                throw response;
+            }
+
+            return response.json();
         })
-            .then(response => {
-                if (response.status !== 200) {
-                    throw response;
-                }
-
-                return response.json();
-            })
-            .catch(err => {
-                if (parseInt(err.message) === 401) {
-                    login();
-                }
-            });
-    }
+        .catch(err => {
+            if (parseInt(err.message) === 401) {
+                login();
+            }
+        });
 }
 
 async function updateChangedJob(jobUpdate) {
@@ -340,6 +343,16 @@ function ButtonAnimation(container) {
             const element = buttons[i];
             mdc.ripple.MDCRipple.attachTo(element);
         }
+    }
+}
+
+function FabButtonAnimation(fab) {
+    if (typeof mdc !== 'undefined') {
+        mdc.ripple.MDCRipple.attachTo(fab);
+
+        fab.addEventListener('click', async () => {
+            createPORequest();
+        });
     }
 }
 
@@ -445,22 +458,24 @@ function DialogAnimation(container) {
                                 }
                             }
 
-                            let selectedBoxes = [];
-                            for (let i = 0; i < list.listElements.length; i++) {
-                                const element = list.listElements[i];
-                                let dataName = '';
-                                if (mdcDialog.parentElement.getAttribute('id') == "app_done_dialog") {
-                                    dataName = 'data-install-complete';
+                            if (currentJob === null) {
+                                let selectedBoxes = [];
+                                for (let i = 0; i < list.listElements.length; i++) {
+                                    const element = list.listElements[i];
+                                    let dataName = '';
+                                    if (mdcDialog.parentElement.getAttribute('id') == "app_done_dialog") {
+                                        dataName = 'data-install-complete';
+                                    }
+                                    const attributeTrue = element.getAttribute('data-input-type') == 'checkbox' ? currentJob[element.getAttribute(dataName)] ?? false : false;
+                                    if (attributeTrue) {
+                                        selectedBoxes = [...selectedBoxes, i];
+                                    }
                                 }
-                                const attributeTrue = element.getAttribute('data-input-type') == 'checkbox' ? currentJob[element.getAttribute(dataName)] ?? false : false;
-                                if (attributeTrue) {
-                                    selectedBoxes = [...selectedBoxes, i];
+                                if (selectedBoxes.length > 0) {
+                                    list.selectedIndex = selectedBoxes;
                                 }
+                                list.layout();
                             }
-                            if (selectedBoxes.length > 0) {
-                                list.selectedIndex = selectedBoxes;
-                            }
-                            list.layout();
                         });
                     });
                 }).catch(err => {
@@ -483,7 +498,12 @@ function DialogAnimation(container) {
                                 installPORequest[`${listElement.getAttribute('data-install-porequest')}`] = listElement.getAttribute('data-input-type') == "number" ? parseInt(elementValue) || 0 : elementValue;
                             }
                         }
+
                         if (installPORequest != null) {
+                            if (installPORequest.poRequestReason == "" || installPORequest.jobDescriptor == "") {
+                                alert('Reason or Job Name missing');
+                                return;
+                            }
                             postPORequest(installPORequest);
                         }
                     }
