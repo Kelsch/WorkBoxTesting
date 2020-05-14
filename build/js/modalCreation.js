@@ -80,13 +80,13 @@ for (let index = 0; index < hiddenModals.length; index++) {
         if (e.target.classList.contains('modal-card-container-tint')) {
             resetModal();
         }
-    });
+    }, Modernizr.passiveeventlisteners ? {passive: true} : false);
 
     hiddenModal.addEventListener('touchstart', (e) => {
         if (e.target.classList.contains('modal-card-container-tint')) {
             resetModal();
         }
-    });
+    }, Modernizr.passiveeventlisteners ? {passive: true} : false);
 
     resizer.addEventListener('mousedown', initDrag, false);
     resizer.addEventListener('touchstart', initDrag, false);
