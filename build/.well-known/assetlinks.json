@@ -1,0 +1,14 @@
+[
+    {
+        "relation": [
+            "delegate_permission/common.handle_all_urls"
+        ],
+        "target": {
+            "namespace": "android_app",
+            "package_name": "com.PopularDesign.PDInstallPWA",
+            "sha256_cert_fingerprints": [
+                "11:0E:E4:37:D0:91:3A:75:6E:B1:1A:EA:32:42:1A:FB:AF:04:72:96:96:82:A5:91:90:D5:A2:C6:5B:94:71:CC"
+            ]
+        }
+    }
+]
