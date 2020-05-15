@@ -228,7 +228,7 @@ class JobCard extends HTMLElement {
                         for (let i = 0; i < data.length; i++) {
                             if (!result) {
                                 const layout = data[i];
-                                console.log(layout)
+                                
                                 result = !result ? layout.jobId == this.jobId : result;
                             }
                         }
