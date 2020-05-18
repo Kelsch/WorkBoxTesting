@@ -10,6 +10,7 @@ workbox.routing.registerRoute(
     // new RegExp('https://pdwebapi-mf5.conveyor.cloud/api/installerAppData/getNonWorkDays'),
     new RegExp(`${apiURL}/api/installerAppData/getNonWorkDays`),
     new workbox.strategies.StaleWhileRevalidate({
+        cacheName: 'non-workDay',
         plugins: [
             new workbox.expiration.ExpirationPlugin({
                 maxAgeSeconds: 60 * 60 * 24,
