@@ -132,6 +132,7 @@ async function jobClicked(jobId) {
                     jobCreatedElement.installerNotes = fJob.installerNotes;
                     jobCreatedElement.status = fJob.status;
                     jobCreatedElement.address = fJob.address;
+                    jobCreatedElement.installRoleId = fJob.installRoleId;
 
                     jobDetailDiv.appendChild(jobCreatedElement);
 

@@ -18,7 +18,7 @@ class JobCard extends HTMLElement {
         this._personId = 0;
         this._salesRepId = 0;
         this._installerBusinessId = 0;
-        this._installRoleId = 0;
+        this._installRoleId = 1;
         this._installed = false;
         this._installerMistakeCost = 0;
         this._servicingNote = "";
@@ -217,7 +217,6 @@ class JobCard extends HTMLElement {
 
     connectedCallback() {
         const installColor = determineInstallColor(this.status);
-
         
         const cacheName = 'jobs-layout-list';
         const request = new Request(`${apiURL}/api/installerAppData/getJobsLayouts?jobIdStrings=${window.currentJobIds}`);
@@ -250,6 +249,7 @@ class JobCard extends HTMLElement {
 }
 
 function jobCardHTML(data, result, installColor) {
+    // console.log(data, data.installRoleId)
     const htmlString = 
         `<div class="modal-information">
             <div class="job-datails job-name job-notes">
