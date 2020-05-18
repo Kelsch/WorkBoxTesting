@@ -18,6 +18,7 @@ class JobCard extends HTMLElement {
         this._personId = 0;
         this._salesRepId = 0;
         this._installerBusinessId = 0;
+        this._installRoleId = 0;
         this._installed = false;
         this._installerMistakeCost = 0;
         this._servicingNote = "";
@@ -143,6 +144,13 @@ class JobCard extends HTMLElement {
         return this._installerBusinessId;
     }
 
+    set installRoleId(value) {
+        this._installRoleId = value;
+    }
+    get installRoleId() {
+        return this._installRoleId;
+    }
+
     set installed(value) {
         this._installed = value;
     }
@@ -258,10 +266,11 @@ function jobCardHTML(data, result, installColor) {
                 <span class="job-label">Home Owner:</span>
                 ${data.hasHomeOwner ? 'Yes' : 'No'}
             </div>
-            <div class="job-datails job-notes">
-                <span class="job-label">Pay:</span>
-                $${data.installerPay.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString()}
-            </div>
+            ${data.installRoleId == 1 ?
+                `<div class="job-datails job-notes">
+                    <span class="job-label">Pay:</span>
+                    $${data.installerPay.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString()}
+                </div>` : ''}
             <div class="job-datails job-notes">
                 <span class="job-label">Notes:</span>
                 ${data.installerNotes === null || data.installerNotes === '' ? '' : data.installerNotes}
