@@ -9,7 +9,13 @@ importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox
 workbox.routing.registerRoute(
     // new RegExp('https://pdwebapi-mf5.conveyor.cloud/api/installerAppData/getNonWorkDays'),
     new RegExp(`${apiURL}/api/installerAppData/getNonWorkDays`),
-    new workbox.strategies.StaleWhileRevalidate()
+    new workbox.strategies.StaleWhileRevalidate({
+        plugins: [
+            new workbox.expiration.ExpirationPlugin({
+                maxAgeSeconds: 60 * 60 * 24,
+            }),
+        ],
+    })
 );
 
 workbox.routing.registerRoute(
@@ -17,6 +23,11 @@ workbox.routing.registerRoute(
     new RegExp(`${apiURL}/api/installerAppData/getInstallIndicators`),
     new workbox.strategies.StaleWhileRevalidate({
         cacheName: 'job-list',
+        plugins: [
+            new workbox.expiration.ExpirationPlugin({
+                maxAgeSeconds: 60 * 60 * 24,
+            }),
+        ],
     })
 );
 
@@ -24,6 +35,11 @@ workbox.routing.registerRoute(
     new RegExp(`${apiURL}/api/installerAppData/getInstallJobsDesignSets`),
     new workbox.strategies.StaleWhileRevalidate({
         cacheName: 'job-designSets-list',
+        plugins: [
+            new workbox.expiration.ExpirationPlugin({
+                maxAgeSeconds: 60 * 60 * 24,
+            }),
+        ],
     })
 );
 
@@ -31,6 +47,11 @@ workbox.routing.registerRoute(
     new RegExp(`${apiURL}/api/installerAppData/getJobsLayouts`),
     new workbox.strategies.StaleWhileRevalidate({
         cacheName: 'jobs-layout-list',
+        plugins: [
+            new workbox.expiration.ExpirationPlugin({
+                maxAgeSeconds: 60 * 60 * 24,
+            }),
+        ],
     })
 );
 

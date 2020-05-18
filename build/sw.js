@@ -9,7 +9,13 @@ importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox
 workbox.routing.registerRoute(
     // new RegExp('https://pdwebapi-mf5.conveyor.cloud/api/installerAppData/getNonWorkDays'),
     new RegExp(`${apiURL}/api/installerAppData/getNonWorkDays`),
-    new workbox.strategies.StaleWhileRevalidate()
+    new workbox.strategies.StaleWhileRevalidate({
+        plugins: [
+            new workbox.expiration.ExpirationPlugin({
+                maxAgeSeconds: 60 * 60 * 24,
+            }),
+        ],
+    })
 );
 
 workbox.routing.registerRoute(
@@ -17,6 +23,11 @@ workbox.routing.registerRoute(
     new RegExp(`${apiURL}/api/installerAppData/getInstallIndicators`),
     new workbox.strategies.StaleWhileRevalidate({
         cacheName: 'job-list',
+        plugins: [
+            new workbox.expiration.ExpirationPlugin({
+                maxAgeSeconds: 60 * 60 * 24,
+            }),
+        ],
     })
 );
 
@@ -24,6 +35,11 @@ workbox.routing.registerRoute(
     new RegExp(`${apiURL}/api/installerAppData/getInstallJobsDesignSets`),
     new workbox.strategies.StaleWhileRevalidate({
         cacheName: 'job-designSets-list',
+        plugins: [
+            new workbox.expiration.ExpirationPlugin({
+                maxAgeSeconds: 60 * 60 * 24,
+            }),
+        ],
     })
 );
 
@@ -31,6 +47,11 @@ workbox.routing.registerRoute(
     new RegExp(`${apiURL}/api/installerAppData/getJobsLayouts`),
     new workbox.strategies.StaleWhileRevalidate({
         cacheName: 'jobs-layout-list',
+        plugins: [
+            new workbox.expiration.ExpirationPlugin({
+                maxAgeSeconds: 60 * 60 * 24,
+            }),
+        ],
     })
 );
 
@@ -108,4 +129,4 @@ self.addEventListener('fetch', (event) => {
     event.waitUntil(promiseChain);
 });
 
-workbox.precaching.precacheAndRoute([{"revision":"3a94fe1fa46941d3062a72e119fb9136","url":"css/calendar.css"},{"revision":"25245eb36e8e452b743fdad734d47671","url":"css/jobCard.css"},{"revision":"f59b7837de41bd6233d2a91708694411","url":"css/main.css"},{"revision":"a5b1db8d853df6c69c0b04b9d5a4b2ed","url":"css/materialDesignOverride.css"},{"revision":"e8b3d535cea3eac50e33901aa60fabbb","url":"css/refreshControl.css"},{"revision":"cd0c6e79954504076e4325ebed5bd5c7","url":"index.html"},{"revision":"4ddd1d640abff2b73b82a3445063b25a","url":"js/apiFetch.js"},{"revision":"f8c739bb41b5923995256b50e6cc051a","url":"js/app.js"},{"revision":"be9c8e7fc3f43cb182e1a63721a97a9e","url":"js/calendar.js"},{"revision":"c3b12a0f396e416ae47b228b76280af9","url":"js/jsClass/designSetInfoCardElement.js"},{"revision":"a9903f8d5c346c1dd98013603acb3996","url":"js/jsClass/jobCardElement.js"},{"revision":"a83ec1bb195c3346cf267f57a4b75a7b","url":"js/modalCreation.js"},{"revision":"dfc20073d069c76c1b67606f3b916e8c","url":"js/refreshControl.js"},{"revision":"8618cac677171c71ee01a7027cdb659b","url":"js/swiped-events.js"},{"revision":"edd4495e66b5cb260886662b5e5b2e42","url":"js/workbox-7248be78.js"},{"revision":"e69c668f5b1158378f2c04b20c5afea8","url":"privacy.html"}]);
+workbox.precaching.precacheAndRoute([{"revision":"3a94fe1fa46941d3062a72e119fb9136","url":"css/calendar.css"},{"revision":"25245eb36e8e452b743fdad734d47671","url":"css/jobCard.css"},{"revision":"f59b7837de41bd6233d2a91708694411","url":"css/main.css"},{"revision":"a5b1db8d853df6c69c0b04b9d5a4b2ed","url":"css/materialDesignOverride.css"},{"revision":"e8b3d535cea3eac50e33901aa60fabbb","url":"css/refreshControl.css"},{"revision":"cd0c6e79954504076e4325ebed5bd5c7","url":"index.html"},{"revision":"4ddd1d640abff2b73b82a3445063b25a","url":"js/apiFetch.js"},{"revision":"06799b84742fe1b584136ce131bc467b","url":"js/app.js"},{"revision":"be9c8e7fc3f43cb182e1a63721a97a9e","url":"js/calendar.js"},{"revision":"c3b12a0f396e416ae47b228b76280af9","url":"js/jsClass/designSetInfoCardElement.js"},{"revision":"b528a121b541e77fd988d57065b50ed3","url":"js/jsClass/jobCardElement.js"},{"revision":"a83ec1bb195c3346cf267f57a4b75a7b","url":"js/modalCreation.js"},{"revision":"dfc20073d069c76c1b67606f3b916e8c","url":"js/refreshControl.js"},{"revision":"8618cac677171c71ee01a7027cdb659b","url":"js/swiped-events.js"},{"revision":"edd4495e66b5cb260886662b5e5b2e42","url":"js/workbox-7248be78.js"},{"revision":"e69c668f5b1158378f2c04b20c5afea8","url":"privacy.html"}]);
