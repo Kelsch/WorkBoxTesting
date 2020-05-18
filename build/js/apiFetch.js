@@ -105,16 +105,19 @@ async function getJobs(month, year) {
             });
 
             // Get design sets and layouts for every job in the month LIMITED TO 55 AT A TIME
+            window.jobIdLists = [];
             let jobIdList = [];
             let timesReset = 0;
             for (let i = 0; i < filteredJobs.length; i++) {
                 const job = filteredJobs[i];
                 jobIdList = [...jobIdList, job.jobId];
-                
+
                 
                 if (jobIdList.length / 5 == 11 || (((timesReset * 55) - filteredJobs.length) * -1 < 55 && (((timesReset * 55) - filteredJobs.length) * -1 > -1 && filteredJobs.length - 1 == i))) {
+                    window.jobIdLists = [...window.jobIdLists, jobIdList];
                     getDesignSets(jobIdList);
                     getLayouts(jobIdList);
+                    
                     jobIdList = [];
                     timesReset++;
                 }
@@ -175,6 +178,7 @@ async function findSelectedDateJobs(selectedInstallDate) {
 
 async function getDesignSets(jobIds) {
     window.currentJobIds = jobIds;
+
     if (jobIds.length <= 0) {
         return;
     }

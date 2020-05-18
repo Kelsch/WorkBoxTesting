@@ -94,6 +94,7 @@ for (let index = 0; index < hiddenModals.length; index++) {
 
 async function jobClicked(jobId) {
     window.jobOpened = true;
+    setCurrentJobIds(jobId);
     const cacheAvailable = 'caches' in self;
     if (!cacheAvailable && selectedInstallDate != null) {
         return;
@@ -163,20 +164,8 @@ function designSetInfoClicked(jobId) {
     const cacheName = 'job-list';
     const request = new Request(`${apiURL}/api/installerAppData/getInstallIndicators?businessId=${cred.name}`);
 
-    // Get design sets and layouts for every job in the month LIMITED TO 55 AT A TIME
-    // let jobIdList = [];
-    // for (let i = 0; i < window.currentJobs.length; i++) {
-    //     const job = window.currentJobs[i];
-    //     jobIdList = [...jobIdList, job.jobId];
+    setCurrentJobIds(jobId);
 
-    //     if (jobIdList.length / 5 == 11) {
-    //         getDesignSets(jobIdList);
-    //         getLayouts(jobIdList);
-    //         jobIdList = [];
-    //     }
-    // }
-
-    // console.log(window.currentJobIds)
     const cacheNameDesignSet = 'job-designSets-list';
     const requestDesignSet = new Request(`${apiURL}/api/installerAppData/getInstallJobsDesignSets?jobIdStrings=${window.currentJobIds}`);
 
@@ -246,6 +235,7 @@ function designSetInfoClicked(jobId) {
                                     }
                                 }
                                 designSetInfoCreatedElement.designSetDTOs = designSetDTOsJob;
+                                // console.log(designSetDTOs, jobId)
                                 designSetInfoDetailDiv.appendChild(designSetInfoCreatedElement);
                             });
                         });
@@ -292,6 +282,7 @@ async function hasLayouts() {
 }
 
 function jobLayouts(jobId) {
+    setCurrentJobIds(jobId);
     const cacheName = 'jobs-layout-list';
     const request = new Request(`${apiURL}/api/installerAppData/getJobsLayouts?jobIdStrings=${window.currentJobIds}`);
     const layoutDetailDiv = layoutModal.querySelector(".modal-info-container");
@@ -332,6 +323,14 @@ function jobLayouts(jobId) {
             });
         });
     });
+}
+
+function setCurrentJobIds(jobId) {
+    const currentJobIds = window.jobIdLists.find(jobIds => {
+        return jobIds.find(x => x === jobId);
+    });
+
+    window.currentJobIds = currentJobIds;
 }
 
 function jobDone(jobId) {

@@ -249,7 +249,7 @@ class JobCard extends HTMLElement {
 }
 
 function jobCardHTML(data, result, installColor) {
-    // console.log(data, data.installRoleId)
+    setCurrentJobIds(data.jobId);
     const htmlString = 
         `<div class="modal-information">
             <div class="job-datails job-name job-notes">
