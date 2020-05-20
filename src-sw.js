@@ -13,7 +13,7 @@ workbox.routing.registerRoute(
         cacheName: 'non-workDay',
         plugins: [
             new workbox.expiration.ExpirationPlugin({
-                maxAgeSeconds: 60 * 60 * 24,
+                maxAgeSeconds: 60 * 60 * 4,
             }),
         ],
     })
@@ -22,11 +22,11 @@ workbox.routing.registerRoute(
 workbox.routing.registerRoute(
     // new RegExp('https://pdwebapi-mf5.conveyor.cloud/api/installerAppData/getInstallIndicators'),
     new RegExp(`${apiURL}/api/installerAppData/getInstallIndicators`),
-    new workbox.strategies.StaleWhileRevalidate({
+    new workbox.strategies.NetworkFirst({
         cacheName: 'job-list',
         plugins: [
             new workbox.expiration.ExpirationPlugin({
-                maxAgeSeconds: 60 * 60 * 24,
+                maxAgeSeconds: 60 * 60 * 4,
             }),
         ],
     })
@@ -38,7 +38,7 @@ workbox.routing.registerRoute(
         cacheName: 'job-designSets-list',
         plugins: [
             new workbox.expiration.ExpirationPlugin({
-                maxAgeSeconds: 60 * 60 * 24,
+                maxAgeSeconds: 60 * 60 * 4,
             }),
         ],
     })
@@ -50,7 +50,7 @@ workbox.routing.registerRoute(
         cacheName: 'jobs-layout-list',
         plugins: [
             new workbox.expiration.ExpirationPlugin({
-                maxAgeSeconds: 60 * 60 * 24,
+                maxAgeSeconds: 60 * 60 * 4,
             }),
         ],
     })
