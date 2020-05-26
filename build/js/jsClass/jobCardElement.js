@@ -258,6 +258,13 @@ function jobCardHTML(data, result, installColor) {
             <div class="job-datails job-address job-notes" onclick="OpenMaps('${data.address}', '${data.longLat}')">
                 ${data.address}
             </div>
+
+            ${data.scheduledFrom == null ? '' : `
+                <div class="job-datails job-scheduledTime job-notes">
+                    <span class="job-label">Scheduled Time:</span>
+                    ${formatDate(new Date(data.scheduledFrom))} - ${formatDate(new Date(data.scheduledTo))}
+                </div>
+            `}
             <div class="job-datails job-cabinetCount job-notes">
                 <span class="job-label">Cab. Count:</span>
                 ${data.cabinetCount}

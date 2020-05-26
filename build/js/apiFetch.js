@@ -161,7 +161,7 @@ async function findSelectedDateJobs(selectedInstallDate) {
                     const buttonHtml = `<button class="mdc-button mdc-button--unelevated${installColor}" jobid="${fJob.jobId}" onclick="jobClicked('${fJob.jobId}')">
                                             <div class="mdc-button__ripple"></div>
                                             <span class="mdc-button__label">
-                                                ${fJob.name}: ${fJob.cabinetCount}
+                                                ${fJob.name}: ${fJob.cabinetCount} ${fJob.scheduledFrom != null ? '- Scheduled Time' : ''}
                                             </span>
                                         </button>`;
 

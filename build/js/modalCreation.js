@@ -134,6 +134,8 @@ async function jobClicked(jobId) {
                     jobCreatedElement.status = fJob.status;
                     jobCreatedElement.address = fJob.address;
                     jobCreatedElement.installRoleId = fJob.installRoleId;
+                    jobCreatedElement.scheduledFrom = fJob.scheduledFrom;
+                    jobCreatedElement.scheduledTo = fJob.scheduledTo;
 
                     jobDetailDiv.appendChild(jobCreatedElement);
 
