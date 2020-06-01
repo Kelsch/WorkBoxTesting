@@ -274,10 +274,11 @@ async function postPORequest(installPORequest) {
     installPORequest.InstallerPORequestJobId = jobId;
     installPORequest.PORequestInstallerId = parseInt(cred.name);
     installPORequest.DateRequested = new Date().toLocalJSON().replace(/"/g, "");
+    console.log(installPORequest)
 
     let token = localStorage.getItem('token');
 
-    fetch(`${apiURL}/api/installerAppData/postJobinstallPORequest`, {
+    fetch(`${apiURL}/api/installerAppData/postJobInstallPORequest`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
