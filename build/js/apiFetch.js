@@ -271,7 +271,7 @@ async function jobToggleInstallConfirmation(jobId) {
                 if (parseInt(err.message) === 401) {
                     login();
                 }
-                return err.json();
+                return err;
             });
     }
 }

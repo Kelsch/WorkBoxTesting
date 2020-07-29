@@ -7,7 +7,6 @@ importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox
 // );
 
 workbox.routing.registerRoute(
-    // new RegExp('https://pdwebapi.conveyor.cloud/api/installerAppData/getNonWorkDays'),
     new RegExp(`${apiURL}/api/installerAppData/getNonWorkDays`),
     new workbox.strategies.StaleWhileRevalidate({
         cacheName: 'non-workDay',
@@ -20,7 +19,6 @@ workbox.routing.registerRoute(
 );
 
 workbox.routing.registerRoute(
-    // new RegExp('https://pdwebapi.conveyor.cloud/api/installerAppData/getInstallIndicators'),
     new RegExp(`${apiURL}/api/installerAppData/getInstallIndicators`),
     new workbox.strategies.NetworkFirst({
         cacheName: 'job-list',
@@ -113,6 +111,14 @@ workbox.routing.registerRoute(
 );
 
 workbox.routing.registerRoute(
+    new RegExp(`${apiURL}/api/installerAppData/postJobToggleInstallConfirmation`),
+    new workbox.strategies.NetworkOnly({
+        plugins: [bgSyncPlugin]
+    }),
+    'POST'
+);
+
+workbox.routing.registerRoute(
     new RegExp(`${apiURL}/api/installerAppData/postJobinstallPORequest`),
     new workbox.strategies.NetworkOnly({
         plugins: [bgSyncPlugin]
@@ -123,7 +129,7 @@ workbox.routing.registerRoute(
 self.addEventListener('fetch', (event) => {
     // Clone the request to ensure it's safe to read when
     // adding to the Queue.
-    // console.log(event.preloadResponse.then((t) => console.log(this, t)))
+
     const promiseChain = fetch(event.request.clone()).catch((err) => {
         return queue.pushRequest({ request: event.request });
     });
