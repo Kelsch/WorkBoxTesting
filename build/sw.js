@@ -7,7 +7,7 @@ importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox
 // );
 
 workbox.routing.registerRoute(
-    // new RegExp('https://pdwebapi-mf5.conveyor.cloud/api/installerAppData/getNonWorkDays'),
+    // new RegExp('https://pdwebapi.conveyor.cloud/api/installerAppData/getNonWorkDays'),
     new RegExp(`${apiURL}/api/installerAppData/getNonWorkDays`),
     new workbox.strategies.StaleWhileRevalidate({
         cacheName: 'non-workDay',
@@ -20,7 +20,7 @@ workbox.routing.registerRoute(
 );
 
 workbox.routing.registerRoute(
-    // new RegExp('https://pdwebapi-mf5.conveyor.cloud/api/installerAppData/getInstallIndicators'),
+    // new RegExp('https://pdwebapi.conveyor.cloud/api/installerAppData/getInstallIndicators'),
     new RegExp(`${apiURL}/api/installerAppData/getInstallIndicators`),
     new workbox.strategies.NetworkFirst({
         cacheName: 'job-list',
@@ -123,6 +123,7 @@ workbox.routing.registerRoute(
 self.addEventListener('fetch', (event) => {
     // Clone the request to ensure it's safe to read when
     // adding to the Queue.
+    // console.log(event.preloadResponse.then((t) => console.log(this, t)))
     const promiseChain = fetch(event.request.clone()).catch((err) => {
         return queue.pushRequest({ request: event.request });
     });
@@ -130,4 +131,4 @@ self.addEventListener('fetch', (event) => {
     event.waitUntil(promiseChain);
 });
 
-workbox.precaching.precacheAndRoute([{"revision":"3a94fe1fa46941d3062a72e119fb9136","url":"css/calendar.css"},{"revision":"25245eb36e8e452b743fdad734d47671","url":"css/jobCard.css"},{"revision":"f59b7837de41bd6233d2a91708694411","url":"css/main.css"},{"revision":"a5b1db8d853df6c69c0b04b9d5a4b2ed","url":"css/materialDesignOverride.css"},{"revision":"e8b3d535cea3eac50e33901aa60fabbb","url":"css/refreshControl.css"},{"revision":"cd0c6e79954504076e4325ebed5bd5c7","url":"index.html"},{"revision":"9b53b4df93529f6d9d4edfcb153bd340","url":"js/apiFetch.js"},{"revision":"a6fb22f7912abec7ecc6323dcc18d64e","url":"js/app.js"},{"revision":"be9c8e7fc3f43cb182e1a63721a97a9e","url":"js/calendar.js"},{"revision":"c3b12a0f396e416ae47b228b76280af9","url":"js/jsClass/designSetInfoCardElement.js"},{"revision":"5b0b1116a7e9eed76e0f197588ab8340","url":"js/jsClass/jobCardElement.js"},{"revision":"ddc01ad281e9074dcf0e93d126f6c5ed","url":"js/modalCreation.js"},{"revision":"dfc20073d069c76c1b67606f3b916e8c","url":"js/refreshControl.js"},{"revision":"8618cac677171c71ee01a7027cdb659b","url":"js/swiped-events.js"},{"revision":"edd4495e66b5cb260886662b5e5b2e42","url":"js/workbox-7248be78.js"},{"revision":"e69c668f5b1158378f2c04b20c5afea8","url":"privacy.html"}]);
+workbox.precaching.precacheAndRoute([{"revision":"3a94fe1fa46941d3062a72e119fb9136","url":"css/calendar.css"},{"revision":"25245eb36e8e452b743fdad734d47671","url":"css/jobCard.css"},{"revision":"f59b7837de41bd6233d2a91708694411","url":"css/main.css"},{"revision":"0ec6ebe9d6281c1fe0206728a2a8f667","url":"css/materialDesignOverride.css"},{"revision":"e8b3d535cea3eac50e33901aa60fabbb","url":"css/refreshControl.css"},{"revision":"cd0c6e79954504076e4325ebed5bd5c7","url":"index.html"},{"revision":"646d01d68c9f325061c37bcaf74e873f","url":"js/apiFetch.js"},{"revision":"a6fb22f7912abec7ecc6323dcc18d64e","url":"js/app.js"},{"revision":"be9c8e7fc3f43cb182e1a63721a97a9e","url":"js/calendar.js"},{"revision":"c3b12a0f396e416ae47b228b76280af9","url":"js/jsClass/designSetInfoCardElement.js"},{"revision":"5d834e44ab5c059e7fc32beeba3d79db","url":"js/jsClass/jobCardElement.js"},{"revision":"7d9df91f6e34a56d7adbc84333ac3aa7","url":"js/modalCreation.js"},{"revision":"dfc20073d069c76c1b67606f3b916e8c","url":"js/refreshControl.js"},{"revision":"8618cac677171c71ee01a7027cdb659b","url":"js/swiped-events.js"},{"revision":"edd4495e66b5cb260886662b5e5b2e42","url":"js/workbox-7248be78.js"},{"revision":"e69c668f5b1158378f2c04b20c5afea8","url":"privacy.html"}]);

@@ -75,3 +75,8 @@
     grid-gap: 10px;
     align-self: center;
 }
+
+.mdc-button .mdc-button__icon {
+    height: 15px;
+    font-size: 15px;
+}

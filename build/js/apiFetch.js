@@ -28,7 +28,6 @@ SwitchAnimation(appTopBar);
 DialogAnimation(dialog);
 TextInputAnimation(document.getElementById('job-poRequest-content'));
 
-
 function getNonWorkDays() {
     let token = localStorage.getItem('token');
     fetch(`${apiURL}/api/installerAppData/getNonWorkDays`, {
@@ -161,8 +160,9 @@ async function findSelectedDateJobs(selectedInstallDate) {
                     const buttonHtml = `<button class="mdc-button mdc-button--unelevated${installColor}" jobid="${fJob.jobId}" onclick="jobClicked('${fJob.jobId}')">
                                             <div class="mdc-button__ripple"></div>
                                             <span class="mdc-button__label">
-                                                <span>${fJob.name}: ${fJob.cabinetCount} ${fJob.scheduledFrom != null ? '- Scheduled Time' : ''}</span>
+                                                ${fJob.name}: ${fJob.cabinetCount} ${fJob.scheduledFrom != null ? '- Scheduled Time' : ''}
                                             </span>
+                                            <i class="material-icons mdc-button__icon" aria-hidden="true">${fJob.installDateConfirmed ? 'check_circle_outline' : 'radio_button_unchecked'}</i>
                                         </button>`;
 
                     jobDiv.innerHTML += buttonHtml;
@@ -231,6 +231,47 @@ async function getLayouts(jobIds) {
                 else {
                     // logout();
                 }
+            });
+    }
+}
+
+async function jobToggleInstallConfirmation(jobId) {
+    if (jobId != null) {
+        let button = body.querySelector('.job-button[data-buttontype="dateConfirmed"]');
+        let installDateConfirmed = button.getAttribute('title') != "true";
+        let token = localStorage.getItem('token');
+        let installCompletion = {};
+        installCompletion.InstallCompletionJobId = jobId;
+        installCompletion.InstallCompletionInstallerId = parseInt(cred.name);
+        installCompletion.installDateConfirmed = installDateConfirmed;
+        
+        let buttonIcon = button.querySelector('.material-icons');
+        buttonIcon.innerHTML = installDateConfirmed ? "check_circle_outline" : "radio_button_unchecked";
+        button.setAttribute('title', installDateConfirmed);
+        // console.log(button.getAttribute('title'), buttonIcon.innerHTML)
+        updateChangedJob(installCompletion);
+
+        fetch(`${apiURL}/api/installerAppData/postJobToggleInstallConfirmation`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(jobId)
+        })
+            .then(response => {
+                if (response.status !== 200) {
+                    throw response;
+                }
+
+                return response.json();
+            })
+            .catch(err => {
+                console.error(err)
+                if (parseInt(err.message) === 401) {
+                    login();
+                }
+                return err.json();
             });
     }
 }
@@ -307,15 +348,15 @@ async function updateChangedJob(jobUpdate) {
     }
     const cacheName = 'job-list';
     const request = new Request(`${apiURL}/api/installerAppData/getInstallIndicators?businessId=${cred.name}`);
-
+    
     const jobDiv = document.getElementById('jobs');
-
+    
     caches.open(cacheName).then(cache => {
         cache.match(request).then((response) => {
             if (response == undefined) {
                 return;
             }
-
+            
             response.json().then(jobs => {
                 jobDiv.innerHTML = '';
                 let jobIndex = 0;
@@ -329,8 +370,9 @@ async function updateChangedJob(jobUpdate) {
                     fJob.docsUploaded = jobUpdate.docsUploaded ?? false;
                     fJob.readyForTemplate = jobUpdate.readyForTemplate ?? false;
                     fJob.returnTripRequired = jobUpdate.returnTripRequired ?? false;
+                    fJob.installDateConfirmed = jobUpdate.installDateConfirmed ?? false;
                 });
-
+                
                 jobs[jobIndex] = filteredJobs[0];
                 jsonJobs = JSON.stringify(jobs);
 

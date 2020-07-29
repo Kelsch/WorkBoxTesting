@@ -28,6 +28,7 @@ class JobCard extends HTMLElement {
         this._hasHomeOwner = false;
         this._address = "";
         this._longLat = "";
+        this._installDateConfirmed = false;
     }
 
     //#region getter/setter
@@ -208,10 +209,17 @@ class JobCard extends HTMLElement {
     }
 
     set longLat(value) {
-        this._address = value;
+        this._ = value;
     }
     get longLat() {
         return this._longLat;
+    }
+
+    set installDateConfirmed(value) {
+        this._installDateConfirmed = value;
+    }
+    get installDateConfirmed() {
+        return this._installDateConfirmed;
     }
     //#endregion
 
@@ -313,6 +321,11 @@ function jobCardHTML(data, result, installColor) {
                 <button class="job-button mdc-button${installColor}" data-buttontype="done" title="done" jobid="${data.jobId}" onclick="jobDone('${data.jobId}')">
                     <div class="mdc-button__ripple"></div>
                     <i class="material-icons">done</i>
+                </button>
+                <button class="job-button mdc-button${installColor}" data-buttontype="dateConfirmed" title="${data.installDateConfirmed}" jobid="${data.jobId}"
+                    onclick="jobToggleInstallConfirmation('${data.jobId}')">
+                    <div class="mdc-button__ripple"></div>
+                    <i class="material-icons">${data.installDateConfirmed ? 'check_circle_outline' : 'radio_button_unchecked'}</i>
                 </button>
             </div>
         </div>`;
