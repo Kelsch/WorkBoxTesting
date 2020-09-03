@@ -43,8 +43,17 @@ function getNonWorkDays() {
             return response.json();
         })
         .then(data => {
+            const today = new Date(new Date().setHours(0, 0, 0, 0));
             let days = data;
             const currentCalendar = document.getElementById('calendar_dayContainer');
+
+            let sixthDay = days.filter(day => new Date(day.dateId) >= today && day.isWorkDay)[6];
+
+            const sixthDayElement = currentCalendar.querySelector(`[id='${sixthDay.mm}-${sixthDay.dd}-${sixthDay.yy}']`);
+            if (sixthDayElement !== null) {
+                sixthDayElement.classList.add('sixthDayCallout');
+            }
+
             return days.map(function (day) {
                 const dateElement = currentCalendar.querySelector(`[id='${day.mm}-${day.dd}-${day.yy}']`);
                 if (dateElement !== null && !day.isWorkDay) {
@@ -111,12 +120,12 @@ async function getJobs(month, year) {
                 const job = filteredJobs[i];
                 jobIdList = [...jobIdList, job.jobId];
 
-                
+
                 if (jobIdList.length / 5 == 11 || (((timesReset * 55) - filteredJobs.length) * -1 < 55 && (((timesReset * 55) - filteredJobs.length) * -1 > -1 && filteredJobs.length - 1 == i))) {
                     window.jobIdLists = [...window.jobIdLists, jobIdList];
                     getDesignSets(jobIdList);
                     getLayouts(jobIdList);
-                    
+
                     jobIdList = [];
                     timesReset++;
                 }
@@ -244,7 +253,7 @@ async function jobToggleInstallConfirmation(jobId) {
         installCompletion.InstallCompletionJobId = jobId;
         installCompletion.InstallCompletionInstallerId = parseInt(cred.name);
         installCompletion.installDateConfirmed = installDateConfirmed;
-        
+
         let buttonIcon = button.querySelector('.material-icons');
         buttonIcon.innerHTML = installDateConfirmed ? "check_circle_outline" : "radio_button_unchecked";
         button.setAttribute('title', installDateConfirmed);
@@ -348,15 +357,15 @@ async function updateChangedJob(jobUpdate) {
     }
     const cacheName = 'job-list';
     const request = new Request(`${apiURL}/api/installerAppData/getInstallIndicators?businessId=${cred.name}`);
-    
+
     const jobDiv = document.getElementById('jobs');
-    
+
     caches.open(cacheName).then(cache => {
         cache.match(request).then((response) => {
             if (response == undefined) {
                 return;
             }
-            
+
             response.json().then(jobs => {
                 jobDiv.innerHTML = '';
                 let jobIndex = 0;
@@ -372,7 +381,7 @@ async function updateChangedJob(jobUpdate) {
                     fJob.returnTripRequired = jobUpdate.returnTripRequired ?? false;
                     fJob.installDateConfirmed = jobUpdate.installDateConfirmed ?? false;
                 });
-                
+
                 jobs[jobIndex] = filteredJobs[0];
                 jsonJobs = JSON.stringify(jobs);
 
@@ -545,7 +554,7 @@ function DialogAnimation(container) {
                             }
                             if (listElement.getAttribute('data-input-type') == "text" || listElement.getAttribute('data-input-type') == "number") {
                                 const elementValue = listElement.querySelector('.mdc-text-field__input').value;
-                                
+
                                 installPORequest[`${listElement.getAttribute('data-install-porequest')}`] = listElement.getAttribute('data-input-type') == "number" ? parseFloat(elementValue) || 0 : elementValue;
                             }
                         }

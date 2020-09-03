@@ -120,6 +120,11 @@
     pointer-events: none;
 }
 
+.sixthDayCallout {
+    background-color: var(--yellow0);
+    color: black;
+}
+
 .indicator-notReady {
     background-color: var(--notReady);
 }

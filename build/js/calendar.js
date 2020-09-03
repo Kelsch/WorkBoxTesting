@@ -19,6 +19,7 @@ function showCalendar(month, year) {
     for (let r = 0; r < 6; r++) {
         for (let i = 0; i < 7; i++) {
             let cell = '';
+
             if (r === 0 && i < firstDay) {
                 let lastMonth;
                 let lastMonthYear = year;
