@@ -340,7 +340,7 @@ class DesignSetInfoCard extends HTMLElement {
                     <div class="modal-job-detail modal-address">
                         <div class="modal-address-detail">${this.addressName}</div>
                         <div class="modal-address-detail job-address" onclick="OpenMaps('${this.address}', '${this.longLat}')">${this.address}</div>
-                        <div class="modal-address-detail">${this.addressNumber === null || this.addressNumber === '' ? '' : this.addressNumber}</div>
+                        <div class="modal-address-detail" onclick="OpenPhoneNumber('${this.addressNumber === null || this.addressNumber === '' ? '' : this.addressNumber}')">${this.addressNumber === null || this.addressNumber === '' ? '' : this.addressNumber}</div>
                     </div>
                 </div>
             </div>
