@@ -153,6 +153,9 @@ async function jobClicked(jobId) {
                     }
                 }
                 jobModal.classList.add("modal-card-container-show");
+
+                let jobModalHistory = {modal: "jobModal"}; // state object
+                history.pushState(jobModalHistory, "unused argument", "#jobModal");
             });
         });
     }).catch(err => {
@@ -257,6 +260,9 @@ function designSetInfoClicked(jobId) {
                     }
                 }
                 designSetModal.classList.add("modal-card-container-show");
+
+                let designSetModalHistory = {modal: "designSetModal"}; // state object
+                history.pushState(designSetModalHistory, "unused argument", "#designSetModal");
             });
         });
     }).catch(err => {

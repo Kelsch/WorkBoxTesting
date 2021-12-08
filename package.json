@@ -4,7 +4,7 @@
   "description": "WorkBoxTesting",
   "main": "index.js",
   "scripts": {
-    "serv": "http-server -S -c-1 build -p 8181",
+    "serv": "http-server -S -C cert.pem -c-1 build -p 8181",
     "servBuild": "workbox injectManifest && http-server build -S -c-1 -p 8181"
   },
   "repository": {

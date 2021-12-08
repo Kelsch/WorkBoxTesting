@@ -1,6 +1,6 @@
 // const apiURL = 'https://pdwebapi.longformgibberish.com';
-const apiURL = 'https://pdwebapiazure.azurewebsites.net';
-// const apiURL = 'https://pdwebapi.conveyor.cloud';
+// const apiURL = 'https://pdwebapiazure.azurewebsites.net';
+const apiURL = 'https://pdwebapi.conveyor.cloud';
 // const apiURL = 'https://192.168.1.43:45455';
 let loginButtonPressed = false;
 let cred;
@@ -219,6 +219,26 @@ function userAuthenticated() {
   fabRequestButton.classList.remove('loginForm-none');
   showCalendar(currentMonth, currentYear);
   setupSwipeListener(calendarElement);
+  setupPopStateHistoryChangeListener();
+}
+
+function setupPopStateHistoryChangeListener() {
+  window.onpopstate = function(event) {    
+    // This actually means that they just closed the design set modal
+    if (event.state == null) {
+      document.getElementById('modalCard_designSetInfo').classList.remove('modal-card-container-show');
+      document.getElementById('modalCard_job').classList.remove('modal-card-container-show');
+    }
+    else {
+      if (event.state.modal == 'jobModal') {
+        document.getElementById('modalCard_designSetInfo').classList.remove('modal-card-container-show');
+        document.getElementById('modalCard_job').classList.add('modal-card-container-show');
+      }
+      if (event.state.modal == 'designSetModal') {
+        document.getElementById('modalCard_designSetInfo').classList.add('modal-card-container-show');
+      }
+    }
+  };
 }
 
 function logout() {
