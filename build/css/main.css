@@ -212,4 +212,8 @@ body {
     .settings-button.mdc-icon-button:not(:disabled) {
         top: 0px;
     }
+
+    .notificationBell-button.mdc-icon-button:not(:disabled) {
+        top: 0px;
+    }
 }

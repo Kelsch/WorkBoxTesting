@@ -17,6 +17,12 @@
     right: 10px;
 }
 
+.notificationBell-button.mdc-icon-button:not(:disabled) {
+    position: absolute;
+    top: 5px;
+    left: 10px;
+}
+
 .customSpacingBottom {
     margin-bottom: 7px;
 }
