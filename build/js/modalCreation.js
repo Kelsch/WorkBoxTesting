@@ -251,7 +251,6 @@ function designSetInfoClicked(jobId) {
                     modalName.innerHTML = `${fJob.orderId} - ${fJob.name}`;
                 });
 
-
                 const buttons = designSetInfoDetailDiv.querySelectorAll('.mdc-button');
                 if (typeof mdc !== 'undefined') {
                     for (let i = 0; i < buttons.length; i++) {
