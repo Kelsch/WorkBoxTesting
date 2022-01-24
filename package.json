@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "serv": "http-server -S -C cert.pem -c-1 build -p 8181",
+    "serv1": "http-server -S -c-1 build -p 8181 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe' --ignore-certificate-errors --unsafely-treat-insecure-origin-as-secure=https://192.168.12.2:8181 --user-data-dir=C:\\temp",
     "servBuild": "workbox injectManifest && http-server build -S -c-1 -p 8181"
   },
   "repository": {
@@ -17,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/Kelsch/WorkBoxTesting/issues"
   },
-  "homepage": "https://github.com/Kelsch/WorkBoxTesting#readme"
+  "homepage": "https://github.com/Kelsch/WorkBoxTesting#readme",
+  "dependencies": {
+    "workbox": "0.0.0"
+  }
 }

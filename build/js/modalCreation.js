@@ -55,9 +55,11 @@ function resetModal() {
     if (resizable.classList.contains('modal-card-sub')) {
         resizable.style.height = 370 + 'px';
     }
+    
+    history.back();
 
     document.querySelector('.list-jobs').classList.remove('stopScroll');
-
+    
     stopDrag();
 
     let remainingModal = document.querySelector('.modal-card-container-show');
@@ -138,6 +140,7 @@ async function jobClicked(jobId) {
                     jobCreatedElement.scheduledTo = fJob.scheduledTo;
                     jobCreatedElement.installDate = fJob.installDate;
                     jobCreatedElement.installDateConfirmed = fJob.installDateConfirmed;
+                    jobCreatedElement.addressNumber = fJob.addressNumber;
 
                     jobDetailDiv.appendChild(jobCreatedElement);
 
@@ -153,7 +156,7 @@ async function jobClicked(jobId) {
                     }
                 }
                 jobModal.classList.add("modal-card-container-show");
-
+                
                 let jobModalHistory = {modal: "jobModal"}; // state object
                 history.pushState(jobModalHistory, "unused argument", "#jobModal");
             });

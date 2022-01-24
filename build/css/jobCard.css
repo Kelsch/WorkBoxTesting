@@ -166,6 +166,13 @@ job-card {
     max-height: 50px;
 }
 
+.job-hasHomeOwner {
+    background-color: #89ff89;
+    border-radius: 3px;
+    padding: 2px 1px;
+    cursor: pointer;
+}
+
 .job-address {
     cursor: pointer;
 }

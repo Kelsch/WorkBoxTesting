@@ -29,6 +29,7 @@ class JobCard extends HTMLElement {
         this._address = "";
         this._longLat = "";
         this._installDateConfirmed = false;
+        this._addressNumber = "";
     }
 
     //#region getter/setter
@@ -221,6 +222,13 @@ class JobCard extends HTMLElement {
     get installDateConfirmed() {
         return this._installDateConfirmed;
     }
+
+    set addressNumber(value) {
+        this._addressNumber = value;
+    }
+    get addressNumber() {
+        return this._addressNumber;
+    }
     //#endregion
 
     connectedCallback() {
@@ -258,6 +266,7 @@ class JobCard extends HTMLElement {
 
 function jobCardHTML(data, result, installColor) {
     setCurrentJobIds(data.jobId);
+    
     const htmlString = 
         `<div class="modal-information">
             <div class="job-datails job-name job-notes">
@@ -280,9 +289,9 @@ function jobCardHTML(data, result, installColor) {
                 <span class="job-label">Cab. Count:</span>
                 ${data.cabinetCount}
             </div>
-            <div class="job-datails job-notes">
+            <div class="job-datails job-notes${data.hasHomeOwner ? ' job-hasHomeOwner' : ''}" ${data.hasHomeOwner ? `onclick="OpenPhoneNumber('${data.addressNumber === null || data.addressNumber === '' ? '' : data.addressNumber}')"` : ''}>
                 <span class="job-label">Home Owner:</span>
-                ${data.hasHomeOwner ? 'Yes' : 'No'}
+                ${data.hasHomeOwner ? `${data.addressNumber === null || data.addressNumber === '' ? 'Number Missing' : data.addressNumber}` : 'No'}
             </div>
             ${data.installRoleId == 1 ?
                 `<div class="job-datails job-notes">

@@ -5,7 +5,7 @@ design32
 
 https://stackoverflow.com/questions/27294589/creating-self-signed-certificate-for-domain-and-subdomains-neterr-cert-commo
 
-//This is what I used to create a working test certificate, it only works on localhost though. It outputs a .crt file that can be installed, then renamed to cert.pem
+//This is what I used to create a working test certificate, it only works on https://localhost:8181 though. It outputs a .crt file that can be installed, then renamed to cert.pem
 
 //Create a conf file using this
 
