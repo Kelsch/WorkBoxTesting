@@ -327,6 +327,10 @@ function jobCardHTML(data, result, installColor) {
                     <div class="mdc-button__ripple"></div>
                     <i class="material-icons">receipt</i>
                 </button>
+                <button class="job-button mdc-button${installColor}" data-buttontype="InstallDateChange" title="Change Install Date" jobid="${data.jobId}" onclick="changeInstallDate('${data.jobId}')">
+                    <div class="mdc-button__ripple"></div>
+                    <i class="material-icons">date_range</i>
+                </button>
                 <button class="job-button mdc-button${installColor}" data-buttontype="done" title="done" jobid="${data.jobId}" onclick="jobDone('${data.jobId}')">
                     <div class="mdc-button__ripple"></div>
                     <i class="material-icons">done</i>

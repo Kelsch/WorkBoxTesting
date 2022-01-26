@@ -354,3 +354,8 @@ function createPORequest(jobId) {
     this.dialogPORequest.open();
     this.currentJobId = jobId;
 }
+
+function changeInstallDate(jobId) {
+    this.dialogChangeInstallDate.open();
+    this.currentJobId = jobId;
+}

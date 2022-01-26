@@ -12,6 +12,7 @@
     <meta charset="UTF-8">
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
     <title>PDInstall</title>
+    <link rel="stylesheet" href="css/date-pick.css"/>
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/calendar.css">
     <link rel="stylesheet" href="css/jobCard.css">
@@ -22,10 +23,11 @@
     <link rel="apple-touch-icon" href="/images/icons/icon-192x192.png">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
+    
     <link href="https://unpkg.com/material-components-web@v6.0.0/dist/material-components-web.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/materialDesignOverride.css">
-
+    
+    <script src="js/date-pick.js"></script>
     <script src="js/swiped-events.js"></script>
 </head>
 
@@ -141,6 +143,51 @@
     </div>
 
     <div id="dialog_container">
+        <div id="app_changeinstalldate_dialog">
+            <div class="mdc-dialog">
+                <div class="mdc-dialog__container">
+                    <div class="mdc-dialog__surface" role="alertdialog" aria-modal="true"
+                        aria-labelledby="job-changeinstalldate-title" aria-describedby="job-changeinstalldate-content">
+                        <!-- Title cannot contain leading whitespace due to mdc-typography-baseline-top() -->
+                        <h2 class="mdc-dialog__title" id="job-changeinstalldate-title">
+                            Change Install Date
+                        </h2>
+                        <div class="mdc-dialog__content" id="job-changeInstallDate-content">
+                            <ul class="mdc-list" style="max-width: 250px;">
+                                <div>
+                                    <label class="mdc-text-field mdc-text-field--filled customSpacingBottom job-changeInstallDate" data-install-changeinstalldate="schedulefrom" data-input-type="text" id="job-changeInstallDate-scheduleFrom">
+                                        <span class="mdc-text-field__ripple"></span>
+                                        <input class="mdc-text-field__input" type="text" aria-labelledby="schedulefrom-label">
+                                        <span class="mdc-floating-label" id="schedulefrom-label">Schedule From</span>
+                                        <span class="mdc-line-ripple"></span>
+                                    </label>
+                                    <div id="date-pick-container-scheduleFrom" class="date-pick-container"></div>
+                                    <label class="mdc-text-field mdc-text-field--filled customSpacingBottom job-changeInstallDate" data-install-changeinstalldate="scheduleto" data-input-type="text" id="job-changeInstallDate-scheduleTo">
+                                        <span class="mdc-text-field__ripple"></span>
+                                        <input class="mdc-text-field__input" type="text" aria-labelledby="scheduleto-label">
+                                        <span class="mdc-floating-label" id="scheduleto-label">Schedule To</span>
+                                        <span class="mdc-line-ripple"></span>
+                                    </label>
+                                    <div id="date-pick-container-scheduleTo" class="date-pick-container"></div>
+                                </div>
+                            </ul>
+                        </div>
+                        <footer class="mdc-dialog__actions">
+                            <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="close">
+                                <div class="mdc-button__ripple"></div>
+                                <span class="mdc-button__label">Cancel</span>
+                            </button>
+                            <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="accept">
+                                <div class="mdc-button__ripple"></div>
+                                <span class="mdc-button__label">OK</span>
+                            </button>
+                        </footer>
+                    </div>
+                </div>
+                <div class="mdc-dialog__scrim"></div>
+            </div>
+        </div>
+
         <div id="app_porequest_dialog">
             <div class="mdc-dialog">
                 <div class="mdc-dialog__container">
@@ -155,34 +202,28 @@
                                 <li class="mdc-list-item" tabindex="1" data-install-porequest="salesrepConfirmed"
                                     data-input-type="checkbox" style="margin-bottom: 6px;">
                                     <div class="mdc-checkbox">
-                                        <input type="checkbox" class="mdc-checkbox__native-control"
-                                            id="salesrep-confirmed-checkbox" />
+                                        <input type="checkbox" class="mdc-checkbox__native-control" id="salesrep-confirmed-checkbox" />
                                         <div class="mdc-checkbox__background">
                                             <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
-                                                <path class="mdc-checkbox__checkmark-path" fill="none"
-                                                    d="M1.73,12.91 8.1,19.28 22.79,4.59" />
+                                                <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59" />
                                             </svg>
                                             <div class="mdc-checkbox__mixedmark"></div>
                                         </div>
                                         <div class="mdc-checkbox__ripple"></div>
                                     </div>
-                                    <label for="salesrep-confirmed-checkbox" class="mdc-list-item__text">Sales Rep
-                                        Confirmed</label>
+                                    <label for="salesrep-confirmed-checkbox" class="mdc-list-item__text">Sales Rep Confirmed</label>
                                 </li>
                                 <label class="mdc-text-field mdc-text-field--filled customSpacingBottom"
                                     data-install-porequest="jobDescriptor" data-input-type="text">
                                     <span class="mdc-text-field__ripple"></span>
-                                    <input class="mdc-text-field__input" type="text"
-                                        aria-labelledby="jobDescriptor-label">
-                                    <span class="mdc-floating-label" id="jobDescriptor-label">Job Name / Lot
-                                        Number</span>
+                                    <input class="mdc-text-field__input" type="text" aria-labelledby="jobDescriptor-label">
+                                    <span class="mdc-floating-label" id="jobDescriptor-label">Job Name / Lot Number</span>
                                     <span class="mdc-line-ripple"></span>
                                 </label>
                                 <label class="mdc-text-field mdc-text-field--filled customSpacingBottom"
                                     data-install-porequest="poRequestReason" data-input-type="text">
                                     <span class="mdc-text-field__ripple"></span>
-                                    <input class="mdc-text-field__input" type="text"
-                                        aria-labelledby="poRequestReason-label">
+                                    <input class="mdc-text-field__input" type="text" aria-labelledby="poRequestReason-label">
                                     <span class="mdc-floating-label" id="poRequestReason-label">Why?</span>
                                     <span class="mdc-line-ripple"></span>
                                 </label>

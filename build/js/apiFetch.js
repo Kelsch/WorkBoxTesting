@@ -27,6 +27,7 @@ CheckboxAnimation(appTopBar);
 SwitchAnimation(appTopBar);
 DialogAnimation(dialog);
 TextInputAnimation(document.getElementById('job-poRequest-content'));
+TextInputAnimation(document.getElementById('job-changeInstallDate-content'));
 
 function getNonWorkDays() {
     let token = localStorage.getItem('token');
@@ -483,13 +484,12 @@ function DialogAnimation(container) {
         for (const mdcDialog of container.querySelectorAll('.mdc-dialog')) {
             const dialog = mdc.dialog.MDCDialog.attachTo(mdcDialog);
             const list = mdc.list.MDCList.attachTo(mdcDialog.querySelector('.mdc-dialog .mdc-list'));
-
             dialog.listen('MDCDialog:opened', (dialogElement) => {
                 const cacheAvailable = 'caches' in self;
                 if (!cacheAvailable) {
                     return;
                 }
-
+                
                 const cacheName = 'job-list';
                 const request = new Request(`${apiURL}/api/installerAppData/getInstallIndicators?businessId=${cred.name}`);
                 let currentJob;
@@ -516,6 +516,10 @@ function DialogAnimation(container) {
                                         element.classList.remove('mdc-text-field--label-floating');
                                     }
                                 }
+                            }
+
+                            if (mdcDialog.parentElement.getAttribute('id') == "app_changeinstalldate_dialog") {
+                                document.activeElement.blur()
                             }
 
                             if (currentJob === null) {
@@ -589,6 +593,9 @@ function DialogAnimation(container) {
             }
             if (mdcDialog.parentElement.getAttribute('id') == "app_done_dialog") {
                 window.dialog = dialog;
+            }
+            if (mdcDialog.parentElement.getAttribute('id') == "app_changeinstalldate_dialog") {
+                window.dialogChangeInstallDate = dialog;
             }
         }
     }
