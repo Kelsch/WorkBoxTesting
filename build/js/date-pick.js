@@ -6,18 +6,6 @@ window.onload = function(){
 }
 
 function calendarInputClicked() {
-  const splitElementIdArray = this.id.split("-");
-  const lastId = splitElementIdArray[splitElementIdArray.length - 1];
-
-  const datePickId = `date-pick-${lastId}`;
-  const datePickBodyCurrentId = `date-pick-body-current-${lastId}`;
-  const datePickMonthId = `date-pick-month-${lastId}`;
-  const datePickPrevId = `date-pick-prev-${lastId}`;
-  const datePickMonthCurrentId = `date-pick-month-current-${lastId}`;
-  const datePickNextId = `date-pick-next-${lastId}`;
-  const datePickWeekDaysCurrentId = `date-pick-week-days-current-${lastId}`;
-  const datePickDaysCurrentId = `date-pick-days-current-${lastId}`;
-
   var html =
                 `<div id='${datePickId}' class='date-pick text-center'>`
                   + `<div id='${datePickBodyCurrentId}' class='date-pick-body'>`
@@ -75,7 +63,6 @@ function calendarInputClicked() {
       return new Date(year, month + 1, 0).getDate();
   }
 
-  //TODO: Doesn't work with multiple calendars
   window._makeCalender = function(status){
     var offset; // increases or decreases month
     var newSpan; // for creating a new span node
