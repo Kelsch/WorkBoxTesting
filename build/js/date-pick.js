@@ -1,24 +1,24 @@
 window.onload = function(){
   // (function(window){
     // console.log(document.getElementsByClassName("job-changeInstallDate"))
-    // document.getElementById("job-changeInstallDate-scheduleFrom").addEventListener("click", calendarInputClicked);
-    Array.from(document.getElementsByClassName("job-changeInstallDate")).forEach(el => el.addEventListener("click", calendarInputClicked));
+    document.getElementById("job-changeInstallDate-installDate").addEventListener("click", calendarInputClicked);
+    // Array.from(document.getElementsByClassName("job-changeInstallDate")).forEach(el => el.addEventListener("click", calendarInputClicked));
 }
 
 function calendarInputClicked() {
   var html =
-                `<div id='${datePickId}' class='date-pick text-center'>`
-                  + `<div id='${datePickBodyCurrentId}' class='date-pick-body'>`
-                    + `<div id='${datePickMonthId}' class='date-pick-month'>`
+                `<div id='date-pick' class='date-pick text-center'>`
+                  + `<div id='date-pick-body-current' class='date-pick-body'>`
+                    + `<div id='date-pick-month' class='date-pick-month'>`
                       + "<span class='date-pick-controls date-pick-prev-month'>"
-                        + `<i id='${datePickPrevId}' class='prev'><</i>`
+                        + `<i id='date-pick-prev' class='prev'><</i>`
                       + "</span>"
-                      + `<span id='${datePickMonthCurrentId}' class='date-pick-month-select'></span>`
+                      + `<span id='date-pick-month-current' class='date-pick-month-select'></span>`
                       + "<span class='date-pick-controls date-pick-next-month'>"
-                        + `<i id='${datePickNextId}' class='next'>></i>`
+                        + `<i id='date-pick-next' class='next'>></i>`
                       + "</span>"
                     + "</div>"
-                    + `<div id='${datePickWeekDaysCurrentId}' class='date-pick-week-days'>`
+                    + `<div id='date-pick-week-days-current' class='date-pick-week-days'>`
                       + "<span class='date-pick-week-day'>S</span>"
                       + "<span class='date-pick-week-day'>M</span>"
                       + "<span class='date-pick-week-day'>T</span>"
@@ -27,24 +27,18 @@ function calendarInputClicked() {
                       + "<span class='date-pick-week-day'>F</span>"
                       + "<span class='date-pick-week-day'>S</span>"
                     + "</div>"
-                    + `<div id='${datePickDaysCurrentId}' class='date-pick-days'></div>`
+                    + `<div id='date-pick-days-current' class='date-pick-days'></div>`
                   + "</div>"
                 + "</div>";
   
   let calendarElement;
-  if (this.id === "job-changeInstallDate-scheduleFrom") {
-    calendarElement = document.getElementById("date-pick-container-scheduleFrom");
-  }
-  if (this.id === "job-changeInstallDate-scheduleTo") {
-    calendarElement = document.getElementById("date-pick-container-scheduleTo");
-  }
-
+  calendarElement = document.getElementById("date-pick-container");
   calendarElement.innerHTML = html;
 
-  document.getElementById(datePickPrevId).addEventListener("click", function(){
+  document.getElementById('date-pick-prev').addEventListener("click", function(){
       _makeCalender('prev');
   });
-  document.getElementById(datePickNextId).addEventListener("click", function(){
+  document.getElementById('date-pick-next').addEventListener("click", function(){
       _makeCalender('next');
   });
 
@@ -67,16 +61,16 @@ function calendarInputClicked() {
     var offset; // increases or decreases month
     var newSpan; // for creating a new span node
     var newContent; // for creating new day of month to go into span node
-    var datePickBody = document.getElementById(datePickDaysCurrentId);
-
+    var datePickBody = document.getElementById(`date-pick-days-current`);
     if (status === "current") {
       monthVariable = dInit.getMonth(); // sets monthVariable to current month
-    } else if (status === "prev") {
+    // } else if (status === "prev") {
+    } else if (status.includes("prev")) {
       while (datePickBody.firstChild) { // removes all span nodes from datePickBody element
           datePickBody.removeChild(datePickBody.firstChild);
       }
       monthVariable -= 1; // decreases the month variable by 1 month
-    } else if (status === "next") {
+    } else if (status.includes("next")) {
       while (datePickBody.firstChild) { // removes all span nodes from datePickBody element
           datePickBody.removeChild(datePickBody.firstChild);
       }
@@ -101,7 +95,7 @@ function calendarInputClicked() {
     var extraBoxesLeft = extraBoxes - extraBoxesRight;
     var counter = 1;
     
-    var datePickMonthCurrent = document.getElementById(datePickMonthCurrentId);
+    var datePickMonthCurrent = document.getElementById(`date-pick-month-current`);
     datePickMonthCurrent.innerHTML = months[month] + " " + year; // outputs date month and year on page
 
     for (var i = 1; i <= extraBoxesLeft; i++) {    
@@ -175,11 +169,14 @@ function calendarInputClicked() {
     globalMonthString = makeTwoDigit(globalMonth + 1);
     globalDayString = makeTwoDigit(globalDay);
   //     console.log(globalYear + "-" + globalMonthString + "-" + globalDayString); // LOGGING TO CONSOLE
-    var dateInput = this;
-    dateInput.value = days[globalDayOfWeek] + " " + globalDay + " " + months[globalMonth] + " " + globalYear;
+    let dateInput = document.getElementById("job-changeInstallDate-installDate");;
+    // dateInput.setValue(days[globalDayOfWeek] + " " + globalDay + " " + months[globalMonth] + " " + globalYear);
     dateInput.setAttribute("data-selected-year", globalYear);
     dateInput.setAttribute("data-selected-month", globalMonth);
     dateInput.setAttribute("data-selected-day", globalDay);
+
+    let mdcTextInput = new mdc.textField.MDCTextField(dateInput);
+    mdcTextInput.value = `${globalMonth + 1}/${globalDayString}/${globalYear}`;
   };
 
   WebFontConfig = {
