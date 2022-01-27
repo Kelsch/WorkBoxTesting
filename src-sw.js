@@ -70,6 +70,14 @@ workbox.routing.registerRoute(
     })
 );
 
+// Time Picker UI
+workbox.routing.registerRoute(
+    new RegExp('/build/timepicker-ui/dist/'),
+    new workbox.strategies.StaleWhileRevalidate({
+        cacheName: 'time-picker-ui',
+    })
+);
+
 // Cache the underlying font files with a cache-first strategy for 1 year.
 workbox.routing.registerRoute(
     /^https:\/\/fonts\.gstatic\.com/,

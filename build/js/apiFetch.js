@@ -29,6 +29,15 @@ DialogAnimation(dialog);
 TextInputAnimation(document.getElementById('job-poRequest-content'));
 TextInputAnimation(document.getElementById('job-changeInstallDate-content'));
 
+const options = { okLabel: 'test', amLabel: 'test1', backdrop: false, focusInputAfterCloseModal: true };
+const scheduleFromElement = document.querySelector('#job-changeInstallDate-scheduleFrom');
+const myTimePickerFrom = new TimepickerUI(scheduleFromElement, options);
+myTimePickerFrom.create();
+
+const scheduleToElement = document.querySelector('#job-changeInstallDate-scheduleTo');
+const myTimePickerTo = new TimepickerUI(scheduleToElement, options);
+myTimePickerTo.create();
+
 function getNonWorkDays() {
     let token = localStorage.getItem('token');
     fetch(`${apiURL}/api/installerAppData/getNonWorkDays`, {

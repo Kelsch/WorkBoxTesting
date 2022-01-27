@@ -27,7 +27,6 @@
     <link href="https://unpkg.com/material-components-web@v6.0.0/dist/material-components-web.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/materialDesignOverride.css">
     
-    <script src="js/date-pick.js"></script>
     <script src="js/swiped-events.js"></script>
 </head>
 
@@ -161,7 +160,36 @@
                                         <span class="mdc-floating-label" id="installdate-label">Install Date</span>
                                         <span class="mdc-line-ripple"></span>
                                     </label>
-                                    <div id="date-pick-container" class="date-pick-container"></div>
+                                    <div id="date-pick-container" class="date-pick-container" style="margin-top: -20px; margin-bottom: 20px;"></div>
+                                </div>
+                                <div>
+                                    <div id="job-changeInstallDate-scheduleFrom-container">
+                                        <label id="job-changeInstallDate-scheduleFrom" class="mdc-text-field mdc-text-field--filled customSpacingBottom" data-install-changeinstalldate="scheduleFrom" data-input-type="text">
+                                            <span class="mdc-text-field__ripple"></span>
+                                            <input class="mdc-text-field__input" type="text" aria-labelledby="scheduleFrom-label">
+                                            <span class="mdc-floating-label" id="scheduleFrom-label">From</span>
+                                            <span class="mdc-line-ripple"></span>
+                                        </label>
+
+                                        <!-- <button type="button" class="mdc-button" data-open="job-changeInstallDate-scheduleFrom-container">
+                                            <div class="mdc-button__ripple"></div>
+                                            <span class="mdc-button__label">From</span>
+                                        </button> -->
+                                    </div>
+
+                                    <div id="job-changeInstallDate-scheduleTo-container">
+                                        <label id="job-changeInstallDate-scheduleTo" class="mdc-text-field mdc-text-field--filled customSpacingBottom" data-install-changeinstalldate="scheduleTo" data-input-type="text">
+                                            <span class="mdc-text-field__ripple"></span>
+                                            <input class="mdc-text-field__input" type="text" aria-labelledby="scheduleTo-label">
+                                            <span class="mdc-floating-label" id="scheduleTo-label">To</span>
+                                            <span class="mdc-line-ripple"></span>
+                                        </label>
+
+                                        <!-- <button type="button" class="mdc-button" data-open="job-changeInstallDate-scheduleTo-container">
+                                            <div class="mdc-button__ripple"></div>
+                                            <span class="mdc-button__label">To</span>
+                                        </button> -->
+                                    </div>
                                 </div>
                             </ul>
                         </div>
@@ -336,6 +364,8 @@
 
     <script src="https://unpkg.com/material-components-web@v6.0.0/dist/material-components-web.min.js"></script>
     <script src="js/calendar.js"></script>
+    <script src="js/date-pick.js"></script>
+    <script src="js/timepicker-ui.js"></script>
     <script src="js/app.js"></script>
     <script src="js/apiFetch.js"></script>
     <script src="js/refreshControl.js"></script>
