@@ -29,7 +29,7 @@ DialogAnimation(dialog);
 TextInputAnimation(document.getElementById('job-poRequest-content'));
 TextInputAnimation(document.getElementById('job-changeInstallDate-content'));
 
-const options = { okLabel: 'test', amLabel: 'test1', backdrop: false, focusInputAfterCloseModal: true };
+const options = { focusInputAfterCloseModal: true, theme: 'crane-radius' };
 const scheduleFromElement = document.querySelector('#job-changeInstallDate-scheduleFrom');
 const myTimePickerFrom = new TimepickerUI(scheduleFromElement, options);
 myTimePickerFrom.create();
@@ -528,7 +528,27 @@ function DialogAnimation(container) {
                             }
 
                             if (mdcDialog.parentElement.getAttribute('id') == "app_changeinstalldate_dialog") {
-                                document.activeElement.blur()
+                                document.activeElement.blur();
+
+                                const jobInstallDate = new Date(currentJob.installDate);
+                                const installDateElement = list.root_.querySelector('#job-changeInstallDate-installDate');
+                                
+                                let mdcTextInstallDateInput = new mdc.textField.MDCTextField(installDateElement);
+                                mdcTextInstallDateInput.value = `${jobInstallDate.getMonth() + 1}/${jobInstallDate.getDate()}/${jobInstallDate.getFullYear()}`;
+                                if (currentJob.scheduledFrom != null) {
+                                    const scheduledFromElement = list.root_.querySelector('#job-changeInstallDate-scheduleFrom');
+                                    let mdcTextScheduleFromInput = new mdc.textField.MDCTextField(scheduledFromElement);
+                                    const scheduledFromDateTime = new Date(currentJob.scheduledFrom);
+                                    
+                                    mdcTextScheduleFromInput.value = formatAMPM(scheduledFromDateTime);
+                                }
+                                if (currentJob.scheduledTo != null) {
+                                    const scheduledToElement = list.root_.querySelector('#job-changeInstallDate-scheduleTo');
+                                    let mdcTextScheduleToInput = new mdc.textField.MDCTextField(scheduledToElement);
+                                    const scheduledToDateTime = new Date(currentJob.scheduledTo);
+                                    
+                                    mdcTextScheduleToInput.value = formatAMPM(scheduledToDateTime);
+                                }
                             }
 
                             if (currentJob === null) {
@@ -595,6 +615,8 @@ function DialogAnimation(container) {
                         }
                     }
                 }
+
+                history.back();
             });
 
             if (mdcDialog.parentElement.getAttribute('id') == "app_porequest_dialog") {

@@ -332,6 +332,9 @@ function jobLayouts(jobId) {
                 }
 
                 layoutModal.classList.add("modal-card-container-show");
+
+                let layoutModalHistory = {modal: "layoutModal"}; // state object
+                history.pushState(layoutModalHistory, "unused argument", "#layoutModal");
             });
         });
     });
@@ -348,14 +351,23 @@ function setCurrentJobIds(jobId) {
 function jobDone(jobId) {
     this.dialog.open();
     this.currentJobId = jobId;
+
+    let jobDoneModalHistory = {modal: "jobDoneModal"}; // state object
+    history.pushState(jobDoneModalHistory, "unused argument", "#jobDoneModal");
 }
 
 function createPORequest(jobId) {
     this.dialogPORequest.open();
     this.currentJobId = jobId;
+
+    let poRequestModalHistory = {modal: "poRequestModal"}; // state object
+    history.pushState(poRequestModalHistory, "unused argument", "#poRequestModal");
 }
 
 function changeInstallDate(jobId) {
     this.dialogChangeInstallDate.open();
     this.currentJobId = jobId;
+
+    let changeInstallDateModalHistory = {modal: "changeInstallDateModal"}; // state object
+    history.pushState(changeInstallDateModalHistory, "unused argument", "#changeInstallDateModal");
 }
