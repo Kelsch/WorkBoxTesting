@@ -134,6 +134,14 @@ workbox.routing.registerRoute(
     'POST'
 );
 
+workbox.routing.registerRoute(
+    new RegExp(`${apiURL}/api/installerAppData/postJobInstallDateTimeChange`),
+    new workbox.strategies.NetworkOnly({
+        plugins: [bgSyncPlugin]
+    }),
+    'POST'
+);
+
 self.addEventListener('fetch', (event) => {
     // Clone the request to ensure it's safe to read when
     // adding to the Queue.

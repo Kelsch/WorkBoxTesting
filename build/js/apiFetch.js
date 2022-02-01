@@ -376,7 +376,7 @@ async function updateChangedJob(jobUpdate) {
             if (response == undefined) {
                 return;
             }
-
+            
             response.json().then(jobs => {
                 jobDiv.innerHTML = '';
                 let jobIndex = 0;
@@ -384,6 +384,14 @@ async function updateChangedJob(jobUpdate) {
                     if (job.jobId === jobUpdate.InstallCompletionJobId) {
                         jobIndex = index;
                     }
+
+                    if (jobUpdate.InstallCompletionJobId === undefined) {
+                        if (job.jobId === jobUpdate.JobId) {
+                            jobIndex = index;
+                        }
+                        return job.jobId === jobUpdate.JobId;
+                    }
+
                     return job.jobId === jobUpdate.InstallCompletionJobId;
                 });
                 filteredJobs.map(fJob => {
@@ -393,6 +401,14 @@ async function updateChangedJob(jobUpdate) {
                     fJob.installDateConfirmed = jobUpdate.installDateConfirmed ?? false;
                 });
 
+                if (jobUpdate.JobId !== undefined) {
+                    filteredJobs.map(fJob => {
+                        fJob.installDate = jobUpdate.InstallDate;
+                        fJob.scheduledFrom = jobUpdate.ScheduledFrom;
+                        fJob.scheduledTo = jobUpdate.ScheduledTo;
+                    });
+                }
+                
                 jobs[jobIndex] = filteredJobs[0];
                 jsonJobs = JSON.stringify(jobs);
 
@@ -403,6 +419,48 @@ async function updateChangedJob(jobUpdate) {
         });
     }).catch(err => {
         console.error(err)
+    });
+}
+
+async function postJobInstallDateTimeChange(installDateTimeChange) {
+    const jobId = this.currentJobId;
+    installDateTimeChange.JobId = jobId;
+    installDateTimeChange.InstallDateChangeInstallerId = parseInt(cred.name);
+    installDateTimeChange.DateWhenRequested = new Date().toLocalJSON().replace(/"/g, "");
+    
+    updateChangedJob(installDateTimeChange);
+    let token = localStorage.getItem('token');
+
+    fetch(`${apiURL}/api/installerAppData/postJobInstallDateTimeChange`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(installDateTimeChange)
+    })
+    .then(response => {
+        if (response.status !== 200) {
+            throw response;
+        }
+        
+        const jobCardElement = document.getElementById('modalCard_job');
+        const scheduleTimeElement = jobCardElement.querySelector('.job-datails.job-scheduledTime');
+    
+        const scheduledFromDateTime = new Date(installDateTimeChange.ScheduledFrom.split('T')[0] + " " + installDateTimeChange.ScheduledFrom.split('T')[1].replace('T', '').replace('Z', ''));
+        const newScheduledFrom = formatDateTime(scheduledFromDateTime);
+        const scheduledToDateTime = new Date(installDateTimeChange.ScheduledTo.split('T')[0] + " " + installDateTimeChange.ScheduledTo.split('T')[1].replace('T', '').replace('Z', ''));
+        const newScheduledTo = formatDateTime(scheduledToDateTime);
+    
+        scheduleTimeElement.innerHTML = `<span class="job-label">Scheduled Time:</span> ${newScheduledFrom} - ${newScheduledTo}`;
+        showCalendar(scheduledFromDateTime.getMonth(), scheduledFromDateTime.getFullYear());
+        
+        return response.json();
+    })
+    .catch(err => {
+        if (parseInt(err.message) === 401) {
+            login();
+        }
     });
 }
 
@@ -548,6 +606,24 @@ function DialogAnimation(container) {
                                     
                                     mdcTextScheduleToInput.value = formatAMPM(scheduledToDateTime);
                                 }
+
+                                if (currentJob.scheduledFrom != null && currentJob.scheduledTo == null) {
+                                    const scheduledToElement = list.root_.querySelector('#job-changeInstallDate-scheduleTo');
+                                    let mdcTextScheduleToInput = new mdc.textField.MDCTextField(scheduledToElement);
+                                    let scheduledToDateTime = new Date(currentJob.scheduledFrom);
+                                    scheduledToDateTime.setHours(scheduledToDateTime.getHours() + 4);
+
+                                    mdcTextScheduleToInput.value = formatAMPM(scheduledToDateTime);
+                                }
+
+                                if (currentJob.scheduledFrom == null && currentJob.scheduledTo != null) {
+                                    const scheduledFromElement = list.root_.querySelector('#job-changeInstallDate-scheduleFrom');
+                                    let mdcTextScheduleFromInput = new mdc.textField.MDCTextField(scheduledFromElement);
+                                    let scheduledFromDateTime = new Date(currentJob.scheduledTo);
+                                    scheduledFromDateTime.setHours(scheduledFromDateTime.getHours() - 4);
+
+                                    mdcTextScheduleFromInput.value = formatAMPM(scheduledFromDateTime);
+                                }
                             }
 
                             if (currentJob === null) {
@@ -615,6 +691,35 @@ function DialogAnimation(container) {
                     }
                 }
 
+                if (mdcDialog.parentElement.getAttribute('id') == "app_changeinstalldate_dialog") {
+                    const installDateElement = list.root_.querySelector('#job-changeInstallDate-installDate');
+                    let mdcTextInstallDateInput = new mdc.textField.MDCTextField(installDateElement);
+
+                    const scheduledFromElement = list.root_.querySelector('#job-changeInstallDate-scheduleFrom');
+                    let mdcTextScheduleFromInput = new mdc.textField.MDCTextField(scheduledFromElement);
+
+                    const scheduledToElement = list.root_.querySelector('#job-changeInstallDate-scheduleTo');
+                    let mdcTextScheduleToInput = new mdc.textField.MDCTextField(scheduledToElement);
+                    if (event.detail.action == "accept") {
+                        let installDateTimeChange = {};
+                        installDateTimeChange['InstallDate'] = mdcTextInstallDateInput.value;
+                        if (mdcTextScheduleFromInput.value != null) {
+                            installDateTimeChange['ScheduledFrom'] = new Date(installDateTimeChange['InstallDate'] + " " + formatTwentyFourHour(mdcTextScheduleFromInput.value)).toLocalJSON().replace(/"/g, "");
+                        }
+                        if (mdcTextScheduleToInput.value != '') {
+                            installDateTimeChange['ScheduledTo'] = new Date(installDateTimeChange['InstallDate'] + " " + formatTwentyFourHour(mdcTextScheduleToInput.value)).toLocalJSON().replace(/"/g, "");
+                        }
+                        if (installDateTimeChange != null) {
+                            postJobInstallDateTimeChange(installDateTimeChange);
+                        }
+                    }
+                    else {
+                        mdcTextInstallDateInput.value = ``;
+                        mdcTextScheduleFromInput.value = '';
+                        mdcTextScheduleToInput.value = '';
+                    }
+                }
+
                 history.back();
             });
 
@@ -628,6 +733,53 @@ function DialogAnimation(container) {
                 window.dialogChangeInstallDate = dialog;
             }
         }
+    }
+}
+
+async function CustomEventAfterOk(event) {
+    const scheduledFromElement = document.querySelector('#job-changeInstallDate-scheduleFrom');
+    const mdcTextScheduleFromInput = new mdc.textField.MDCTextField(scheduledFromElement);
+
+    const scheduledToElement = document.querySelector('#job-changeInstallDate-scheduleTo');
+    const mdcTextScheduleToInput = new mdc.textField.MDCTextField(scheduledToElement);
+
+    let today = new Date();
+    today.setHours(0);
+    today.setMinutes(0);
+    today.setSeconds(0);
+    if (event._element.id.includes('scheduleFrom')) {
+        if (mdcTextScheduleToInput.value == '') {
+            today.setHours(formatTwentyFourHour(mdcTextScheduleFromInput.value).split(':')[0]);
+            today.setMinutes(formatTwentyFourHour(mdcTextScheduleFromInput.value).split(':')[1]);
+            let scheduledTo = today;
+            scheduledTo.setHours(scheduledTo.getHours() + 4);
+            mdcTextScheduleToInput.value = formatAMPM(scheduledTo);
+        }
+    }
+    if (event._element.id.includes('scheduleTo')) {
+        if (mdcTextScheduleFromInput.value == '') {
+            today.setHours(formatTwentyFourHour(mdcTextScheduleToInput.value).split(':')[0]);
+            today.setMinutes(formatTwentyFourHour(mdcTextScheduleToInput.value).split(':')[1]);
+            let scheduledFrom = today;
+            scheduledFrom.setHours(scheduledFrom.getHours() - 4);
+            mdcTextScheduleFromInput.value = formatAMPM(scheduledFrom);
+        }
+    }
+
+    let fromTime = new Date();
+    fromTime.setHours(formatTwentyFourHour(mdcTextScheduleFromInput.value).split(':')[0]);
+    fromTime.setMinutes(formatTwentyFourHour(mdcTextScheduleFromInput.value).split(':')[1]);
+
+    let toTime = new Date();
+    toTime.setHours(formatTwentyFourHour(mdcTextScheduleToInput.value).split(':')[0]);
+    toTime.setMinutes(formatTwentyFourHour(mdcTextScheduleToInput.value).split(':')[1]);
+    
+    if (fromTime > toTime) {
+        today.setHours(formatTwentyFourHour(mdcTextScheduleFromInput.value).split(':')[0]);
+        today.setMinutes(formatTwentyFourHour(mdcTextScheduleFromInput.value).split(':')[1]);
+        let scheduledTo = today;
+        scheduledTo.setHours(scheduledTo.getHours() + 4);
+        mdcTextScheduleToInput.value = formatAMPM(scheduledTo);
     }
 }
 

@@ -273,6 +273,7 @@ class TimepickerUI {
                         degreesHours: this._degreesHours,
                         degreesMinutes: this._degreesMinutes
                     }), this.close()) : i || this.minutes.classList.add("invalid-value")
+                    CustomEventAfterOk(this);
                 }))
             }))
         }, this._handleBackdropClick = () => {
