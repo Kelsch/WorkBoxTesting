@@ -532,7 +532,6 @@ function DialogAnimation(container) {
 
                                 const jobInstallDate = new Date(currentJob.installDate);
                                 const installDateElement = list.root_.querySelector('#job-changeInstallDate-installDate');
-                                
                                 let mdcTextInstallDateInput = new mdc.textField.MDCTextField(installDateElement);
                                 mdcTextInstallDateInput.value = `${jobInstallDate.getMonth() + 1}/${jobInstallDate.getDate()}/${jobInstallDate.getFullYear()}`;
                                 if (currentJob.scheduledFrom != null) {
