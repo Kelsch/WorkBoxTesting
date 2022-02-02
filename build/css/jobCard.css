@@ -179,6 +179,7 @@ job-card {
 
 .job-buttons {
     display: flex;
+    flex-wrap: wrap;
 }
 
 .job-button {
