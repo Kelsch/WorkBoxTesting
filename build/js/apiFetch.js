@@ -719,8 +719,6 @@ function DialogAnimation(container) {
                         mdcTextScheduleToInput.value = '';
                     }
                 }
-
-                history.back();
             });
 
             if (mdcDialog.parentElement.getAttribute('id') == "app_porequest_dialog") {
