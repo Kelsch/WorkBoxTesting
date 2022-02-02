@@ -721,6 +721,12 @@ function DialogAnimation(container) {
                 }
             });
 
+            dialog.listen('MDCDialog:closed', event => {
+                if (event.detail.action == 'close') {
+                    history.back();
+                }
+            });
+
             if (mdcDialog.parentElement.getAttribute('id') == "app_porequest_dialog") {
                 window.dialogPORequest = dialog;
             }

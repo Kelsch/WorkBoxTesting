@@ -1,6 +1,6 @@
 // const apiURL = 'https://pdwebapi.longformgibberish.com';
-// const apiURL = 'https://pdwebapiazure.azurewebsites.net';
-const apiURL = 'https://pdwebapi.conveyor.cloud';
+const apiURL = 'https://pdwebapiazure.azurewebsites.net';
+// const apiURL = 'https://pdwebapi.conveyor.cloud';
 // const apiURL = 'https://192.168.1.43:45455';
 let loginButtonPressed = false;
 let cred;
@@ -256,10 +256,22 @@ function setupPopStateHistoryChangeListener() {
     else {
       if (event.state.modal == 'jobModal') {
         document.getElementById('modalCard_designSetInfo').classList.remove('modal-card-container-show');
+        this.dialog.close();
+        this.dialogPORequest.close();
+        this.dialogChangeInstallDate.close();
         document.getElementById('modalCard_job').classList.add('modal-card-container-show');
       }
       if (event.state.modal == 'designSetModal') {
         document.getElementById('modalCard_designSetInfo').classList.add('modal-card-container-show');
+      }
+      if (event.state.modal == 'jobDoneModal') {
+        this.dialog.open();
+      }
+      if (event.state.modal == 'poRequestModal') {
+        this.dialogPORequest.open();
+      }
+      if (event.state.modal == 'changeInstallDateModal') {
+        this.dialogChangeInstallDate.open();
       }
     }
   };
