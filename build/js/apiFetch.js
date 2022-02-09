@@ -503,13 +503,19 @@ function MenuAnimation(container) {
             const element = buttons[i];
             const menu = mdc.menu.MDCMenu.attachTo(element);
 
-            const btn = container.querySelector('.settings-button');
-            btn.addEventListener('click', async () => {
+            const btnSettings = container.querySelector('.settings-button');
+            btnSettings.addEventListener('click', async () => {
                 menu.open = !menu.open;
 
                 await sleep(100);
                 element.style.top = '10px';
                 element.style.right = '10px';
+            });
+
+            const btnNotificationBell = container.querySelector('.notificationBell-button');
+            btnNotificationBell.addEventListener('click', async () => {
+
+                await sleep(100);
             });
         }
     }

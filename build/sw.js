@@ -153,4 +153,18 @@ self.addEventListener('fetch', (event) => {
     event.waitUntil(promiseChain);
 });
 
+self.addEventListener('notificationclick', function(e) {
+    var notification = e.notification;
+    var primaryKey = notification.data.primaryKey;
+    var action = e.action;
+
+    if (action === 'close') {
+        notification.close();
+    } else {
+        console.log(clients, notification, primaryKey, action)
+        clients.openWindow('https://localhost:8181/');
+        notification.close();
+    }
+});
+
 workbox.precaching.precacheAndRoute([{"revision":"e7e57128ed03fdb223f0e4f308aecf44","url":"css/calendar.css"},{"revision":"25245eb36e8e452b743fdad734d47671","url":"css/jobCard.css"},{"revision":"f59b7837de41bd6233d2a91708694411","url":"css/main.css"},{"revision":"0ec6ebe9d6281c1fe0206728a2a8f667","url":"css/materialDesignOverride.css"},{"revision":"e8b3d535cea3eac50e33901aa60fabbb","url":"css/refreshControl.css"},{"revision":"cd0c6e79954504076e4325ebed5bd5c7","url":"index.html"},{"revision":"fe8b27076d467237ddd0a3dad8403093","url":"js/apiFetch.js"},{"revision":"a6fb22f7912abec7ecc6323dcc18d64e","url":"js/app.js"},{"revision":"f8db2956d9d483eb6be3bb29550c038d","url":"js/calendar.js"},{"revision":"c3b12a0f396e416ae47b228b76280af9","url":"js/jsClass/designSetInfoCardElement.js"},{"revision":"5d834e44ab5c059e7fc32beeba3d79db","url":"js/jsClass/jobCardElement.js"},{"revision":"7d9df91f6e34a56d7adbc84333ac3aa7","url":"js/modalCreation.js"},{"revision":"dfc20073d069c76c1b67606f3b916e8c","url":"js/refreshControl.js"},{"revision":"8618cac677171c71ee01a7027cdb659b","url":"js/swiped-events.js"},{"revision":"edd4495e66b5cb260886662b5e5b2e42","url":"js/workbox-7248be78.js"},{"revision":"e69c668f5b1158378f2c04b20c5afea8","url":"privacy.html"}]);

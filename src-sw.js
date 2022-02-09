@@ -153,4 +153,17 @@ self.addEventListener('fetch', (event) => {
     event.waitUntil(promiseChain);
 });
 
+self.addEventListener('notificationclick', function(e) {
+    var notification = e.notification;
+    var primaryKey = notification.data.primaryKey;
+    var action = e.action;
+
+    if (action === 'close') {
+        notification.close();
+    } else {
+        clients.openWindow('https://localhost:8181/');
+        notification.close();
+    }
+});
+
 workbox.precaching.precacheAndRoute(self.__WB_MANIFEST);
