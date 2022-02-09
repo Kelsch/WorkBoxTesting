@@ -94,6 +94,8 @@ async function getJobs(month, year) {
                 throw new Error(response.status);
             }
 
+            getNewAssignedJobs();
+
             return response.json();
         })
         .then(data => {
@@ -253,6 +255,57 @@ async function getLayouts(jobIds) {
                 }
             });
     }
+}
+
+async function getNewAssignedJobs() {
+    let token = localStorage.getItem('token');
+        fetch(`${apiURL}/api/installerAppData/getInstallerJobNotification?businessId=${cred.name}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(response => {
+                if (response.status !== 200) {
+                    throw new Error(response.status);
+                }
+
+                return response.json();
+            })
+            .then(data => {
+                const notificationMenu = document.getElementById("notification-menu");
+                data.forEach(job => {
+                    let jobElement = document.createElement('li');
+                    jobElement.classList.add("mdc-list-item");
+                    jobElement.setAttribute('role', 'menuitem');
+
+                    let jobInfoContainer = document.createElement('div');
+                    jobInfoContainer.classList.add('notification-jobInfoContainer');
+                    
+                    let jobInfoName = document.createElement('span');
+                    jobInfoName.classList.add('mdc-list-item__text');
+                    jobInfoName.textContent = job.shopName;
+
+                    let jobInfoInstallDate = document.createElement('span');
+                    jobInfoInstallDate.classList.add('mdc-list-item__text');
+                    jobInfoInstallDate.classList.add('secondary-text');
+                    jobInfoInstallDate.textContent = new Date(job.installDate).toLocaleDateString();
+
+                    jobInfoContainer.appendChild(jobInfoName);
+                    jobInfoContainer.appendChild(jobInfoInstallDate);
+
+                    jobElement.setAttribute('tabindex', -1);
+                    jobElement.appendChild(jobInfoContainer);
+                    notificationMenu.appendChild(jobElement)
+                });
+            })
+            .catch(err => {
+                if (parseInt(err.message) === 401) {
+                    login();
+                }
+                else {
+                    // logout();
+                }
+            });
 }
 
 async function jobToggleInstallConfirmation(jobId) {
@@ -502,21 +555,28 @@ function MenuAnimation(container) {
         for (let i = 0; i < buttons.length; i++) {
             const element = buttons[i];
             const menu = mdc.menu.MDCMenu.attachTo(element);
+            
+            if (element.parentElement.id === "settings_menu") {
+                const btnSettings = container.querySelector('.settings-button');
+                btnSettings.addEventListener('click', async () => {
+                    menu.open = !menu.open;
 
-            const btnSettings = container.querySelector('.settings-button');
-            btnSettings.addEventListener('click', async () => {
-                menu.open = !menu.open;
+                    await sleep(100);
+                    element.style.top = '10px';
+                    element.style.right = '10px';
+                });
+            }
 
-                await sleep(100);
-                element.style.top = '10px';
-                element.style.right = '10px';
-            });
+            if (element.parentElement.id === "notification_menu") {
+                const btnNotificationBell = container.querySelector('.notificationBell-button');
+                btnNotificationBell.addEventListener('click', async () => {
+                    menu.open = !menu.open;
 
-            const btnNotificationBell = container.querySelector('.notificationBell-button');
-            btnNotificationBell.addEventListener('click', async () => {
-
-                await sleep(100);
-            });
+                    await sleep(100);
+                    element.style.top = '10px';
+                    element.style.left = '10px';
+                });
+            }
         }
     }
 }

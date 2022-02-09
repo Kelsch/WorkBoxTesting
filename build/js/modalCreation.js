@@ -102,7 +102,6 @@ async function jobClicked(jobId) {
         return;
     }
     const cacheName = 'job-list';
-    // const request = new Request(`https://pdwebapi-mf5.conveyor.cloud/api/installerAppData/getInstallIndicators?businessId=2`);
     const request = new Request(`${apiURL}/api/installerAppData/getInstallIndicators?businessId=${cred.name}`);
 
     const jobDetailDiv = jobModal.querySelector(".modal-info-container");

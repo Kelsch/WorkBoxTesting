@@ -1,0 +1,4 @@
+.notification-jobInfoContainer {
+    display: flex;
+    flex-direction: column;
+}

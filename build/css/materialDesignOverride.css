@@ -86,3 +86,19 @@
     height: 15px;
     font-size: 15px;
 }
+
+#notification-menu {
+    max-height: 30vh;
+}
+
+.secondary-text {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    font-size: .875rem;
+    line-height: 1.25rem;
+    font-weight: 400;
+    letter-spacing: .0178571429em;
+    text-decoration: inherit;
+    text-transform: inherit;
+    opacity: .6;
+}

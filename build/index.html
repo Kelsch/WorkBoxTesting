@@ -26,6 +26,7 @@
     
     <link href="https://unpkg.com/material-components-web@v6.0.0/dist/material-components-web.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/materialDesignOverride.css">
+    <link rel="stylesheet" href="css/notificationMenu.css">
     
     <script src="js/swiped-events.js"></script>
 </head>
@@ -41,6 +42,11 @@
     <div id="app_container" class="app-container">
         <div id="app_topBar" class="app-topBar">
             <button class="mdc-icon-button material-icons notificationBell-button">notifications_none</button>
+            <div id="notification_menu" class="mdc-menu-surface--anchor">
+                <div class="mdc-menu mdc-menu-surface">
+                    <ul id="notification-menu" class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical" tabindex="-1"></ul>
+                </div>
+            </div>
             <div class="app-title">PDInstall</div>
             <button class="mdc-icon-button material-icons settings-button">settings</button>
             <div id="settings_menu" class="mdc-menu-surface--anchor">
@@ -48,20 +54,6 @@
                 <div class="mdc-menu mdc-menu-surface">
                     <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical" tabindex="-1">
                         <li id="darkMode-liItem" class="mdc-list-item" role="menuitem" onclick="darkModeCheck()">
-
-                            <!-- <div class="mdc-checkbox">
-                                <input type="checkbox" class="mdc-checkbox__native-control" id="darkMode-checkbox"/>
-                                <div class="mdc-checkbox__background">
-                                    <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
-                                        <path class="mdc-checkbox__checkmark-path" fill="none"
-                                            d="M1.73,12.91 8.1,19.28 22.79,4.59" />
-                                    </svg>
-                                    <div class="mdc-checkbox__mixedmark"></div>
-                                </div>
-                                <div class="mdc-checkbox__ripple"></div>
-                            </div>
-                            <label for="darkMode-checkbox" class="mdc-list-item__text">Dark Mode</label> -->
-
                             <div class="mdc-switch mdc-switch--checked">
                                 <div class="mdc-switch__track"></div>
                                 <div class="mdc-switch__thumb-underlay">
