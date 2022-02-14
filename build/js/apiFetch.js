@@ -273,6 +273,21 @@ async function getNewAssignedJobs() {
             })
             .then(data => {
                 const notificationMenu = document.getElementById("notification-menu");
+                
+                if (data.length > 0) {
+                    let anyJobHasntBeenSeen = false;
+                    for (let i = 0; i < data.length; i++) {
+                        const job = data[i];
+                        if (!job.hasBeenSeen && !anyJobHasntBeenSeen) {
+                            anyJobHasntBeenSeen = !job.hasBeenSeen;
+                        }
+                    }
+                    if (anyJobHasntBeenSeen) {
+                        let notificationButtonElement = document.getElementById("app_topBar_notificationBell");
+                        notificationButtonElement.innerHTML = "notifications";
+                    }
+                }
+
                 data.forEach(job => {
                     let jobElement = document.createElement('li');
                     jobElement.classList.add("mdc-list-item");
@@ -294,9 +309,13 @@ async function getNewAssignedJobs() {
                     jobInfoContainer.appendChild(jobInfoInstallDate);
 
                     jobElement.setAttribute('tabindex', -1);
+                    jobElement.setAttribute('jobid', job.jobId);
                     jobElement.appendChild(jobInfoContainer);
+                    jobElement.onclick = notificationJobClicked;
                     notificationMenu.appendChild(jobElement)
                 });
+
+                ListAnimation(document.getElementById("settings_menu"));
             })
             .catch(err => {
                 if (parseInt(err.message) === 401) {
@@ -306,6 +325,68 @@ async function getNewAssignedJobs() {
                     // logout();
                 }
             });
+}
+
+async function notificationJobClicked(event) {
+    const installDate = this.querySelector(".secondary-text").innerHTML.replaceAll("/", "-");
+    dateSelected(document.getElementById(installDate));
+    jobClicked(this.getAttribute('jobid'));
+}
+
+async function updateNotificationJobs() {
+    const cacheAvailable = 'caches' in self;
+    if (!cacheAvailable && selectedInstallDate != null) {
+        return;
+    }
+    const cacheName = 'job-notification-list';
+    const request = new Request(`${apiURL}/api/installerAppData/getInstallerJobNotification?businessId=${cred.name}`);
+
+    caches.open(cacheName).then(cache => {
+        cache.match(request).then((response) => {
+            if (response == undefined) {
+                return;
+            }
+            
+            response.json().then(jobs => {
+                jobs.map(job => {
+                    job.hasBeenSeen = true;
+                });
+
+                jsonJobs = JSON.stringify(jobs);
+
+                cache.put(request, new Response(jsonJobs));
+
+                let notificationButtonElement = document.getElementById("app_topBar_notificationBell");
+                notificationButtonElement.innerHTML = "notifications_none";
+            });
+        });
+    }).catch(err => {
+        console.error(err)
+    });
+
+    let token = localStorage.getItem('token');
+    fetch(`${apiURL}/api/installerAppData/putInstallerNotificationsSeen?businessId=${cred.name}`, {
+        method: 'PUT',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({})
+    })
+        .then(response => {
+            if (response.status !== 200) {
+                throw response;
+            }
+
+            return response.json();
+        })
+        .catch(err => {
+            console.error(err)
+            if (parseInt(err.message) === 401) {
+                login();
+            }
+            return err;
+        });
 }
 
 async function jobToggleInstallConfirmation(jobId) {
@@ -527,6 +608,14 @@ function ButtonAnimation(container) {
     }
 }
 
+function ListAnimation(container) {
+    const listElement = container.querySelectorAll('.mdc-list');
+    if (typeof mdc !== 'undefined') {
+        const list = mdc.list.MDCList.attachTo(listElement);
+        const listItemRipples = list.listElements.map((listItemEl) => mdc.ripple.MDCRipple.attachTo(listItemEl));
+    }
+}
+
 function FabButtonAnimation(fab) {
     if (typeof mdc !== 'undefined') {
         mdc.ripple.MDCRipple.attachTo(fab);
@@ -575,6 +664,8 @@ function MenuAnimation(container) {
                     await sleep(100);
                     element.style.top = '10px';
                     element.style.left = '10px';
+
+                    updateNotificationJobs();
                 });
             }
         }

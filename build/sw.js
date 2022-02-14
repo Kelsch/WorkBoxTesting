@@ -31,6 +31,18 @@ workbox.routing.registerRoute(
 );
 
 workbox.routing.registerRoute(
+    new RegExp(`${apiURL}/api/installerAppData/getInstallerJobNotification`),
+    new workbox.strategies.StaleWhileRevalidate({
+        cacheName: 'job-notification-list',
+        plugins: [
+            new workbox.expiration.ExpirationPlugin({
+                maxAgeSeconds: 60 * 60 * 4,
+            }),
+        ],
+    })
+);
+
+workbox.routing.registerRoute(
     new RegExp(`${apiURL}/api/installerAppData/getInstallJobsDesignSets`),
     new workbox.strategies.StaleWhileRevalidate({
         cacheName: 'job-designSets-list',
