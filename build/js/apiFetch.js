@@ -64,6 +64,14 @@ function getNonWorkDays() {
                 sixthDayElement.classList.add('sixthDayCallout');
             }
 
+            const installMeetingDays = days.filter(day => day.installMeeting);
+            installMeetingDays.forEach(installMeetingDay => {
+                const installMeetingElement = currentCalendar.querySelector(`[id='${installMeetingDay.mm}-${installMeetingDay.dd}-${installMeetingDay.yy}']`);
+                if (installMeetingElement !== null) {
+                    installMeetingElement.classList.add('installerMeeting');
+                }
+            });
+
             return days.map(function (day) {
                 const dateElement = currentCalendar.querySelector(`[id='${day.mm}-${day.dd}-${day.yy}']`);
                 if (dateElement !== null && !day.isWorkDay) {

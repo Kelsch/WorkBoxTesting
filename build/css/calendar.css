@@ -125,6 +125,11 @@
     color: black;
 }
 
+.installerMeeting {
+    background-color: var(--purple0);
+    color: black;
+}
+
 .indicator-notReady {
     background-color: var(--notReady);
 }
