@@ -872,7 +872,7 @@ function DialogAnimation(container) {
                     if (event.detail.action == "accept") {
                         let installDateTimeChange = {};
                         installDateTimeChange['InstallDate'] = mdcTextInstallDateInput.value;
-                        if (mdcTextScheduleFromInput.value != null) {
+                        if (mdcTextScheduleFromInput.value != '') {
                             installDateTimeChange['ScheduledFrom'] = new Date(installDateTimeChange['InstallDate'] + " " + formatTwentyFourHour(mdcTextScheduleFromInput.value)).toLocalJSON().replace(/"/g, "");
                         }
                         if (mdcTextScheduleToInput.value != '') {
@@ -883,6 +883,7 @@ function DialogAnimation(container) {
                         }
                         if (installDateTimeChange != null) {
                             postJobInstallDateTimeChange(installDateTimeChange);
+                            history.back();
                         }
                     }
                     else {
