@@ -28,7 +28,7 @@ function handleConnection() {
     isReachable("https://google.com/").then(function (online) {
       if (online) {
         // handle online status
-        console.log('online');
+        console.log('Can reach the internet');
         if (typeof document !== 'undefined') {
           document.getElementById('offline_indicator').classList.remove("offline-show");
         }
