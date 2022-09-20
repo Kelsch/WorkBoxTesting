@@ -6,6 +6,13 @@ importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox
 //     new workbox.strategies.StaleWhileRevalidate()
 // );
 
+// Detailed logging is very useful during development
+workbox.setConfig({debug: true});
+
+// Updating SW lifecycle to update the app after user triggered refresh
+workbox.core.skipWaiting();
+workbox.core.clientsClaim();
+
 workbox.routing.registerRoute(
     new RegExp(`${apiURL}/api/installerAppData/getNonWorkDays`),
     new workbox.strategies.StaleWhileRevalidate({
