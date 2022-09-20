@@ -750,7 +750,7 @@ function DialogAnimation(container) {
                                 }
                             }
 
-                            if (mdcDialog.parentElement.getAttribute('id') == "app_changeinstalldate_dialog") {
+                            if (mdcDialog.parentElement.getAttribute('id') == "g") {
                                 document.activeElement.blur();
 
                                 const jobInstallDate = new Date(currentJob.installDate);
@@ -865,6 +865,10 @@ function DialogAnimation(container) {
 
                     const scheduledToElement = list.root_.querySelector('#job-changeInstallDate-scheduleTo');
                     let mdcTextScheduleToInput = new mdc.textField.MDCTextField(scheduledToElement);
+
+                    const noteElement = list.root_.querySelector('#job-changeInstallDate-note');
+                    let mdcTextNoteInput = new mdc.textField.MDCTextField(noteElement);
+
                     if (event.detail.action == "accept") {
                         let installDateTimeChange = {};
                         installDateTimeChange['InstallDate'] = mdcTextInstallDateInput.value;
@@ -874,6 +878,9 @@ function DialogAnimation(container) {
                         if (mdcTextScheduleToInput.value != '') {
                             installDateTimeChange['ScheduledTo'] = new Date(installDateTimeChange['InstallDate'] + " " + formatTwentyFourHour(mdcTextScheduleToInput.value)).toLocalJSON().replace(/"/g, "");
                         }
+                        if (mdcTextNoteInput.value != '') {
+                            installDateTimeChange['Note'] = mdcTextNoteInput.value;
+                        }
                         if (installDateTimeChange != null) {
                             postJobInstallDateTimeChange(installDateTimeChange);
                         }
@@ -882,6 +889,7 @@ function DialogAnimation(container) {
                         mdcTextInstallDateInput.value = ``;
                         mdcTextScheduleFromInput.value = '';
                         mdcTextScheduleToInput.value = '';
+                        mdcTextNoteInput.value = '';
                     }
                 }
             });
