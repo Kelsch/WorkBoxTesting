@@ -588,14 +588,23 @@ async function postJobInstallDateTimeChange(installDateTimeChange) {
         
         const jobCardElement = document.getElementById('modalCard_job');
         const scheduleTimeElement = jobCardElement.querySelector('.job-datails.job-scheduledTime');
+
+        console.log(installDateTimeChange.ScheduledFrom === undefined)
     
-        const scheduledFromDateTime = new Date(installDateTimeChange.ScheduledFrom.split('T')[0] + " " + installDateTimeChange.ScheduledFrom.split('T')[1].replace('T', '').replace('Z', ''));
-        const newScheduledFrom = formatDateTime(scheduledFromDateTime);
-        const scheduledToDateTime = new Date(installDateTimeChange.ScheduledTo.split('T')[0] + " " + installDateTimeChange.ScheduledTo.split('T')[1].replace('T', '').replace('Z', ''));
-        const newScheduledTo = formatDateTime(scheduledToDateTime);
-    
-        scheduleTimeElement.innerHTML = `<span class="job-label">Scheduled Time:</span> ${newScheduledFrom} - ${newScheduledTo}`;
-        showCalendar(scheduledFromDateTime.getMonth(), scheduledFromDateTime.getFullYear());
+        if (installDateTimeChange.ScheduledFrom !== undefined) {
+            const scheduledFromDateTime = new Date(installDateTimeChange.ScheduledFrom.split('T')[0] + " " + installDateTimeChange.ScheduledFrom.split('T')[1].replace('T', '').replace('Z', ''));
+            const newScheduledFrom = formatDateTime(scheduledFromDateTime);
+            const scheduledToDateTime = new Date(installDateTimeChange.ScheduledTo.split('T')[0] + " " + installDateTimeChange.ScheduledTo.split('T')[1].replace('T', '').replace('Z', ''));
+            const newScheduledTo = formatDateTime(scheduledToDateTime);
+            scheduleTimeElement.innerHTML = `<span class="job-label">Scheduled Time:</span> ${newScheduledFrom} - ${newScheduledTo}`;
+            
+            showCalendar(scheduledFromDateTime.getMonth(), scheduledFromDateTime.getFullYear());
+        }
+
+        if (installDateTimeChange.ScheduledFrom === undefined) {
+            const scheduledInstallDate = new Date(installDateTimeChange.InstallDate);
+            showCalendar(scheduledInstallDate.getMonth(), scheduledInstallDate.getFullYear());
+        }
         
         return response.json();
     })
