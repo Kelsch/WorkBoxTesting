@@ -1,7 +1,8 @@
 // const apiURL = 'https://pdwebapi.longformgibberish.com';
 const apiURL = 'https://pdwebapiazure.azurewebsites.net';
-//  const apiURL = 'https://pdwebapi.conveyor.cloud';
-// const apiURL = 'https://192.168.1.43:45455';
+// const apiURL = 'https://differentbluetower65.conveyor.cloud';
+// const apiURL = 'https://192.168.254.68:45456';
+// const apiURL = 'https://localhost:44384'
 let loginButtonPressed = false;
 let cred;
 

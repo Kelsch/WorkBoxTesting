@@ -115,11 +115,9 @@ function dateSelected(element) {
     }
     element.classList.add('calendar-selectedDate');
 
-
     const selectedInstallDate = new Date(element.getAttribute('id').replace(/-/g, '/'));
     const installDateString = new Date(selectedInstallDate.setHours(0, 0, 0, 0)).toJSON();
-
-
+    
     const buttonContainerTitle = document.getElementById('date_selected');
     buttonContainerTitle.innerHTML = selectedInstallDate.toLocaleDateString();
 

@@ -138,6 +138,7 @@ async function jobClicked(jobId) {
                     jobCreatedElement.scheduledFrom = fJob.scheduledFrom;
                     jobCreatedElement.scheduledTo = fJob.scheduledTo;
                     jobCreatedElement.installDate = fJob.installDate;
+                    jobCreatedElement.installDateRange = fJob.installDateRange;
                     jobCreatedElement.installDateConfirmed = fJob.installDateConfirmed;
                     jobCreatedElement.addressNumber = fJob.addressNumber;
 
@@ -226,6 +227,7 @@ function designSetInfoClicked(jobId) {
                     designSetInfoCreatedElement.completionDate = fJob.completionDate;
                     designSetInfoCreatedElement.installer = fJob.installer;
                     designSetInfoCreatedElement.installDate = fJob.installDate;
+                    designSetInfoCreatedElement.installDateRange = fJob.installDateRange;
                     designSetInfoCreatedElement.closeDate = fJob.closeDate;
                     designSetInfoCreatedElement.products = fJob.products;
                     // designSetInfoCreatedElement.designSetDTOs = fJob.designSetDTOs;

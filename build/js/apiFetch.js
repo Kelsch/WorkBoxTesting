@@ -113,7 +113,7 @@ async function getJobs(month, year) {
             timesRunGetJobs++;
             let jobs = data;
             const currentCalendar = document.getElementById('calendar_dayContainer');
-
+            
             year = month - 1 == -1 ? year - 1 : year;
             month = month - 1 == -1 ? 12 : month - 1;
             const selectedInstallMonth = new Date(year, month - 1, 1);
@@ -122,13 +122,35 @@ async function getJobs(month, year) {
                 let jobInstallDate = new Date(job.installDate);
                 return jobInstallDate >= selectedInstallMonth;
             });
-
+            
             filteredJobs.map(function (job) {
                 const jobInstallDate = new Date(job.installDate.substring(0, job.installDate.indexOf('T')).replace(/-/g, '/'));
+
                 const installElement = currentCalendar.querySelector(`[id='indicatorContainer${jobInstallDate.getMonth() + 1}-${jobInstallDate.getDate()}-${jobInstallDate.getFullYear()}']`);
                 if (installElement !== null) {
                     const installColor = determineInstallColor(job.status);
                     installElement.innerHTML += `<div class="dateNumber-indicator${installColor}" data-jobid="${job.jobId}"></div>`;
+                }
+
+                let jobInstallDateRange;
+                if (job.installDateRange != null) {
+                    jobInstallDateRange = new Date(job.installDateRange.substring(0, job.installDateRange.indexOf('T')).replace(/-/g, '/'));
+
+                    let datesBetween;
+                    let startDate = new Date(job.installDate);
+                    startDate.setDate(startDate.getDate() + 1);
+                    let endDate = new Date(job.installDateRange);
+                    datesBetween = getDatesBetweenDates(startDate, endDate);
+                    
+                    for (var i3 = 0; i3 < datesBetween.length; i3++) {
+                        let dateBetween = datesBetween[i3];
+                        
+                        const installElementRange = currentCalendar.querySelector(`[id='indicatorContainer${dateBetween.getMonth() + 1}-${dateBetween.getDate()}-${dateBetween.getFullYear()}']`);
+                        if (installElementRange !== null) {
+                            const installColorRange = determineInstallColor(job.status);
+                            installElementRange.innerHTML += `<div class="dateNumber-indicator${installColorRange}" data-jobid="${job.jobId}"></div>`;
+                        }
+                    }
                 }
             });
 
@@ -163,6 +185,13 @@ async function getJobs(month, year) {
     timesRunGetJobs = 0;
 }
 
+function getDatesBetweenDates(start, end) {
+    for (var arr = [], dt = new Date(start); dt <= new Date(end); dt.setDate(dt.getDate() + 1)) {
+        arr.push(new Date(dt));
+    }
+    return arr;
+}
+
 async function findSelectedDateJobs(selectedInstallDate) {
     const cacheAvailable = 'caches' in self;
     if (!cacheAvailable && selectedInstallDate != null) {
@@ -181,7 +210,7 @@ async function findSelectedDateJobs(selectedInstallDate) {
             response.json().then(jobs => {
                 jobDiv.innerHTML = '';
                 const filteredJobs = jobs.filter(job => {
-                    return job.installDate === selectedInstallDate;
+                    return (job.installDate === selectedInstallDate) || (job.installDateRange >= selectedInstallDate && job.installDate <= selectedInstallDate);
                 });
                 filteredJobs.map(fJob => {
                     const installColor = determineInstallColor(fJob.status);
@@ -589,7 +618,7 @@ async function postJobInstallDateTimeChange(installDateTimeChange) {
         const jobCardElement = document.getElementById('modalCard_job');
         const scheduleTimeElement = jobCardElement.querySelector('.job-datails.job-scheduledTime');
 
-        console.log(installDateTimeChange.ScheduledFrom === undefined)
+        // console.log(installDateTimeChange.ScheduledFrom === undefined)
     
         if (installDateTimeChange.ScheduledFrom !== undefined) {
             const scheduledFromDateTime = new Date(installDateTimeChange.ScheduledFrom.split('T')[0] + " " + installDateTimeChange.ScheduledFrom.split('T')[1].replace('T', '').replace('Z', ''));

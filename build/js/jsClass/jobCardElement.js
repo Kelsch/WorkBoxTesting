@@ -10,6 +10,7 @@ class JobCard extends HTMLElement {
         this._install = false;
         this._installScheduled = false;
         this._installDate = Date.now;
+        this._installDateRange = Date.now;
         this._scheduledFrom;
         this._scheduledTo;
         this._status = 0;
@@ -88,6 +89,13 @@ class JobCard extends HTMLElement {
     }
     get installDate() {
         return this._installDate;
+    }
+
+    set installDateRange(value) {
+        this._installDateRange = value;
+    }
+    get installDateRange() {
+        return this._installDateRange;
     }
 
     set scheduledFrom(value) {
@@ -275,10 +283,17 @@ function jobCardHTML(data, result, installColor) {
             <div class="job-datails job-address job-notes" onclick="OpenMaps('${data.address}', '${data.longLat}')">
                 ${data.address}
             </div>
-            <div class="job-datails job-installDate job-notes">
-                <span class="job-label">Date:</span>
-                ${new Date(data.installDate).toLocaleDateString()}
-            </div>
+            ${data.installDateRange == null ? `
+                <div class="job-datails job-installDate job-notes">
+                    <span class="job-label">Date:</span>
+                    ${new Date(data.installDate).toLocaleDateString()}
+                </div>
+                ` : `
+                <div class="job-datails job-installDate job-notes">
+                    <span class="job-label">Date Range:</span>
+                    ${new Date(data.installDate).toLocaleDateString()} - ${new Date(data.installDateRange).toLocaleDateString()}
+                </div>
+            `}
             ${data.scheduledFrom == null ? '' : `
                 <div class="job-datails job-scheduledTime job-notes">
                     <span class="job-label">Scheduled Time:</span>

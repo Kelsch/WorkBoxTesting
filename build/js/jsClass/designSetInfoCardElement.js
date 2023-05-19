@@ -31,6 +31,7 @@ class DesignSetInfoCard extends HTMLElement {
         this._completionDate = Date.now();
         this._installer = "";
         this._installDate = Date.now();
+        this._installDateRange = Date.now();
         this._closeDate = Date.now();
         this._designSetDTOs = [];
         this._products = [];
@@ -231,6 +232,13 @@ class DesignSetInfoCard extends HTMLElement {
     }
     get installDate() {
         return this._installDate;
+    }
+
+    set installDateRange(value) {
+        this._installDate = new Date(value);
+    }
+    get installDateRange() {
+        return this._installDateRange;
     }
 
     set closeDate(value) {
