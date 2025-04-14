@@ -92,8 +92,18 @@ function showCalendar(month, year) {
         dateSelected(selectedDate);
     }
 
+    showSearchButton();
     getJobs(month, year);
     getNonWorkDays();
+}
+
+function showSearchButton() {
+    let searchButton = document.getElementsByClassName('search-button')[0];
+    if (searchButton.style.display === 'none' || searchButton.style.display === '') {
+        searchButton.style.display = 'block';
+    } else {
+        // searchButton.style.display = 'none';
+    }
 }
 
 function setupSwipeListener(calendarElement) {

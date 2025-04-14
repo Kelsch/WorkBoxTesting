@@ -260,6 +260,7 @@ function setupPopStateHistoryChangeListener() {
         this.dialog.close();
         this.dialogPORequest.close();
         this.dialogChangeInstallDate.close();
+        this.dialogSearchJobs.close();
         document.getElementById('modalCard_job').classList.add('modal-card-container-show');
       }
       if (event.state.modal == 'designSetModal') {
@@ -273,6 +274,9 @@ function setupPopStateHistoryChangeListener() {
       }
       if (event.state.modal == 'changeInstallDateModal') {
         this.dialogChangeInstallDate.open();
+      }
+      if (event.state.modal == 'searchJobsModal') {
+        this.dialogSearchJobs.open();
       }
     }
   };

@@ -6,7 +6,6 @@ const darkModeListItem = appTopBar.querySelector('#darkMode-liItem');
 const dialog = document.getElementById('dialog_container');
 // const fab = document.getElementById('fab_PORequest');
 const fab = document.querySelector('.mdc-fab');
-// const poRequstDialog = document.getElementById('app_porequest_dialog');
 const body = document.body;
 
 // Get user's current theme
@@ -28,6 +27,7 @@ SwitchAnimation(appTopBar);
 DialogAnimation(dialog);
 TextInputAnimation(document.getElementById('job-poRequest-content'));
 TextInputAnimation(document.getElementById('job-changeInstallDate-content'));
+TextInputAnimation(document.getElementById('search_bar'));
 
 const options = { focusInputAfterCloseModal: true, theme: 'crane-radius' };
 const scheduleFromElement = document.querySelector('#job-changeInstallDate-scheduleFrom');
@@ -129,7 +129,7 @@ async function getJobs(month, year) {
                 const installElement = currentCalendar.querySelector(`[id='indicatorContainer${jobInstallDate.getMonth() + 1}-${jobInstallDate.getDate()}-${jobInstallDate.getFullYear()}']`);
                 if (installElement !== null) {
                     const installColor = determineInstallColor(job.status);
-                    installElement.innerHTML += `<div class="dateNumber-indicator${installColor}" data-jobid="${job.jobId}"></div>`;
+                    installElement.innerHTML += `<div class="dateNumber-indicator${installColor}" data-jobid="${job.jobId}" data-orderid="${job.orderId}"></div>`;
                 }
 
                 let jobInstallDateRange;
@@ -349,7 +349,7 @@ async function getNewAssignedJobs() {
                     jobElement.setAttribute('jobid', job.jobId);
                     jobElement.appendChild(jobInfoContainer);
                     jobElement.onclick = notificationJobClicked;
-                    notificationMenu.appendChild(jobElement)
+                    notificationMenu.appendChild(jobElement);
                 });
 
                 ListAnimation(document.getElementById("settings_menu"));
@@ -655,7 +655,7 @@ function ButtonAnimation(container) {
 }
 
 function ListAnimation(container) {
-    const listElement = container.querySelectorAll('.mdc-list');
+    const listElement = container.querySelector('.mdc-list');
     if (typeof mdc !== 'undefined') {
         const list = mdc.list.MDCList.attachTo(listElement);
         const listItemRipples = list.listElements.map((listItemEl) => mdc.ripple.MDCRipple.attachTo(listItemEl));
@@ -931,6 +931,15 @@ function DialogAnimation(container) {
                         mdcTextNoteInput.value = '';
                     }
                 }
+
+                if (mdcDialog.parentElement.getAttribute('id') == "app_search_dialog") {
+                    if (event.detail.action == "accept") {
+                        history.back();
+                    }
+                    else {
+                        
+                    }
+                }
             });
 
             dialog.listen('MDCDialog:closed', event => {
@@ -947,6 +956,9 @@ function DialogAnimation(container) {
             }
             if (mdcDialog.parentElement.getAttribute('id') == "app_changeinstalldate_dialog") {
                 window.dialogChangeInstallDate = dialog;
+            }
+            if (mdcDialog.parentElement.getAttribute('id') == "app_search_dialog") {
+                window.dialogSearchJobs = dialog;
             }
         }
     }

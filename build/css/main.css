@@ -198,6 +198,32 @@ body {
     -ms-user-select: none;
 }
 
+.search-button.mdc-icon-button:not(:disabled) {
+    position: absolute;
+    top: 5px;
+    right: 90px;
+}
+
+.settings-button.mdc-icon-button:not(:disabled){
+    right: 50px;
+}
+
+#search_bar {
+    padding: 8px;
+    display: flex; /* Using flexbox for layout */
+    align-items: center;
+    justify-content: center;
+}
+
+#searchInput {
+    border: none;
+    outline: none;
+    padding: 8px;
+    font-size: 16px;
+    flex-grow: 1; /* Allow input to grow */
+    /* border-bottom: 1px solid rgba(0, 0, 0, 0.12); */
+}
+
 @media only screen and (max-width: 768px) {
     .offline-none {
         top: 20px;
@@ -216,5 +242,10 @@ body {
 
     .notificationBell-button.mdc-icon-button:not(:disabled) {
         top: 0px;
+    }
+
+    #search_bar {
+        top: 15px;
+        right: 40px;
     }
 }

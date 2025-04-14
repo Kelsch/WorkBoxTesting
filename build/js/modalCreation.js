@@ -372,3 +372,10 @@ function changeInstallDate(jobId) {
     let changeInstallDateModalHistory = {modal: "changeInstallDateModal"}; // state object
     history.pushState(changeInstallDateModalHistory, "unused argument", "#changeInstallDateModal");
 }
+
+function searchJob() {
+    this.dialogSearchJobs.open();
+
+    let searchJobsModalHistory = {modal: "searchJobsModal"}; // state object
+    history.pushState(searchJobsModalHistory, "unused argument", "#searchJobsModal");
+}
