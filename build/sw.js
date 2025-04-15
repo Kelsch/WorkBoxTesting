@@ -25,6 +25,18 @@ workbox.routing.registerRoute(
     })
 );
 
+//workbox.routing.registerRoute(
+//    new RegExp(`${apiURL}/api/installerAppData/getInstallerRating`),
+//    new workbox.strategies.NetworkFirst({
+//        cacheName: 'installer-rating',
+//        plugins: [
+//            new workbox.expiration.ExpirationPlugin({
+//                maxAgeSeconds: 60 * 60 * 4,
+//            }),
+//        ],
+//    })
+//);
+
 workbox.routing.registerRoute(
     new RegExp(`${apiURL}/api/installerAppData/getInstallIndicators`),
     new workbox.strategies.NetworkFirst({

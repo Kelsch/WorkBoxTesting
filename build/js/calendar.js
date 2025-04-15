@@ -95,6 +95,7 @@ function showCalendar(month, year) {
     showSearchButton();
     getJobs(month, year);
     getNonWorkDays();
+    getInstallerRating();
 }
 
 function showSearchButton() {
